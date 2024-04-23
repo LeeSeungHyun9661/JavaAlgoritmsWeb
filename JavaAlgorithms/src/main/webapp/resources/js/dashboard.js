@@ -2,11 +2,10 @@
 
 (() => {
   'use strict'
-
   // Graphs
   const ctx = document.getElementById('myChart')
   // eslint-disable-next-line no-unused-vars
-  const myChart = new Chart(ctx, {
+  const myChart = new bar(ctx, {
     type: 'line',
     data: {
       labels: [

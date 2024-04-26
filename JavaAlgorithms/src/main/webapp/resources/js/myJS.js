@@ -97,7 +97,7 @@ function startSort(option) {
                 timers[i].pause();
             }
         }
-    }    
+    }
     else {
         console.log("START");
         pause = false;
@@ -127,36 +127,35 @@ function swap(arr, i, j) {
 
 function record(index, time, job, a_index, a, b_index, b, timeout) {
     timers.push(new timer(function() {
-    const table = document.getElementById('process-table');
-    const new_row = table.insertRow();
-    const cell_length = table.rows[0].cells.length;
-    for (let i = 0; i < cell_length; i++) {
-        const new_cell = new_row.insertCell(i);
-        let temp_html = ``;
-        switch (i) {
-            case 0:
-                temp_html = `<td>` + index + `</td>`;
-                break;
-            case 1:
-                temp_html = `<td>` + time + `</td>`;
-                break;
-            case 2:
-                temp_html = `<td>` + job + `</td>`;
-                break;
-            case 3:
-                temp_html = `<td>` + a_index + `</td>`;
-                break;
-            case 4:
-                temp_html = `<td>` + a + `</td>`;
-                break;
-            case 5:
-                temp_html = `<td>` + b_index + `</td>`;
-                break;
-            case 6:
-                temp_html = `<td>` + b + `</td>`;
-                break;
-        }
-        
+        const table = document.getElementById('process-table');
+        const new_row = table.insertRow();
+        const cell_length = table.rows[0].cells.length;
+        for (let i = 0; i < cell_length; i++) {
+            const new_cell = new_row.insertCell(i);
+            let temp_html = ``;
+            switch (i) {
+                case 0:
+                    temp_html = `<td>` + index + `</td>`;
+                    break;
+                case 1:
+                    temp_html = `<td>` + time + `</td>`;
+                    break;
+                case 2:
+                    temp_html = `<td>` + job + `</td>`;
+                    break;
+                case 3:
+                    temp_html = `<td>` + a_index + `</td>`;
+                    break;
+                case 4:
+                    temp_html = `<td>` + a + `</td>`;
+                    break;
+                case 5:
+                    temp_html = `<td>` + b_index + `</td>`;
+                    break;
+                case 6:
+                    temp_html = `<td>` + b + `</td>`;
+                    break;
+            }
             new_cell.insertAdjacentHTML('afterbegin', temp_html);
         }
     }, timeout));
@@ -172,9 +171,9 @@ function bubbleSort() {
 
     for (var i = 0; i < data.length - 1; i++) {
         for (var j = 0; j < (data.length - i) - 1; j++) {
-            record(index++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1],timeout);
+            record(index++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1], timeout);
             if (data[j] > data[j + 1]) {
-                record(index++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1],timeout);
+                record(index++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1], timeout);
                 timeout = chartSwap(data, colors, timeout, interval, j, j + 1);
             }
         }
@@ -193,16 +192,16 @@ function selectionSort() {
         least = data[i];
         least_j = i;
         for (var j = i + 1; j < data.length; j++) {
-            record(index++, new Date().getTime() - now, "Comparison", j, data[j], least_j, least,timeout);
+            record(index++, new Date().getTime() - now, "Comparison", j, data[j], least_j, least, timeout);
 
             if (data[j] < least) {
-                record(index++, new Date().getTime() - now, "New Least", least_j, data[j], "", "",timeout);
+                record(index++, new Date().getTime() - now, "New Least", least_j, data[j], "", "", timeout);
                 least = data[j];
                 least_j = j;
             }
         }
         if (least_j != i) {
-            record(index++, new Date().getTime() - now, "Swap Least", i, data[i], least_j, data[least_j],timeout);
+            record(index++, new Date().getTime() - now, "Swap Least", i, data[i], least_j, data[least_j], timeout);
             timeout = chartSwap(data, colors, timeout, interval, i, least_j);
         }
     }

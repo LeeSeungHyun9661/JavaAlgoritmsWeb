@@ -35,7 +35,6 @@
 
 </head>
 
-
 <body>
 	<!-- Color Mod Icons -->
 	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -91,7 +90,6 @@
 			</li>
 		</ul>
 	</div>
-
 
 	<!-- Header Icons -->
 	<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -217,8 +215,8 @@
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-													<svg class="bi">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/MergeSort.jsp')">
+                                                	<svg class="bi">
 														<use xlink:href="#people"></use></svg>
 													Merge Sort
 												</a>
@@ -327,13 +325,6 @@
 							<li class="nav-item">
 								<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
 									<svg class="bi">
-										<use xlink:href="#gear-wide-connected"></use></svg>
-									Settings
-								</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-									<svg class="bi">
 										<use xlink:href="#door-closed"></use></svg>
 									Sign out
 								</a>
@@ -351,21 +342,14 @@
 	</div>
 	<hr>
 
-    <!-- Jquery -->
+	<!-- Jquery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<!-- Custom JS -->
 	<script type="text/javascript" src="../resources/js/myJS.js"></script>
 	<!-- Chart js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js" integrity="sha512-7DgGWBKHddtgZ9Cgu8aGfJXvgcVv4SWSESomRtghob4k4orCBUTSRQ4s5SaC2Rz+OptMqNk0aHHsaUBk6fzIXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
-    <script src="../resources/js/dashboard.js"></script>    
-    <!-- Bootstrap - JS -->
+	<script src="../resources/js/dashboard.js"></script>
+	<!-- Bootstrap - JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	
-	<!-- code-prettify -->
-	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-	
-	
 </body>
-
 </html>

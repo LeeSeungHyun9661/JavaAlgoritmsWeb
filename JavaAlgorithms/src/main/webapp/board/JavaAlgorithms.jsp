@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Java Sorting Algorithms</title>
+
 <!-- Bootstrap - CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 <!-- Charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <!-- Custom CSS -->
@@ -170,7 +172,6 @@
 		</div>
 	</header>
 
-
 	<!-- Main DOM -->
 	<div class="container-fluid">
 		<div class="row">
@@ -209,7 +210,7 @@
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/InsertionSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#cart"></use></svg>
 													Insertion Sort
@@ -350,15 +351,21 @@
 	</div>
 	<hr>
 
+    <!-- Jquery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<!-- Custom JS -->
 	<script type="text/javascript" src="../resources/js/myJS.js"></script>
-	<script src="../resources/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-	<script src="../resources/js/chart.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script>
-	<script src="../resources/js/dashboard.js"></script>
-
-	<!-- Bootstrap - JS -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+	<!-- Chart js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js" integrity="sha512-7DgGWBKHddtgZ9Cgu8aGfJXvgcVv4SWSESomRtghob4k4orCBUTSRQ4s5SaC2Rz+OptMqNk0aHHsaUBk6fzIXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="../resources/js/dashboard.js"></script>    
+    <!-- Bootstrap - JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	
+	<!-- code-prettify -->
+	<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+	
+	
 </body>
 
 </html>

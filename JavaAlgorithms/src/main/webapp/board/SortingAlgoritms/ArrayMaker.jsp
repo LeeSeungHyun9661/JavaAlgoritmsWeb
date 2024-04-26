@@ -21,34 +21,12 @@
 			</div>
 		</div>
 	</form>
-	<div id="array-list">
-	</div>
-</div>
 
-<script>
-	function makeArray() {
-		/* 입력 변수 받아오기 */
-		var size = Number($("#size").val());
-		var min = Number($("#min").val());
-		var max = Number($("#max").val());
-		
-		/* 값 범위가 너무 작으면 재생성 요청 */
-		if ((max - min + 1) * 0.7 < size) {
-			alert("Make Number range wider!");
-			return;
-		}
-		
-		/* 난수 배열 생성 */
-		
-		while (arr.size < size) {
-			arr.add(Math.floor(Math.random() * (max - min + 1)) + min);
-		}		
-		
-		$("#array-list").empty();
-		
-		for (let num of arr) {
-			var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) +'</span>')
-			dom.appendTo($("#array-list"));
-		}
-	}
-</script>
+	<div class="card card-body">
+		<div id="array-list">
+		</div>
+	</div>
+
+	<!-- Array List -->
+	
+</div>

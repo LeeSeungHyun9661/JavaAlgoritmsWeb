@@ -1,8 +1,5 @@
-var myChart, config, time, timers = [];
+var myChart, config, timers = [], recordIndex, timeout, interval = 50, currentPage, now;
 let myArr, myColors;
-let now;
-var timeout;
-var interval = 10;
 
 /* 그래프 동기화를 위한 타이머 함수*/
 var timer = function(callback, delay) {
@@ -29,6 +26,7 @@ var timer = function(callback, delay) {
 
 /* 정렬 알고리즘 - 페이지 변경에 따른 내부 내용 변경 */
 function contentsChange(page) {
+    currentPage = page;
     /* 실행중인 정렬 작업 모두 종료! */
     if (timers.length > 0) {
         for (let timer of timers) {
@@ -40,7 +38,9 @@ function contentsChange(page) {
     }
     $('#dashboard').fadeOut(200, function() {
         $(this).load(page);
-        $(this).fadeIn(200);
+        $(this).fadeIn(200, function(){
+            makeArray(); 
+        });
     });
 }
 
@@ -71,7 +71,7 @@ function makeArray() {
     timers = [];
     document.getElementById('startButton').value = "START";
     drawChart(Array.from(set), colors);
-    $("#process-table tr:not(:first)").remove();
+    $("#table-row tr:not(:first)").remove();
 }
 
 /* 입력값에 따른 배열 시작 */
@@ -87,9 +87,10 @@ function startSort(option) {
                 cnt += timers[i].resume();
             }
             if (cnt == timers.length) {
-                document.getElementById('startButton').value = "RESET";
+                document.getElementById('startButton').value = "RESTART";
                 timers = [];
                 drawChart(Array.from(myArr), myColors.slice(0));
+                $("#table-row tr:not(:first)").remove();
             }
             /* 리셋 기능 필요 */
         } else {
@@ -101,7 +102,6 @@ function startSort(option) {
         }
     }
     else {
-        console.log("START");
         pause = false;
         document.getElementById('startButton').value = "PAUSE";
         now = new Date().getTime();
@@ -118,6 +118,34 @@ function startSort(option) {
             case 'merge':
                 mergeSort();
                 break
+            case 'quick':
+                quickSort();
+                break
+                /* 여기서 부터!*/
+            case 'heap':
+                quickSort();
+                break
+            case 'Tree':
+                quickSort();
+                break
+            case 'Tim':
+                quickSort();
+                break
+            case 'Intro':
+                quickSort();
+                break
+            case 'Radix':
+                quickSort();
+                break
+            case 'Shell':
+                quickSort();
+                break
+            case 'Sleep':
+                quickSort();
+                break                
+            case 'Gravity':
+                quickSort();
+                break
             default:
                 break
         }
@@ -132,9 +160,10 @@ function swap(arr, i, j) {
 
 function record(index, time, job, a_index, a, b_index, b) {
     timers.push(new timer(function() {
-        const table = document.getElementById('process-table');
-        const new_row = table.insertRow();
-        const cell_length = table.rows[0].cells.length;
+        const table_row = document.getElementById('table-row');
+        const table = document.getElementById('table')
+        const new_row = table_row.insertRow();
+        const cell_length = table_row.rows[0].cells.length;
         for (let i = 0; i < cell_length; i++) {
             const new_cell = new_row.insertCell(i);
             let temp_html = ``;
@@ -162,11 +191,11 @@ function record(index, time, job, a_index, a, b_index, b) {
                     break;
             }
             new_cell.insertAdjacentHTML('afterbegin', temp_html);
+            /*            table.scrollTop = table.scrollHeight;*/
         }
     }, timeout));
 
 }
-
 
 function chartSwap(data, colors, i, j) {
     baseColor = colors[i]
@@ -186,17 +215,22 @@ function chartSwap(data, colors, i, j) {
     updateChart(data.slice(0), colors.slice(0), timeout);
 }
 
-function chartGroup(data,colors, min, max, groupColor){
+function chartGroup(data, colors, min, max, groupColor) {
     baseColor = colors[min]
-    for(var i =0; i<colors.length; i++){
-        if(i <= max && i >= min){
+    for (var i = 0; i < colors.length; i++) {
+        if (i <= max && i >= min) {
             colors[i] = groupColor;
         }
     }
     timeout += interval;
-    updateChart(data.slice(0), colors.slice(0), timeout)    
+    updateChart(data.slice(0), colors.slice(0), timeout)
 }
 
+function chartHighright(data, colors, i, highrightColor) {
+    colors[i] = highrightColor
+    timeout += interval;
+    updateChart(data.slice(0), colors.slice(0), timeout);
+}
 
 function updateChart(data, colors) {
     timers.push(new timer(function() {
@@ -260,18 +294,18 @@ function drawChart(datas, colors) {
 
 /* ______________________________Sorting Algoriths based JS__________________________________________________ */
 
+
 function bubbleSort() {
     let data = myChart.data.datasets[0].data;
     let colors = myChart.data.datasets[0].backgroundColor;
     timeout = 0;
-    interval = 10;
-    var index = 0;
+    recordIndex = 0;
 
     for (var i = 0; i < data.length - 1; i++) {
         for (var j = 0; j < (data.length - i) - 1; j++) {
-            record(index++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1]);
+            record(recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1]);
             if (data[j] > data[j + 1]) {
-                record(index++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1]);
+                record(recordIndex++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1]);
                 chartSwap(data, colors, j, j + 1);
             }
         }
@@ -282,24 +316,23 @@ function selectionSort() {
     let data = myChart.data.datasets[0].data;
     let colors = myChart.data.datasets[0].backgroundColor;
     timeout = 0;
-    interval = 10;
     var least, least_j;
-    var index = 0;
+    recordIndex = 0;
 
     for (var i = 0; i < data.length - 1; i++) {
         least = data[i];
         least_j = i;
         for (var j = i + 1; j < data.length; j++) {
-            record(index++, new Date().getTime() - now, "Comparison", j, data[j], least_j, least);
+            record(recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], least_j, least);
 
             if (data[j] < least) {
-                record(index++, new Date().getTime() - now, "New Least", least_j, data[j], "", "");
+                record(recordIndex++, new Date().getTime() - now, "New Least", least_j, data[j], "", "");
                 least = data[j];
                 least_j = j;
             }
         }
         if (least_j != i) {
-            record(index++, new Date().getTime() - now, "Swap Least", i, data[i], least_j, data[least_j]);
+            record(recordIndex++, new Date().getTime() - now, "Swap Least", i, data[i], least_j, data[least_j]);
             chartSwap(data, colors, i, least_j);
         }
     }
@@ -309,19 +342,19 @@ function insertionSort() {
     let data = myChart.data.datasets[0].data;
     let colors = myChart.data.datasets[0].backgroundColor;
     timeout = 0;
+    recordIndex = 0;
     var target;
-    var index = 0;
 
     for (var i = 0; i < data.length; i++) {
 
-        record(index++, new Date().getTime() - now, "New Target", i, data[i], "", "");
+        record(recordIndex++, new Date().getTime() - now, "New Target", i, data[i], "", "");
         target = i;
         for (var j = i - 1; j >= 0; j--) {
 
-            record(index++, new Date().getTime() - now, "Comparison", target, data[target], j, data[j]);
+            record(recordIndex++, new Date().getTime() - now, "Comparison", target, data[target], j, data[j]);
             if (data[target] < data[j]) {
 
-                record(index++, new Date().getTime() - now, "Swap Target", target, data[target], j, data[j]);
+                record(recordIndex++, new Date().getTime() - now, "Swap Target", target, data[target], j, data[j]);
                 chartSwap(data, colors, target--, j);
             } else {
                 break;
@@ -335,47 +368,89 @@ function mergeSort() {
     let data = myChart.data.datasets[0].data;
     let colors = myChart.data.datasets[0].backgroundColor;
     timeout = 0;
-    interval = 10;
-    divide(data, colors, 0, data.length - 1);
+    recordIndex = 0;
+    mergeSort_divide(data, colors, 0, data.length - 1);
 }
-
-function divide(data, colors, min, max) {
-    if (max - min == 0) {//only one element.
-        return;
-    }
+function mergeSort_divide(data, colors, min, max) {
+    if (max - min == 0) return;
     else if (max - min == 1) {
-        //only two elements and swaps them
-        if (data[min] > data[max]) {
-            chartSwap(data, colors, min, max);
-        }
-
+        if (data[min] > data[max]) chartSwap(data, colors, min, max);
     }
     else {
-        var mid = Math.floor((min + max) / 2);//The midpoint   
-        divide(data, colors, min, mid);//sort the left side
-        divide(data, colors, mid + 1, max);//sort the right side    
-        merge(data, colors, min, max, mid);//combines them
+        var mid = Math.floor((min + max) / 2);
+        record(recordIndex++, new Date().getTime() - now, "Divide", "[ " + min + " - " + mid + " ]", "[ " + data.slice(min, mid + 1) + " ]", "[ " + (mid) + " - " + max + " ]", "[ " + data.slice(mid + 1, max + 1) + " ]");
+        mergeSort_divide(data, colors, min, mid);
+        mergeSort_divide(data, colors, mid + 1, max);
+        mergeSort_merge(data, colors, min, max, mid);
+        record(recordIndex++, new Date().getTime() - now, "Merge", "[ " + min + " - " + mid + " ]", "[ " + data.slice(min, mid + 1) + " ]", "[ " + (mid) + " - " + max + " ]", "[ " + data.slice(mid + 1, max + 1) + " ]");
     }
 }
-
-function merge(data, colors, min, max, mid) {
-    chartGroup(data,colors,min,max,'#81c147');
+function mergeSort_merge(data, colors, min, max, mid) {
+    chartGroup(data, colors, min, max, '#81c147');
     var i = min;
     while (i <= mid) {
         if (data[i] > data[mid + 1]) {
+            record(recordIndex++, new Date().getTime() - now, "Swap", i, data[i], mid + 1, data[mid + 1]);
             chartSwap(data, colors, i, mid + 1);
-            push(data,colors, mid + 1, max);
-            
+            for (var j = mid + 1; j < max; j++) {
+                if (data[j] > data[j + 1]) {
+                    record(recordIndex++, new Date().getTime() - now, "Swap(PUSH)", j, data[j], j + 1, data[j + 1]);
+                    chartSwap(data, colors, j, j + 1);
+                }
+            }
         }
         i++;
     }
-    chartGroup(data,colors,min,max,'#007bff');
+    chartGroup(data, colors, min, max, '#007bff');
 }
 
-function push(data,colors, s, e) {
-    for (var i = s; i < e; i++) {
-        if (data[i] > data[i + 1]) {
-            chartSwap(data, colors, i, i + 1);
-        }
-    }
+
+function quickSort() {
+    let data = myChart.data.datasets[0].data;
+    let colors = myChart.data.datasets[0].backgroundColor;
+    timeout = 0;
+    recordIndex = 0;
+
+    quickSort_pivot(data, colors, 0, data.length - 1);
 }
+function quickSort_pivot(data, colors, min, max) {
+    if (min < max) {
+        chartGroup(data, colors, min, max, '#81c147');
+        record(recordIndex++, new Date().getTime() - now, "Partition", min, data[min], max, data[max]);
+
+        var pivot = quickSort_partition(data, colors, min, max);
+
+        chartGroup(data, colors, min, max, '#81c147');
+        chartHighright(data, colors, pivot, '#FF6347');
+        record(recordIndex++, new Date().getTime() - now, "Pivot", pivot, data[pivot], "", "");
+        
+        quickSort_pivot(data, colors, min, pivot);
+        quickSort_pivot(data, colors, pivot + 1, max);
+
+        chartGroup(data, colors, min, max, '#007bff');
+        chartHighright(data, colors, pivot, '#007bff');
+    }
+    return;
+}
+function quickSort_partition(data, colors, min, max) {
+    var pivot = data[Math.floor((min + max) / 2)]; // 부분리스트의 중간 요소를 피벗으로 설정
+
+    while (true) {
+        while (data[min] < pivot) min++;
+        while (data[max] > pivot && min <= max) max--;
+        if (min >= max) return max;
+
+        record(recordIndex++, new Date().getTime() - now, "Swap", min, data[min], max, data[max]);
+        chartSwap(data, colors, min, max);
+    }
+
+}
+
+function disableF5(e) {
+    if ((e.which || e.keyCode) == 116) {
+        e.preventDefault();
+        contentsChange(currentPage);
+    }
+};
+$(document).bind("keydown", disableF5);
+$(document).on("keydown", disableF5);

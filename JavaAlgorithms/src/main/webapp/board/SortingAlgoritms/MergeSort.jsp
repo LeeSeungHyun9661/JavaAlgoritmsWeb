@@ -41,8 +41,8 @@
 </h2>
 <div class="collapse show" id="collapse-process">
     <div class="card card-body">
-        <div class="table-responsive small" style="width: 100%; height: 200px; overflow: auto">
-            <table class="table table-striped table-sm" id="process-table">
+        <div class="table-responsive small" style="width: 100%; height: 200px; overflow: auto" id="table">
+            <table class="table table-striped table-sm" id="table-row">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

@@ -11,8 +11,6 @@
 
 <!-- Charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-<!-- Custom CSS -->
-<link href="../resources/css/style.css" rel="stylesheet" type="text/css">
 
 <!-- Custom CSS -->
 <link href="../resources/css/style.css" rel="stylesheet" type="text/css">
@@ -31,8 +29,11 @@
 
 
 <link href="../resources/css/bootstrap-icons.min.css" rel="stylesheet">
+
 <link href="../resources/css/dashboard.css" rel="stylesheet">
 
+<!-- Prism CSS -->
+<link href="../resources/css/prism.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -194,6 +195,13 @@
 									<div class="accordion-body">
 										<ul class="nav flex-column">
 											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SortingBasic.html')">
+													<svg class="bi">
+                                                        <use xlink:href="#house-fill"></use></svg>
+													About Sorting Algorithm
+												</a>
+											</li>
+											<li class="nav-item">
 												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/BubbleSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#house-fill"></use></svg>
@@ -216,53 +224,77 @@
 											</li>
 											<li class="nav-item">
 												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/MergeSort.jsp')">
-                                                	<svg class="bi">
+													<svg class="bi">
 														<use xlink:href="#people"></use></svg>
 													Merge Sort
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-													<svg class="bi">
-														<use xlink:href="#graph-up"></use></svg>
-													Heap Sort
-												</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/QuickSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#puzzle"></use></svg>
 													Quick Sort
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/HeapSort.jsp')">
+													<svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+													Heap Sort
+												</a>
+											</li>
+											<li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TreeSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#puzzle"></use></svg>
 													Tree Sort
 												</a>
 											</li>
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TimSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#puzzle"></use></svg>
 													Tim Sort
 												</a>
 											</li>
-											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-													<svg class="bi">
-														<use xlink:href="#puzzle"></use></svg>
-													Block Merge Sort
-												</a>
-											</li>
-											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-													<svg class="bi">
-														<use xlink:href="#puzzle"></use></svg>
-													Intro Sort
-												</a>
-											</li>
+                                            <li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/IntroSort.jsp')">
+                                                    <svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+                                                    Intro Sort
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/RadixSort.jsp')">
+                                                    <svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+                                                    Radix Sort
+                                                </a>
+                                            </li>
+                                            
+                                            <li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/ShellSort.jsp')">
+                                                    <svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+                                                    Shell Sort
+                                                </a>
+                                            </li>
+                                            
+                                            <li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SleepSort.jsp')">
+                                                    <svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+                                                    Sleep Sort
+                                                </a>
+                                            </li>
+                                            
+                                            <li class="nav-item">
+                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/HeapSort.jsp')">
+                                                    <svg class="bi">
+                                                        <use xlink:href="#puzzle"></use></svg>
+                                                    Gravity Sort
+                                                </a>
+                                            </li>
 										</ul>
 									</div>
 								</div>
@@ -342,14 +374,22 @@
 	</div>
 	<hr>
 
+
 	<!-- Jquery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 	<!-- Custom JS -->
 	<script type="text/javascript" src="../resources/js/myJS.js"></script>
+
 	<!-- Chart js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js" integrity="sha512-7DgGWBKHddtgZ9Cgu8aGfJXvgcVv4SWSESomRtghob4k4orCBUTSRQ4s5SaC2Rz+OptMqNk0aHHsaUBk6fzIXw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 	<script src="../resources/js/dashboard.js"></script>
+
 	<!-- Bootstrap - JS -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+
 </body>
 </html>

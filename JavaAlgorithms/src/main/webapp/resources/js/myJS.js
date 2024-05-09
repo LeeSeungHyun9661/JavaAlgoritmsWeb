@@ -1,6 +1,6 @@
 var chart, config, timers = [], recordIndex, timeout, interval = 50, now;
-var firstArray;
 
+var firstArray, option, group;
 
 var currentPage;/* 현재 페이지 값 저장하는 변수 */
 
@@ -38,21 +38,16 @@ var timer = function(callback, delay) {
 
 /* 정렬 알고리즘 - 페이지 변경에 따른 내부 내용 변경 */
 function contentsChange(page) {
-    currentPage = page;
+    this.currentPage = page;
+    this.group = page.split('/')[0];
+    this.option = page.split('/')[1].split('.')[0];
+    console.log(this.group);
+    console.log(this.option);
 
-    /*if (timers.length > 0) {
-        for (let timer of timers) {
-            timer.pause();
-        }
-    }
-    if (myChart != undefined || myChart != null) {
-        myChart.destroy();
-    }*/
     $('#dashboard').fadeOut(200, function() {
         window.scrollTo(0, 0);
         $(this).load(page);
         $(this).fadeIn(200, function() {
-            /*makeArray();*/
         });
     });
 }
@@ -82,95 +77,81 @@ function generateArray() {
 
     /* 현재 값들에 대한 초기값 저장*/
     firstArray = Array.from(set);
-    timers = [];
-    /*drawChart(firstArray, colors);  */
-
-    myChart = new MyChart($('#myChart'), firstArray);
+    myChart = new MyChart($('#myChart'), [...firstArray]);
     $("#table-row tr:not(:first)").remove();
 }
 
 /* 입력값에 따른 배열 시작 */
-function startSort(option) {
-    /* 배열 정지 또는 재시작을 위한 기능 */
-    if (timers.length > 0) {
-        if (pause) {
-            pause = false;
-            document.getElementById('startButton').value = "PAUSE";
-            cnt = 0
+function startSort() {
+    $('#startButton').val("STOP");
+    $('#startButton').attr("onClick", 'stopSort()');
 
-            for (var i = 0; i < timers.length; i++) {
-                cnt += timers[i].resume();
-            }
-            if (cnt == timers.length) {
-                document.getElementById('startButton').value = "RESTART";
-                timers = [];
-                drawChart(Array.from(myArr), myColors.slice(0));
-                $("#table-row tr:not(:first)").remove();
-            }
-            /* 리셋 기능 필요 */
-        } else {
-            pause = true;
-            document.getElementById('startButton').value = "RESUME";
-            for (var i = 0; i < timers.length; i++) {
-                timers[i].pause();
-            }
-        }
-    }
-    else {
-        pause = false;
-        document.getElementById('startButton').value = "PAUSE";
-        now = new Date().getTime();
-        switch (option) {
-            case 'bubble':
-                bubbleSort();
-                break
-            case 'selection':
-                selectionSort();
-                break
-            case 'insertion':
-                insertionSort();
-                break
-            case 'merge':
-                mergeSort();
-                break
-            case 'quick':
-                quickSort();
-                break
-            /* 여기서 부터!*/
-            case 'heap':
-                quickSort();
-                break
-            case 'Tree':
-                quickSort();
-                break
-            case 'Tim':
-                quickSort();
-                break
-            case 'Intro':
-                quickSort();
-                break
-            case 'Radix':
-                quickSort();
-                break
-            case 'Shell':
-                quickSort();
-                break
-            case 'Sleep':
-                quickSort();
-                break
-            case 'Gravity':
-                quickSort();
-                break
-            default:
-                break
-        }
+    now = new Date().getTime();
+    switch (this.option) {
+        case 'BubbleSort':
+            bubbleSort();
+            break
+        case 'SelectionSort':
+            selectionSort();
+            break
+        case 'InsertionSort':
+            insertionSort();
+            break
+        case 'merge':
+            mergeSort();
+            break
+        case 'quick':
+            quickSort();
+            break
+        case 'heap':
+            quickSort();
+            break
+        case 'Tree':
+            quickSort();
+            break
+        case 'Tim':
+            quickSort();
+            break
+        case 'Intro':
+            quickSort();
+            break
+        case 'Radix':
+            quickSort();
+            break
+        case 'Shell':
+            quickSort();
+            break
+        case 'Sleep':
+            quickSort();
+            break
+        case 'Gravity':
+            quickSort();
+            break
+        default:
+            break
     }
 }
+
+function stopSort() {
+    $('#startButton').val("RESUME");
+    myChart.stop();
+    $('#startButton').attr("onClick", 'resumeSort()');
+}
+
+function resetSort() {
+    $('#startButton').val("START");
+    myChart.reset();
+    $('#startButton').attr("onClick", "startSort()");
+}
+
+function resumeSort() {
+    $('#startButton').val("STOP");
+    myChart.resume();
+    $('#startButton').attr("onClick", 'stopSort()');
+}
+
 class MyChart {
     constructor(ctx, data) {
-        console.log("CONSTRUCTOR");
-
-        this.data = data;
         ctx.css("display", "block");
         $('#startButton').css("display", "block");
 
@@ -217,44 +198,74 @@ class MyChart {
                 tooltips: {
                     enabled: false,
                 },
+                animation: false,
             },
         });
-
         this.timers = [];
         this.timeout = 0;
-        this.interval = 500;
+        this.interval = 100;
     }
 
     swap(data, i, j) {
         var temp = data[i];
         data[i] = data[j];
         data[j] = temp;
-        this.update(data.slice(0), this.color.slice(0))
-
+        /*      this.highLight([i, j], '#FFB399');*/
+        this.update([...data]);
     }
 
-    update(data, color) {
+    update(data) {
+        this.timeout += this.interval;
         var chart = this.chart;
         timers.push(new timer(function() {
             chart.data.datasets[0].data = data;
-            chart.data.datasets[0].backgroundColor = color;
             chart.update();
         }, this.timeout));
-        this.timeout += this.interval;
     }
 
-    finish() {        
+    finish() {
         timers.push(new timer(function() {
-            console.log("Finish!")
-            $('#startButton').val("restart");
+            $('#startButton').val("RESET");
+            $('#startButton').attr("onClick", 'resetSort()');
+            this.timers = [];
         }, this.timeout));
     }
 
-    paint(i) {
-        console.log("PAINT");
-        let colors = chart.data.datasets[0].backgroundColor;
-        colors[i] = color;
-        chart.data.datasets[0].backgroundColor = colors;
+    stop() {
+        for (var i = 0; i < timers.length; i++) {
+            timers[i].pause();
+        }
+
+    }
+
+    resume() {
+        for (var i = 0; i < timers.length; i++) {
+            timers[i].resume();
+        }
+    }
+
+    reset() {
+        this.chart.data.datasets[0].data = [...firstArray];
+        this.timeout = 0;
+        this.chart.update();
+    }
+
+
+    highLight(list, colorCode) {
+        let chart = this.chart;
+        let BaseColor = [...chart.data.datasets[0].backgroundColor];
+
+        timers.push(new timer(function() {
+            for (var i = 0; i < list.length; i++) {
+                chart.data.datasets[0].backgroundColor[list[i]] = colorCode;
+            }
+            chart.update();
+        }, this.timeout + (this.interval / 3)));
+
+        timers.push(new timer(function() {
+            chart.data.datasets[0].backgroundColor = BaseColor;
+            chart.update();
+        }, this.timeout + this.interval + (this.interval / 3)));
     }
 
     record(row, list) {
@@ -269,69 +280,48 @@ class MyChart {
     }
 }
 
+
+/* ______________________________Sorting Algoriths based JS__________________________________________________ */
+
 function bubbleSort() {
-    var data = myChart.data;
-    recordIndex = 0;
-    console.log(data);
+    var data = [...myChart.chart.data.datasets[0].data];
 
     for (var i = 0; i < data.length - 1; i++) {
         for (var j = 0; j < (data.length - i) - 1; j++) {
-            /*            chart.record($('#table-row'), [recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1]]);*/
             if (data[j] > data[j + 1]) {
-                /*                chart.record($('#table-row'), [recordIndex++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1]]);*/
                 myChart.swap(data, j, j + 1);
             }
         }
     }
-    
     myChart.finish();
 }
 
-
-
-
-function chartSwap(data, colors, i, j) {
-    baseColor = colors[i]
-    colors[i] = '#FFB399'
-    colors[j] = '#FF6633'
-    timeout += interval;
-    updateChart(data.slice(0), colors.slice(0), timeout);
-
-    timeout += interval;
-    swap(colors, i, j);
-    swap(data, i, j);
-    updateChart(data.slice(0), colors.slice(0), timeout);
-
-    colors[i] = baseColor
-    colors[j] = baseColor
-    timeout += interval;
-    updateChart(data.slice(0), colors.slice(0), timeout);
+function selectionSort() {
+    var data = [...myChart.chart.data.datasets[0].data];
+    for (var i = 0; i < data.length - 1; i++) {
+        var least = i;
+        for (var j = i + 1; j < data.length; j++) {
+            if (data[j] < data[least])
+                least = j;
+        }
+        if (least != i)
+            myChart.swap(data, i, least);
+    }
+    myChart.finish();
 }
 
-function chartGroup(data, colors, min, max, groupColor) {
-    baseColor = colors[min]
-    for (var i = 0; i < colors.length; i++) {
-        if (i <= max && i >= min) {
-            colors[i] = groupColor;
+function insertionSort() {
+    var data = [...myChart.chart.data.datasets[0].data];
+    for (var i = 0; i < data.length; i++) {
+         var target = i;
+        for (var j = i - 1; j >= 0; j--) {
+            if (data[target] < data[j]) {
+                myChart.swap(data, target--, j);
+            } else {
+                break;
+            }
         }
     }
-    timeout += interval;
-    updateChart(data.slice(0), colors.slice(0), timeout)
+    myChart.finish();
 }
-
-function chartHighright(data, colors, i, highrightColor) {
-    colors[i] = highrightColor
-    timeout += interval;
-    updateChart(data.slice(0), colors.slice(0), timeout);
-}
-
-function updateChart(data, colors) {
-    timers.push(new timer(function() {
-        myChart.data.datasets[0].data = data;
-        myChart.data.datasets[0].backgroundColor = colors;
-        myChart.update();
-    }, timeout));
-}
-
-/* ______________________________Sorting Algoriths based JS__________________________________________________ */
 

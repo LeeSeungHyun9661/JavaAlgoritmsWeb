@@ -76,11 +76,8 @@
 <div class="collapse show" id="collapse-chart">
     <!-- Chart -->
     <div class="d-flex flex-column justify-content-center">
-        <canvas class="my-4 w-100" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-        <div class="d-flex flex-row justify-content-center">
-            <input class="btn btn-primary" id="startButton" type="button" onclick="startSort('bubble')" value="Start" style="display: none">
-        </div>
-
+        <canvas class="my-4" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
+        <input class="btn btn-primary" id="startButton" type="button" onclick="startSort()" value="Start" style="display: none">
     </div>
 </div>
 

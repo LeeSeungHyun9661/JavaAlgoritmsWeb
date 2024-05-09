@@ -61,24 +61,22 @@
 </div>
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Visualization</h1>
-	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button" aria-expanded="false" aria-controls="collapse">
-		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+    <h1 class="h2">Visualization</h1>
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button" aria-expanded="false" aria-controls="collapse">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
       <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
     </svg>
-	</a>
+    </a>
 </div>
 <div class="collapse show" id="collapse-chart">
-	<!-- Chart -->
-	<div class="d-flex flex-column justify-content-center">
-		<canvas class="my-4 w-100" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-		<div class="d-flex flex-row justify-content-center">
-			<input class="btn btn-primary" id="startButton" type="button" onclick="startSort('bubble')" value="Start" style="display: none">
-		</div>
-
-	</div>
+    <!-- Chart -->
+    <div class="d-flex flex-column justify-content-center">
+        <canvas class="my-4" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
+        <input class="btn btn-primary" id="startButton" type="button" onclick="startSort()" value="Start" style="display: none">
+    </div>
 </div>
+
 
 <h2>
 	Setting

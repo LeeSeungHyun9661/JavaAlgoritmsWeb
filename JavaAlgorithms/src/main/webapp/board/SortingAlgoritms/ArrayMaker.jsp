@@ -14,7 +14,7 @@
 				<input type="number" name="max" id="max" class="form-control" placeholder="Max">
 			</div>
 			<div class="col-auto">
-				<input type="button" onclick="makeArray()" value="Generate">
+				<input type="button" onclick="generateArray()" value="Generate">
 			</div>
 			<div class="col-auto">
 				<span id="passwordHelpInline" class="form-text"> Array size is under 70% of number range!</span>

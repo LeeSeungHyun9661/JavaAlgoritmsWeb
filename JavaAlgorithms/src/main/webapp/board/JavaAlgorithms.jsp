@@ -149,7 +149,7 @@
 
 	<!-- Header DOM -->
 	<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#" onclick="contentsChange('DashBoard.jsp')">Java Algorithms</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#" onclick="contentsChange('MainBoard.jsp')">Java Algorithms</a>
 
 		<ul class="navbar-nav flex-row d-md-none">
 			<li class="nav-item text-nowrap">
@@ -195,10 +195,10 @@
 									<div class="accordion-body">
 										<ul class="nav flex-column">
 											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SortingBasic.html')">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SortingBasic.jsp')">
 													<svg class="bi">
                                                         <use xlink:href="#house-fill"></use></svg>
-													About Sorting Algorithm
+													Sorting Algorithm
 												</a>
 											</li>
 											<li class="nav-item">
@@ -303,9 +303,9 @@
 
 							<div class="accordion-item">
 								<h2 class="accordion-header">
-									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Accordion Item #3</button>
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseThree">Data Structure</button>
 								</h2>
-								<div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+								<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 									<div class="accordion-body">
 										<ul class="nav flex-column mb-auto">
 											<li class="nav-item">
@@ -366,9 +366,9 @@
 				</div>
 			</div>
 
-			<!-- DashBoard -->
+			<!-- MainBoard -->
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="dashboard">
-				<jsp:include page="DashBoard.jsp" flush="true" />
+				<jsp:include page="MainBoard.jsp" flush="true" />
 			</main>
 		</div>
 	</div>

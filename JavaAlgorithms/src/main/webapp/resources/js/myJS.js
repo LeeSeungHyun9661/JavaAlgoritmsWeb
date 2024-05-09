@@ -1,16 +1,28 @@
-var myChart, config, timers = [], recordIndex, timeout, interval = 50, currentPage, now;
-let myArr, myColors;
+var chart, config, timers = [], recordIndex, timeout, interval = 50, now;
+var firstArray;
+
+
+var currentPage;/* 현재 페이지 값 저장하는 변수 */
+
+/* 새로고침 기능 대체 */
+function disableF5(e) {
+    if ((e.which || e.keyCode) == 116) {
+        e.preventDefault();
+        contentsChange(currentPage);
+    }
+};
+$(document).bind("keydown", disableF5);
+$(document).on("keydown", disableF5);
+
 
 /* 그래프 동기화를 위한 타이머 함수*/
 var timer = function(callback, delay) {
     var timerId, start, remaining = delay;
-
     this.pause = function() {
         window.clearTimeout(timerId);
         timerId = null;
         remaining -= Date.now() - start;
     };
-
     this.resume = function() {
         if (timerId) { return; }
         start = Date.now();
@@ -27,50 +39,53 @@ var timer = function(callback, delay) {
 /* 정렬 알고리즘 - 페이지 변경에 따른 내부 내용 변경 */
 function contentsChange(page) {
     currentPage = page;
-    /* 실행중인 정렬 작업 모두 종료! */
-    if (timers.length > 0) {
+
+    /*if (timers.length > 0) {
         for (let timer of timers) {
             timer.pause();
         }
     }
     if (myChart != undefined || myChart != null) {
         myChart.destroy();
-    }
+    }*/
     $('#dashboard').fadeOut(200, function() {
+        window.scrollTo(0, 0);
         $(this).load(page);
-        $(this).fadeIn(200, function(){
-            makeArray(); 
+        $(this).fadeIn(200, function() {
+            /*makeArray();*/
         });
     });
 }
 
 /* 정렬 알고리즘 - 배열 생성 */
-function makeArray() {
+function generateArray() {
     /* 입력 변수 받아오기 */
     var size = Number($("#size").val());
     var min = Number($("#min").val());
     var max = Number($("#max").val());
 
     let set = new Set();
-    let colors = [];
     /* 값 범위가 너무 작으면 재생성 요청 */
     if ((max - min + 1) * 0.7 < size) { alert("Make Number range wider!"); return; }
-
+    /* 값을 넣지 않은 상태일 경우 디폴트값 지정*/
+    if (size == 0) size = 10; min = 1; max = 20;
     /* 난수 배열 생성 */
-    if (size == 0) { size = 50; min = 1; max = 100; }
-    while (set.size < size) { set.add(Math.floor(Math.random() * (max - min + 1)) + min); }
-    while (colors.length < set.size) { colors.push('#007bff'); }
+    while (set.size < size) set.add(Math.floor(Math.random() * (max - min + 1)) + min);
 
+
+    /* 배열 값들에 대한 직접나열 */
     $("#array-list").empty();
     for (let num of set) {
         var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
         dom.appendTo($("#array-list"));
     }
-    myArr = set;
-    myColors = colors;
+
+    /* 현재 값들에 대한 초기값 저장*/
+    firstArray = Array.from(set);
     timers = [];
-    document.getElementById('startButton').value = "START";
-    drawChart(Array.from(set), colors);
+    /*drawChart(firstArray, colors);  */
+
+    myChart = new MyChart($('#myChart'), firstArray);
     $("#table-row tr:not(:first)").remove();
 }
 
@@ -121,7 +136,7 @@ function startSort(option) {
             case 'quick':
                 quickSort();
                 break
-                /* 여기서 부터!*/
+            /* 여기서 부터!*/
             case 'heap':
                 quickSort();
                 break
@@ -142,7 +157,7 @@ function startSort(option) {
                 break
             case 'Sleep':
                 quickSort();
-                break                
+                break
             case 'Gravity':
                 quickSort();
                 break
@@ -151,51 +166,129 @@ function startSort(option) {
         }
     }
 }
+class MyChart {
+    constructor(ctx, data) {
+        console.log("CONSTRUCTOR");
 
-function swap(arr, i, j) {
-    var temp = arr[i];
-    arr[i] = arr[j];
-    arr[j] = temp;
-}
+        this.data = data;
+        ctx.css("display", "block");
+        $('#startButton').css("display", "block");
 
-function record(index, time, job, a_index, a, b_index, b) {
-    timers.push(new timer(function() {
-        const table_row = document.getElementById('table-row');
-        const table = document.getElementById('table')
-        const new_row = table_row.insertRow();
-        const cell_length = table_row.rows[0].cells.length;
+        var color = [];
+        while (color.length < data.length) {
+            color.push('#333d4d');
+        }
+        this.color = color;
+
+        this.chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data,
+                datasets: [{
+                    label: '',
+                    data: data,
+                    backgroundColor: color,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            display: false
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: false
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false,
+                },
+            },
+        });
+
+        this.timers = [];
+        this.timeout = 0;
+        this.interval = 500;
+    }
+
+    swap(data, i, j) {
+        var temp = data[i];
+        data[i] = data[j];
+        data[j] = temp;
+        this.update(data.slice(0), this.color.slice(0))
+
+    }
+
+    update(data, color) {
+        var chart = this.chart;
+        timers.push(new timer(function() {
+            chart.data.datasets[0].data = data;
+            chart.data.datasets[0].backgroundColor = color;
+            chart.update();
+        }, this.timeout));
+        this.timeout += this.interval;
+    }
+
+    finish() {        
+        timers.push(new timer(function() {
+            console.log("Finish!")
+            $('#startButton').val("restart");
+        }, this.timeout));
+    }
+
+    paint(i) {
+        console.log("PAINT");
+        let colors = chart.data.datasets[0].backgroundColor;
+        colors[i] = color;
+        chart.data.datasets[0].backgroundColor = colors;
+    }
+
+    record(row, list) {
+        /*const table_row = $('#table-row');*/
+        const new_row = row.insertRow();
+        const cell_length = row.rows[0].cells.length;
         for (let i = 0; i < cell_length; i++) {
             const new_cell = new_row.insertCell(i);
-            let temp_html = ``;
-            switch (i) {
-                case 0:
-                    temp_html = `<td>` + index + `</td>`;
-                    break;
-                case 1:
-                    temp_html = `<td>` + time + `</td>`;
-                    break;
-                case 2:
-                    temp_html = `<td>` + job + `</td>`;
-                    break;
-                case 3:
-                    temp_html = `<td>` + a_index + `</td>`;
-                    break;
-                case 4:
-                    temp_html = `<td>` + a + `</td>`;
-                    break;
-                case 5:
-                    temp_html = `<td>` + b_index + `</td>`;
-                    break;
-                case 6:
-                    temp_html = `<td>` + b + `</td>`;
-                    break;
-            }
+            let temp_html = `<td>` + list[i] + `</td>`;
             new_cell.insertAdjacentHTML('afterbegin', temp_html);
-            /*            table.scrollTop = table.scrollHeight;*/
         }
-    }, timeout));
-
+    }
 }
+
+function bubbleSort() {
+    var data = myChart.data;
+    recordIndex = 0;
+    console.log(data);
+
+    for (var i = 0; i < data.length - 1; i++) {
+        for (var j = 0; j < (data.length - i) - 1; j++) {
+            /*            chart.record($('#table-row'), [recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1]]);*/
+            if (data[j] > data[j + 1]) {
+                /*                chart.record($('#table-row'), [recordIndex++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1]]);*/
+                myChart.swap(data, j, j + 1);
+            }
+        }
+    }
+    
+    myChart.finish();
+}
+
+
+
 
 function chartSwap(data, colors, i, j) {
     baseColor = colors[i]
@@ -240,217 +333,5 @@ function updateChart(data, colors) {
     }, timeout));
 }
 
-function drawChart(datas, colors) {
-    if (myChart != undefined || myChart != null) {
-        myChart.destroy();
-    }
-
-    config = {
-        type: 'bar',
-        data: {
-            labels: datas,
-            datasets: [{
-                label: '',
-                data: datas,
-                backgroundColor: colors,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    scaleLabel: {
-                        display: false
-                    },
-                    ticks: {
-                        suggestedMin: 0,
-                        display: false // it should work
-                    }
-                }],
-                xAxes: [{
-                    scaleLabel: {
-                        display: false
-                    },
-                    ticks: {
-                        display: false // it should work
-                    }
-                }],
-            },
-            legend: {
-                display: false
-            },
-            tooltips: {
-                enabled: false,
-            },
-            animation: false,
-        },
-    }
-    ctx = document.getElementById('myChart');
-    myChart = new Chart(ctx, config);
-
-    ctx.style.display = "block"
-    document.getElementById('startButton').style.display = "block"
-}
-
 /* ______________________________Sorting Algoriths based JS__________________________________________________ */
 
-
-function bubbleSort() {
-    let data = myChart.data.datasets[0].data;
-    let colors = myChart.data.datasets[0].backgroundColor;
-    timeout = 0;
-    recordIndex = 0;
-
-    for (var i = 0; i < data.length - 1; i++) {
-        for (var j = 0; j < (data.length - i) - 1; j++) {
-            record(recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], j + 1, data[j + 1]);
-            if (data[j] > data[j + 1]) {
-                record(recordIndex++, new Date().getTime() - now, "Swap", j, data[j], j + 1, data[j + 1]);
-                chartSwap(data, colors, j, j + 1);
-            }
-        }
-    }
-}
-
-function selectionSort() {
-    let data = myChart.data.datasets[0].data;
-    let colors = myChart.data.datasets[0].backgroundColor;
-    timeout = 0;
-    var least, least_j;
-    recordIndex = 0;
-
-    for (var i = 0; i < data.length - 1; i++) {
-        least = data[i];
-        least_j = i;
-        for (var j = i + 1; j < data.length; j++) {
-            record(recordIndex++, new Date().getTime() - now, "Comparison", j, data[j], least_j, least);
-
-            if (data[j] < least) {
-                record(recordIndex++, new Date().getTime() - now, "New Least", least_j, data[j], "", "");
-                least = data[j];
-                least_j = j;
-            }
-        }
-        if (least_j != i) {
-            record(recordIndex++, new Date().getTime() - now, "Swap Least", i, data[i], least_j, data[least_j]);
-            chartSwap(data, colors, i, least_j);
-        }
-    }
-}
-
-function insertionSort() {
-    let data = myChart.data.datasets[0].data;
-    let colors = myChart.data.datasets[0].backgroundColor;
-    timeout = 0;
-    recordIndex = 0;
-    var target;
-
-    for (var i = 0; i < data.length; i++) {
-
-        record(recordIndex++, new Date().getTime() - now, "New Target", i, data[i], "", "");
-        target = i;
-        for (var j = i - 1; j >= 0; j--) {
-
-            record(recordIndex++, new Date().getTime() - now, "Comparison", target, data[target], j, data[j]);
-            if (data[target] < data[j]) {
-
-                record(recordIndex++, new Date().getTime() - now, "Swap Target", target, data[target], j, data[j]);
-                chartSwap(data, colors, target--, j);
-            } else {
-                break;
-            }
-        }
-    }
-}
-
-
-function mergeSort() {
-    let data = myChart.data.datasets[0].data;
-    let colors = myChart.data.datasets[0].backgroundColor;
-    timeout = 0;
-    recordIndex = 0;
-    mergeSort_divide(data, colors, 0, data.length - 1);
-}
-function mergeSort_divide(data, colors, min, max) {
-    if (max - min == 0) return;
-    else if (max - min == 1) {
-        if (data[min] > data[max]) chartSwap(data, colors, min, max);
-    }
-    else {
-        var mid = Math.floor((min + max) / 2);
-        record(recordIndex++, new Date().getTime() - now, "Divide", "[ " + min + " - " + mid + " ]", "[ " + data.slice(min, mid + 1) + " ]", "[ " + (mid) + " - " + max + " ]", "[ " + data.slice(mid + 1, max + 1) + " ]");
-        mergeSort_divide(data, colors, min, mid);
-        mergeSort_divide(data, colors, mid + 1, max);
-        mergeSort_merge(data, colors, min, max, mid);
-        record(recordIndex++, new Date().getTime() - now, "Merge", "[ " + min + " - " + mid + " ]", "[ " + data.slice(min, mid + 1) + " ]", "[ " + (mid) + " - " + max + " ]", "[ " + data.slice(mid + 1, max + 1) + " ]");
-    }
-}
-function mergeSort_merge(data, colors, min, max, mid) {
-    chartGroup(data, colors, min, max, '#81c147');
-    var i = min;
-    while (i <= mid) {
-        if (data[i] > data[mid + 1]) {
-            record(recordIndex++, new Date().getTime() - now, "Swap", i, data[i], mid + 1, data[mid + 1]);
-            chartSwap(data, colors, i, mid + 1);
-            for (var j = mid + 1; j < max; j++) {
-                if (data[j] > data[j + 1]) {
-                    record(recordIndex++, new Date().getTime() - now, "Swap(PUSH)", j, data[j], j + 1, data[j + 1]);
-                    chartSwap(data, colors, j, j + 1);
-                }
-            }
-        }
-        i++;
-    }
-    chartGroup(data, colors, min, max, '#007bff');
-}
-
-
-function quickSort() {
-    let data = myChart.data.datasets[0].data;
-    let colors = myChart.data.datasets[0].backgroundColor;
-    timeout = 0;
-    recordIndex = 0;
-
-    quickSort_pivot(data, colors, 0, data.length - 1);
-}
-function quickSort_pivot(data, colors, min, max) {
-    if (min < max) {
-        chartGroup(data, colors, min, max, '#81c147');
-        record(recordIndex++, new Date().getTime() - now, "Partition", min, data[min], max, data[max]);
-
-        var pivot = quickSort_partition(data, colors, min, max);
-
-        chartGroup(data, colors, min, max, '#81c147');
-        chartHighright(data, colors, pivot, '#FF6347');
-        record(recordIndex++, new Date().getTime() - now, "Pivot", pivot, data[pivot], "", "");
-        
-        quickSort_pivot(data, colors, min, pivot);
-        quickSort_pivot(data, colors, pivot + 1, max);
-
-        chartGroup(data, colors, min, max, '#007bff');
-        chartHighright(data, colors, pivot, '#007bff');
-    }
-    return;
-}
-function quickSort_partition(data, colors, min, max) {
-    var pivot = data[Math.floor((min + max) / 2)]; // 부분리스트의 중간 요소를 피벗으로 설정
-
-    while (true) {
-        while (data[min] < pivot) min++;
-        while (data[max] > pivot && min <= max) max--;
-        if (min >= max) return max;
-
-        record(recordIndex++, new Date().getTime() - now, "Swap", min, data[min], max, data[max]);
-        chartSwap(data, colors, min, max);
-    }
-
-}
-
-function disableF5(e) {
-    if ((e.which || e.keyCode) == 116) {
-        e.preventDefault();
-        contentsChange(currentPage);
-    }
-};
-$(document).bind("keydown", disableF5);
-$(document).on("keydown", disableF5);

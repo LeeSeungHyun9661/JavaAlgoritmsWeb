@@ -1,9 +1,10 @@
-var chart, config, timers = [], recordIndex, timeout, interval = 50, now;
+var now;
 
 var firstArray, option, group;
 
 var currentPage;/* 현재 페이지 값 저장하는 변수 */
 
+var myBarChart, myTreeChart; /* */
 /* 새로고침 기능 대체 */
 function disableF5(e) {
     if ((e.which || e.keyCode) == 116) {
@@ -44,10 +45,17 @@ function contentsChange(page) {
     console.log(this.group);
     console.log(this.option);
 
+
+
     $('#dashboard').fadeOut(200, function() {
         window.scrollTo(0, 0);
         $(this).load(page);
         $(this).fadeIn(200, function() {
+            if (group == "SortingAlgoritms") {
+                if (option != 'SortingBasic') {
+                    generateArray();
+                }
+            }
         });
     });
 }
@@ -63,10 +71,11 @@ function generateArray() {
     /* 값 범위가 너무 작으면 재생성 요청 */
     if ((max - min + 1) * 0.7 < size) { alert("Make Number range wider!"); return; }
     /* 값을 넣지 않은 상태일 경우 디폴트값 지정*/
-    if (size == 0) size = 10; min = 1; max = 20;
+    if (size == 0) size = 50; min = 1; max = 100;
     /* 난수 배열 생성 */
     while (set.size < size) set.add(Math.floor(Math.random() * (max - min + 1)) + min);
-
+    /* 현재 값들에 대한 초기값 저장*/
+    firstArray = Array.from(set);
 
     /* 배열 값들에 대한 직접나열 */
     $("#array-list").empty();
@@ -75,86 +84,53 @@ function generateArray() {
         dom.appendTo($("#array-list"));
     }
 
-    /* 현재 값들에 대한 초기값 저장*/
-    firstArray = Array.from(set);
-    myChart = new MyChart($('#myChart'), [...firstArray]);
+    if ($('#barChart').length) {
+        if (myBarChart) {
+            myBarChart.reset();
+        }
+        if (currentJob) {
+            $('#BarSortingBtn').attr("onclick", currentJob);
+        }
+
+        myBarChart = new BarChart($('#barChart'), [...firstArray]);
+    }
+
+    if ($('#treeChart').length) {
+        myTreeChart = new TreeChart('chartdiv', []);
+    }
+
     $("#table-row tr:not(:first)").remove();
 }
 
-/* 입력값에 따른 배열 시작 */
-function startSort() {
-    $('#startButton').val("STOP");
-    $('#startButton').attr("onClick", 'stopSort()');
 
-    now = new Date().getTime();
-    switch (this.option) {
-        case 'BubbleSort':
-            bubbleSort();
-            break
-        case 'SelectionSort':
-            selectionSort();
-            break
-        case 'InsertionSort':
-            insertionSort();
-            break
-        case 'merge':
-            mergeSort();
-            break
-        case 'quick':
-            quickSort();
-            break
-        case 'heap':
-            quickSort();
-            break
-        case 'Tree':
-            quickSort();
-            break
-        case 'Tim':
-            quickSort();
-            break
-        case 'Intro':
-            quickSort();
-            break
-        case 'Radix':
-            quickSort();
-            break
-        case 'Shell':
-            quickSort();
-            break
-        case 'Sleep':
-            quickSort();
-            break
-        case 'Gravity':
-            quickSort();
-            break
-        default:
-            break
+var currentJob = null;
+
+function bar_pause() {
+    if (myBarChart) {
+        if (currentJob == null) {
+            currentJob = $('#BarSortingBtn').attr('onclick');
+        }
+        myBarChart.stop();
+        $('#BarSortingBtn').attr("onclick", "bar_resume()");
     }
 }
 
-function stopSort() {
-    $('#startButton').val("RESUME");
-    myChart.stop();
-    $('#startButton').attr("onClick", 'resumeSort()');
+function bar_reset() {
+    if (myBarChart) {
+        myBarChart.reset();
+        console.log(currentJob);
+        $('#BarSortingBtn').attr("onclick", currentJob);
+    }
 }
 
-function resetSort() {
-    $('#startButton').val("START");
-    myChart.reset();
-    $('#startButton').attr("onClick", "startSort()");
+function bar_resume() {
+    if (myBarChart) {
+        myBarChart.resume();
+    }
 }
 
-function resumeSort() {
-    $('#startButton').val("STOP");
-    myChart.resume();
-    $('#startButton').attr("onClick", 'stopSort()');
-}
-
-class MyChart {
+class BarChart {
     constructor(ctx, data) {
-        ctx.css("display", "block");
-        $('#startButton').css("display", "block");
-
         var color = [];
         while (color.length < data.length) {
             color.push('#333d4d');
@@ -199,6 +175,7 @@ class MyChart {
                     enabled: false,
                 },
                 animation: false,
+                events: [],
             },
         });
         this.timers = [];
@@ -210,37 +187,28 @@ class MyChart {
         var temp = data[i];
         data[i] = data[j];
         data[j] = temp;
-        /*      this.highLight([i, j], '#FFB399');*/
         this.update([...data]);
     }
 
     update(data) {
         this.timeout += this.interval;
         var chart = this.chart;
-        timers.push(new timer(function() {
+        this.timers.push(new timer(function() {
             chart.data.datasets[0].data = data;
             chart.update();
         }, this.timeout));
     }
 
-    finish() {
-        timers.push(new timer(function() {
-            $('#startButton').val("RESET");
-            $('#startButton').attr("onClick", 'resetSort()');
-            this.timers = [];
-        }, this.timeout));
-    }
-
     stop() {
-        for (var i = 0; i < timers.length; i++) {
-            timers[i].pause();
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
         }
 
     }
 
     resume() {
-        for (var i = 0; i < timers.length; i++) {
-            timers[i].resume();
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].resume();
         }
     }
 
@@ -248,6 +216,11 @@ class MyChart {
         this.chart.data.datasets[0].data = [...firstArray];
         this.timeout = 0;
         this.chart.update();
+
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
+        }
+        this.timers = [];
     }
 
 
@@ -255,14 +228,14 @@ class MyChart {
         let chart = this.chart;
         let BaseColor = [...chart.data.datasets[0].backgroundColor];
 
-        timers.push(new timer(function() {
+        this.timers.push(new timer(function() {
             for (var i = 0; i < list.length; i++) {
                 chart.data.datasets[0].backgroundColor[list[i]] = colorCode;
             }
             chart.update();
         }, this.timeout + (this.interval / 3)));
 
-        timers.push(new timer(function() {
+        this.timers.push(new timer(function() {
             chart.data.datasets[0].backgroundColor = BaseColor;
             chart.update();
         }, this.timeout + this.interval + (this.interval / 3)));
@@ -279,25 +252,122 @@ class MyChart {
         }
     }
 }
+/*_________________________________________________________________________________________________________*/
+
+class TreeChart {
+    constructor(ctx, data) {
+        $('#' + ctx).css("display", "block");
+        this.root = am5.Root.new(ctx);
+
+        this.container = this.root.container.children.push(
+            am5.Container.new(this.root, {
+                width: am5.percent(100),
+                height: am5.percent(100),
+                layout: this.root.verticalLayout
+            })
+        );
+
+        this.series = this.container.children.push(
+            am5hierarchy.Tree.new(this.root, {
+                singleBranchOnly: false,
+                downDepth: 1,
+                initialDepth: 5,
+                topDepth: 0,
+                valueField: "value",
+                categoryField: "name",
+                childDataField: "children"
+            })
+        );
+
+        this.series.circles.template.setAll({
+            radius: 20
+        });
+
+        this.series.outerCircles.template.setAll({
+            radius: 20
+        });
+
+        this.series.nodes.template.setAll({
+            draggable: false,
+            toggleKey: "none",
+            cursorOverStyle: "default"
+        });
+
+        this.series.labels.template.set("forceHidden", false);
+
+        this.series.appear(0, 0);
+
+        this.data = data;
+        this.series.data.setAll(this.data);
+        this.series.set("selectedDataItem", this.series.dataItems[0]);
+
+        this.timers = [];
+        this.timeout = 0;
+        this.interval = 100;
+    }
+
+    update(index, value) {
+        this.data[index] = value;
+        var dataset = this.getDataset(this.data);
+        this.series.data.setAll(dataset);
+    }
+
+    add(value) {
+        this.data.push(value);
+        var data = [...this.data];
+        var series = this.series;
+
+        this.timeout += this.interval;
+
+        this.timers.push(new timer(function() {
+
+            var arr = [];
+            for (let i = 1; i < data.length; i++) {
+                arr.push({ id: i, parentid: Math.floor(i / 2), name: data[i] });
+            }
+
+            var tree = [], mappedArr = {}, arrElem, mappedElem;
+            for (var i = 0, len = arr.length; i < len; i++) {
+                arrElem = arr[i];
+                mappedArr[arrElem.id] = arrElem;
+                mappedArr[arrElem.id]['children'] = [];
+            }
+
+            for (var id in mappedArr) {
+                if (mappedArr.hasOwnProperty(id)) {
+                    mappedElem = mappedArr[id];
+                    if (mappedElem.parentid) {
+                        mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
+                    }
+                    else {
+                        tree.push(mappedElem);
+                    }
+                }
+            }
+            series.data.setAll(tree);
+        }, this.timeout));
+    }
+}
 
 
 /* ______________________________Sorting Algoriths based JS__________________________________________________ */
 
-function bubbleSort() {
-    var data = [...myChart.chart.data.datasets[0].data];
+function bubbleSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
 
     for (var i = 0; i < data.length - 1; i++) {
         for (var j = 0; j < (data.length - i) - 1; j++) {
             if (data[j] > data[j + 1]) {
-                myChart.swap(data, j, j + 1);
+                myBarChart.swap(data, j, j + 1);
             }
         }
     }
-    myChart.finish();
 }
 
-function selectionSort() {
-    var data = [...myChart.chart.data.datasets[0].data];
+function selectionSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
     for (var i = 0; i < data.length - 1; i++) {
         var least = i;
         for (var j = i + 1; j < data.length; j++) {
@@ -305,23 +375,118 @@ function selectionSort() {
                 least = j;
         }
         if (least != i)
-            myChart.swap(data, i, least);
+            myBarChart.swap(data, i, least);
     }
-    myChart.finish();
 }
 
-function insertionSort() {
-    var data = [...myChart.chart.data.datasets[0].data];
+function insertionSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
     for (var i = 0; i < data.length; i++) {
-         var target = i;
+        var target = i;
         for (var j = i - 1; j >= 0; j--) {
             if (data[target] < data[j]) {
-                myChart.swap(data, target--, j);
+                myBarChart.swap(data, target--, j);
             } else {
                 break;
             }
         }
     }
-    myChart.finish();
 }
 
+function mergeSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    mergeSort_divide(data, 0, data.length - 1);
+}
+
+function mergeSort_divide(data, min, max) {
+    if (max - min == 0) return;
+    else if (max - min == 1) {
+        if (data[min] > data[max])
+            myBarChart.swap(data, min, max);
+    }
+    else {
+        var mid = Math.floor((min + max) / 2);
+        mergeSort_divide(data, min, mid);
+        mergeSort_divide(data, mid + 1, max);
+        mergeSort_merge(data, min, max, mid);
+    }
+}
+function mergeSort_merge(data, min, max, mid) {
+    var i = min;
+    while (i <= mid) {
+        if (data[i] > data[mid + 1]) {
+            myBarChart.swap(data, i, mid + 1);
+            for (var j = mid + 1; j < max; j++) {
+                if (data[j] > data[j + 1]) {
+                    myBarChart.swap(data, j, j + 1);
+                }
+            }
+        }
+        i++;
+    }
+}
+
+function quickSort_bar() {
+    $('#startButton').val("STOP");
+    $('#startButton').attr("onClick", 'stopSort()');
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    quickSort_pivot(data, 0, data.length - 1);
+}
+function quickSort_pivot(data, min, max) {
+    if (min < max) {
+        var pivot = quickSort_partition(data, min, max);
+        quickSort_pivot(data, min, pivot);
+        quickSort_pivot(data, pivot + 1, max);
+    }
+    return;
+}
+function quickSort_partition(data, min, max) {
+    var pivot = data[Math.floor((min + max) / 2)]; // 부분리스트의 중간 요소를 피벗으로 설정
+    while (true) {
+        while (data[min] < pivot) min++;
+        while (data[max] > pivot && min <= max) max--;
+        if (min >= max) return max;
+        myBarChart.swap(data, min, max);
+    }
+
+}
+
+function heapSort_bar() {
+    $('#startButton').val("STOP");
+    $('#startButton').attr("onClick", 'stopSort()');
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+
+    for (let i = data.length - 1; i >= 0; i--) {
+        heapSort_heapify(data, i)
+        if (data[0] > data[i]) {
+            myBarChart.swap(data, 0, i);
+        }
+    }
+}
+
+function heapSort_heapify(data, i) {
+    let index = parseInt(i / 2) - 1;
+    while (index >= 0) {
+        const left = index * 2 + 1;
+        const right = index * 2 + 2;
+
+        if (data[left] >= data[right] && data[index] < data[left]) {
+            myBarChart.swap(data, index, left);
+        } else if (data[right] > data[left] && data[index] < data[right]) {
+            myBarChart.swap(data, index, right);
+        }
+        index--;
+    }
+
+}
+
+function heapSort_tree() {
+    var mytreechart = new myTreeChart('chartdiv', []);
+    for (let i = data.length - 1; i >= 0; i--) {
+        mytreechart.add(data[i]);
+    }
+}

@@ -9,6 +9,9 @@
 <!-- Bootstrap - CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
+<!-- Bootstrap Icons - CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <!-- Charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
@@ -17,6 +20,12 @@
 
 <!-- Color Mod -->
 <script src="../resources/js/color-mode.js"></script>
+
+<!-- amChart -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
 
 <!-- Favicons : 웹 아이콘 설정 -->
 <link rel="apple-touch-icon" href="../resources/icon/java-touch-icon.png" sizes="180x180">
@@ -149,7 +158,7 @@
 
 	<!-- Header DOM -->
 	<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#" onclick="contentsChange('MainBoard.jsp')">Java Algorithms</a>
+		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#" onclick="contentsChange('Front/MainBoard.jsp')">Java Algorithms</a>
 
 		<ul class="navbar-nav flex-row d-md-none">
 			<li class="nav-item text-nowrap">
@@ -244,57 +253,57 @@
 												</a>
 											</li>
 											<li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TreeSort.jsp')">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TreeSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#puzzle"></use></svg>
 													Tree Sort
 												</a>
 											</li>
 											<li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TimSort.jsp')">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/TimSort.jsp')">
 													<svg class="bi">
 														<use xlink:href="#puzzle"></use></svg>
 													Tim Sort
 												</a>
 											</li>
-                                            <li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/IntroSort.jsp')">
-                                                    <svg class="bi">
+											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/IntroSort.jsp')">
+													<svg class="bi">
                                                         <use xlink:href="#puzzle"></use></svg>
-                                                    Intro Sort
-                                                </a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/RadixSort.jsp')">
-                                                    <svg class="bi">
+													Intro Sort
+												</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/RadixSort.jsp')">
+													<svg class="bi">
                                                         <use xlink:href="#puzzle"></use></svg>
-                                                    Radix Sort
-                                                </a>
-                                            </li>
-                                            
-                                            <li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/ShellSort.jsp')">
-                                                    <svg class="bi">
+													Radix Sort
+												</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/ShellSort.jsp')">
+													<svg class="bi">
                                                         <use xlink:href="#puzzle"></use></svg>
-                                                    Shell Sort
-                                                </a>
-                                            </li>
-                                            
-                                            <li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SleepSort.jsp')">
-                                                    <svg class="bi">
+													Shell Sort
+												</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SleepSort.jsp')">
+													<svg class="bi">
                                                         <use xlink:href="#puzzle"></use></svg>
-                                                    Sleep Sort
-                                                </a>
-                                            </li>
-                                            
-                                            <li class="nav-item">
-                                                <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/HeapSort.jsp')">
-                                                    <svg class="bi">
+													Sleep Sort
+												</a>
+											</li>
+
+											<li class="nav-item">
+												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/GravitySort.jsp')">
+													<svg class="bi">
                                                         <use xlink:href="#puzzle"></use></svg>
-                                                    Gravity Sort
-                                                </a>
-                                            </li>
+													Gravity Sort
+												</a>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -368,7 +377,7 @@
 
 			<!-- MainBoard -->
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="dashboard">
-				<jsp:include page="MainBoard.jsp" flush="true" />
+				<jsp:include page="Front/MainBoard.jsp" flush="true" />
 			</main>
 		</div>
 	</div>

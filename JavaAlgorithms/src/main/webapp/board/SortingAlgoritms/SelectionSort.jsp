@@ -73,11 +73,29 @@
     </svg>
     </a>
 </div>
+
 <div class="collapse show" id="collapse-chart">
-    <!-- Chart -->
+    <!-- Bar Chart -->
     <div class="d-flex flex-column justify-content-center">
-        <canvas class="my-4" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-        <input class="btn btn-primary" id="startButton" type="button" onclick="startSort()" value="Start" style="display: none">
+        <canvas class="my-4" id="barChart" style="display: block; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
+        <div class="row mx-auto p-2">
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="selectionSort_bar()">
+                    <i class="bi bi-play-fill"></i>
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary"  id="pauseBtn" onclick="bar_pause()">
+                    <i class="bi bi-pause-fill"></i>
+                </button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" id="resetBtn" onclick="bar_reset()">
+                    <i class="bi bi-arrow-clockwise" ></i>
+                </button>
+
+            </div>
+        </div>
     </div>
 </div>
 

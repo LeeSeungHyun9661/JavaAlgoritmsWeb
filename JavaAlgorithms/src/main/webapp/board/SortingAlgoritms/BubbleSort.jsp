@@ -71,10 +71,27 @@
 	</a>
 </div>
 <div class="collapse show" id="collapse-chart">
-	<!-- Chart -->
+	<!-- Bar Chart -->
 	<div class="d-flex flex-column justify-content-center">
-		<canvas class="my-4" id="myChart" style="display: none; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-		<input class="btn btn-primary" id="startButton" type="button" onclick="startSort()" value="Start" style="display: none">
+		<canvas class="my-4" id="barChart" style="display: block; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
+		<div class="row mx-auto p-2">
+			<div class="col">
+				<button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="bubbleSort_bar()">
+					<i class="bi bi-play-fill"></i>
+				</button>
+			</div>
+			<div class="col">
+				<button type="button" class="btn btn-primary"  id="pauseBtn" onclick="bar_pause()">
+					<i class="bi bi-pause-fill"></i>
+				</button>
+			</div>
+			<div class="col">
+				<button type="button" class="btn btn-primary" id="resetBtn" onclick="bar_reset()">
+					<i class="bi bi-arrow-clockwise" ></i>
+				</button>
+
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -92,7 +109,7 @@
 <div class="collapse show" id="collapse-setting">
 	<div class="card card-body">
 		<jsp:include page="ArrayMaker.jsp" flush="true" />
-		
+
 		<input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
 		<h2>
 			Process Record
@@ -101,7 +118,7 @@
 		      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
 		      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
 		      </svg>
-		  </a>
+			</a>
 		</h2>
 		<div class="collapse show" id="collapse-process">
 			<div class="card card-body">

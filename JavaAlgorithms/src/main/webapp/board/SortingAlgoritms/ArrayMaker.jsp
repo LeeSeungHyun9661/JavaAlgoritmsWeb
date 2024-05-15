@@ -20,13 +20,5 @@
 				<span id="passwordHelpInline" class="form-text"> Array size is under 70% of number range!</span>
 			</div>
 		</div>
-	</form>
-
-	<div class="card card-body">
-		<div id="array-list">
-		</div>
-	</div>
-
-	<!-- Array List -->
-	
+	</form>	
 </div>

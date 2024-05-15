@@ -1,10 +1,10 @@
 var now;
-
 var firstArray, option, group;
+var currentPage, currentJob;/* 현재 페이지 값 저장하는 변수 */
+var myBarChart, myTreeChart, myTreeList;
 
-var currentPage;/* 현재 페이지 값 저장하는 변수 */
+const chartColor = am5.color(0x6771dc);
 
-var myBarChart, myTreeChart; /* */
 /* 새로고침 기능 대체 */
 function disableF5(e) {
     if ((e.which || e.keyCode) == 116) {
@@ -17,8 +17,10 @@ $(document).on("keydown", disableF5);
 
 
 /* 그래프 동기화를 위한 타이머 함수*/
-var timer = function(callback, delay) {
+var timer = function(callback, delay, data) {
     var timerId, start, remaining = delay;
+    this.data = data;
+
     this.pause = function() {
         window.clearTimeout(timerId);
         timerId = null;
@@ -42,10 +44,9 @@ function contentsChange(page) {
     this.currentPage = page;
     this.group = page.split('/')[0];
     this.option = page.split('/')[1].split('.')[0];
+
     console.log(this.group);
     console.log(this.option);
-
-
 
     $('#dashboard').fadeOut(200, function() {
         window.scrollTo(0, 0);
@@ -66,6 +67,8 @@ function generateArray() {
     var size = Number($("#size").val());
     var min = Number($("#min").val());
     var max = Number($("#max").val());
+
+    currentJob = $('#BarSortingBtn').attr('onclick');
 
     let set = new Set();
     /* 값 범위가 너무 작으면 재생성 요청 */
@@ -91,32 +94,37 @@ function generateArray() {
         if (currentJob) {
             $('#BarSortingBtn').attr("onclick", currentJob);
         }
-
         myBarChart = new BarChart($('#barChart'), [...firstArray]);
     }
 
     if ($('#treeChart').length) {
-        myTreeChart = new TreeChart('chartdiv', []);
+
+        myTreeChart = new TreeChart('treeChart', []);
+        myTreeList = $("#treeList");
+
+        $("#treeList").empty();
+        for (let num of firstArray) {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTreeList);
+        }
     }
 
     $("#table-row tr:not(:first)").remove();
 }
 
-
-var currentJob = null;
-
 function bar_pause() {
     if (myBarChart) {
-        if (currentJob == null) {
-            currentJob = $('#BarSortingBtn').attr('onclick');
+        if (myBarChart.running) {
+            myBarChart.running = false;
+            myBarChart.stop();
+            $('#BarSortingBtn').attr("onclick", "bar_resume()");
         }
-        myBarChart.stop();
-        $('#BarSortingBtn').attr("onclick", "bar_resume()");
     }
 }
 
 function bar_reset() {
     if (myBarChart) {
+        myBarChart.running = false;
         myBarChart.reset();
         console.log(currentJob);
         $('#BarSortingBtn').attr("onclick", currentJob);
@@ -124,10 +132,15 @@ function bar_reset() {
 }
 
 function bar_resume() {
-    if (myBarChart) {
-        myBarChart.resume();
+    if (!myBarChart.running) {
+        myBarChart.running = true;
+        if (myBarChart) {
+            myBarChart.resume();
+        }
     }
+
 }
+/*__________________________________________Bar Chart______________________________________________________*/
 
 class BarChart {
     constructor(ctx, data) {
@@ -181,6 +194,8 @@ class BarChart {
         this.timers = [];
         this.timeout = 0;
         this.interval = 100;
+
+        this.running = false;
     }
 
     swap(data, i, j) {
@@ -252,10 +267,10 @@ class BarChart {
         }
     }
 }
-/*_________________________________________________________________________________________________________*/
+/*__________________________________________Tree Chart_____________________________________________________*/
 
 class TreeChart {
-    constructor(ctx, data) {
+    constructor(ctx) {
         $('#' + ctx).css("display", "block");
         this.root = am5.Root.new(ctx);
 
@@ -271,20 +286,30 @@ class TreeChart {
             am5hierarchy.Tree.new(this.root, {
                 singleBranchOnly: false,
                 downDepth: 1,
-                initialDepth: 5,
+                initialDepth: 10,
                 topDepth: 0,
                 valueField: "value",
                 categoryField: "name",
-                childDataField: "children"
+                childDataField: "children",
+                fillField: "fill",
+                paddingBottom: 40,
+                paddingTop: 60
             })
         );
 
+
         this.series.circles.template.setAll({
-            radius: 20
+            radius: 15,
         });
 
         this.series.outerCircles.template.setAll({
-            radius: 20
+            radius: 0
+        });
+
+        this.series.links.template.setAll({
+            strokeWidth: 1,
+            strokeOpacity: 0.5,
+            strokeWidth: 2
         });
 
         this.series.nodes.template.setAll({
@@ -294,11 +319,9 @@ class TreeChart {
         });
 
         this.series.labels.template.set("forceHidden", false);
+        this.series.nodes.template.set("tooltipText", false);
 
-        this.series.appear(0, 0);
-
-        this.data = data;
-        this.series.data.setAll(this.data);
+        this.series.data.setAll([]);
         this.series.set("selectedDataItem", this.series.dataItems[0]);
 
         this.timers = [];
@@ -306,45 +329,61 @@ class TreeChart {
         this.interval = 100;
     }
 
-    update(index, value) {
-        this.data[index] = value;
-        var dataset = this.getDataset(this.data);
-        this.series.data.setAll(dataset);
-    }
+    binaryAdd(tree, index, data) {
+        var data = { id: index, name: data, fill: "#333d4d" };
 
-    add(value) {
-        this.data.push(value);
-        var data = [...this.data];
-        var series = this.series;
-
-        this.timeout += this.interval;
-
-        this.timers.push(new timer(function() {
-
-            var arr = [];
-            for (let i = 1; i < data.length; i++) {
-                arr.push({ id: i, parentid: Math.floor(i / 2), name: data[i] });
-            }
-
-            var tree = [], mappedArr = {}, arrElem, mappedElem;
-            for (var i = 0, len = arr.length; i < len; i++) {
-                arrElem = arr[i];
-                mappedArr[arrElem.id] = arrElem;
-                mappedArr[arrElem.id]['children'] = [];
-            }
-
-            for (var id in mappedArr) {
-                if (mappedArr.hasOwnProperty(id)) {
-                    mappedElem = mappedArr[id];
-                    if (mappedElem.parentid) {
-                        mappedArr[mappedElem['parentid']]['children'].push(mappedElem);
-                    }
-                    else {
-                        tree.push(mappedElem);
-                    }
+        if (tree.length == 0) {
+            tree.push(data);
+        } else {
+            var route = [];
+            while (index > 0) {
+                if (index % 2 == 0) {
+                    index = Math.floor((index - 2) / 2);
+                    route.push(true);
+                }
+                else {
+                    index = Math.floor((index - 1) / 2);
+                    route.push(false);
                 }
             }
+            var temp = tree[0];
+            var cnt = route.length;
+            while (--cnt > 0) {
+                if (route[cnt]) {
+                    temp = temp.children[1];
+                } else {
+                    temp = temp.children[0];
+                }
+            }
+            if (!route[cnt]) {
+                temp.children = [];
+            }
+            temp.children.push(data);
+        }
+        this.update(JSON.parse(JSON.stringify(tree)));
+        this.removeListChild();
+    }
+
+    update(tree) {
+        this.timeout += this.interval;
+        var series = this.series;
+        this.timers.push(new timer(function() {
+            console.log(JSON.stringify(tree));
             series.data.setAll(tree);
+        }, this.timeout));
+    }
+
+
+    removeListChild() {
+        this.timers.push(new timer(function() {
+            myTreeList.find('span:first').remove();
+        }, this.timeout));
+    }
+
+    addListChild(num) {
+        this.timers.push(new timer(function() {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTreeList);
         }, this.timeout));
     }
 }
@@ -355,6 +394,7 @@ class TreeChart {
 function bubbleSort_bar() {
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
 
     for (var i = 0; i < data.length - 1; i++) {
         for (var j = 0; j < (data.length - i) - 1; j++) {
@@ -368,6 +408,8 @@ function bubbleSort_bar() {
 function selectionSort_bar() {
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
     for (var i = 0; i < data.length - 1; i++) {
         var least = i;
         for (var j = i + 1; j < data.length; j++) {
@@ -382,6 +424,8 @@ function selectionSort_bar() {
 function insertionSort_bar() {
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
     for (var i = 0; i < data.length; i++) {
         var target = i;
         for (var j = i - 1; j >= 0; j--) {
@@ -397,6 +441,8 @@ function insertionSort_bar() {
 function mergeSort_bar() {
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
     mergeSort_divide(data, 0, data.length - 1);
 }
 
@@ -429,10 +475,10 @@ function mergeSort_merge(data, min, max, mid) {
 }
 
 function quickSort_bar() {
-    $('#startButton').val("STOP");
-    $('#startButton').attr("onClick", 'stopSort()');
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
     quickSort_pivot(data, 0, data.length - 1);
 }
 function quickSort_pivot(data, min, max) {
@@ -455,20 +501,18 @@ function quickSort_partition(data, min, max) {
 }
 
 function heapSort_bar() {
-    $('#startButton').val("STOP");
-    $('#startButton').attr("onClick", 'stopSort()');
     now = new Date().getTime();
     var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
 
     for (let i = data.length - 1; i >= 0; i--) {
-        heapSort_heapify(data, i)
+        heapSort_heapify_bar(data, i)
         if (data[0] > data[i]) {
             myBarChart.swap(data, 0, i);
         }
     }
 }
-
-function heapSort_heapify(data, i) {
+function heapSort_heapify_bar(data, i) {
     let index = parseInt(i / 2) - 1;
     while (index >= 0) {
         const left = index * 2 + 1;
@@ -481,12 +525,128 @@ function heapSort_heapify(data, i) {
         }
         index--;
     }
-
 }
 
 function heapSort_tree() {
-    var mytreechart = new myTreeChart('chartdiv', []);
-    for (let i = data.length - 1; i >= 0; i--) {
-        mytreechart.add(data[i]);
+    now = new Date().getTime();
+    var data = [...firstArray];
+
+    var tree = [];
+    for (var i = 0; i < data.length; i++) {
+        myTreeChart.binaryAdd(tree, i, data[i]);
     }
+}
+
+function heapSort_heapify_tree(data, i) {
+    let index = parseInt(i / 2) - 1;
+    while (index >= 0) {
+        const left = index * 2 + 1;
+        const right = index * 2 + 2;
+
+        if (data[left] >= data[right] && data[index] < data[left]) {
+            myBarChart.swap(data, index, left);
+        } else if (data[right] > data[left] && data[index] < data[right]) {
+            myBarChart.swap(data, index, right);
+        }
+        index--;
+    }
+}
+
+
+
+function heapSort_heapify_tree(data, i) {
+    let index = parseInt(i / 2) - 1;
+    while (index >= 0) {
+        const left = index * 2 + 1;
+        const right = index * 2 + 2;
+
+        if (data[left] >= data[right] && data[index] < data[left]) {
+            myTreeChart.swap(data, index, left);
+        } else if (data[right] > data[left] && data[index] < data[right]) {
+            myTreeChart.swap(data, index, right);
+        }
+        index--;
+    }
+}
+
+
+function treeSort_tree() {
+    now = new Date().getTime();
+    var data = [...firstArray];
+
+    var dataset = [];
+    for (let i = 0; i < data.length; i++) {
+        treeSort_insert(dataset, i, data[i]);
+        myTreeChart.update([...dataset]);
+    }
+}
+
+function treeSort_insert(dataset, index, value) {
+
+    if (dataset.length == 0) {
+        dataset.push(data);
+    } else {
+        var temp = dataset[0];
+        while (true) {
+            if (temp.hasOwnProperty('children')) {
+                if (temp.children.length == 1) {
+                    if (temp.name > value) {
+                        if (temp.children[0].name > value) {
+                            temp = temp.children[0];
+                        }
+                        else {
+                            temp.children.push(data);
+                            return;
+                        }
+                    } else {
+                        if (temp.children[0].name < value) {
+                            temp = temp.children[0];
+                        }
+                        else {
+                            temp.children.push(data);
+                            return;
+                        }
+                    }
+                } else {
+                    if (temp.name > value) {
+                        temp = temp.children[0];
+                    } else {
+                        temp = temp.children[1];
+                    }
+                }
+            } else {
+                temp.children = [data];
+                return;
+            }
+        }
+    }
+
+}
+
+function treeSort_insert2(dataset, index, value) {
+    var data = { id: index, name: value, children: [{}, {}] };
+
+    if (dataset.length == 0) {
+        dataset.push(data);
+    } else {
+        var temp = dataset[0];
+        while (true) {
+            if (temp.name > value) {
+                if (Object.keys(temp.children[0]).length === 0) {
+                    temp.children[0] = data;
+                    return;
+                } else {
+                    temp = temp.children[0];
+                }
+            } else {
+                if (Object.keys(temp.children[1]).length === 0) {
+                    temp.children[1] = data;
+                    return;
+                } else {
+                    temp = temp.children[1];
+                }
+            }
+        }
+    }
+
 }

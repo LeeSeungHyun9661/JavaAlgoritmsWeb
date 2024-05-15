@@ -99,7 +99,13 @@
 	<!-- Tree Chart -->
 	<div class="d-flex flex-column justify-content-center">
 		<!-- HTML -->
-		<div id="chartdiv" style="display: none; width: 100%; height: 200px;"></div>
+		<div id="treeChart" style="display: block; width: 100%; height: 500px;"></div>
+
+		<div class="card card-body">
+			<div id="treeList"></div>
+		</div>
+
+
 		<div class="row mx-auto p-2">
 			<div class="col">
 				<button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="heapSort_tree()">

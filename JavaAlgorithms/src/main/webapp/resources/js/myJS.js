@@ -1,4 +1,4 @@
-var now;
+var now, interval = 250;
 var firstArray, option, group;
 var currentPage, currentTreeJob, currentBarJob;/* 현재 페이지 값 저장하는 변수 */
 var myBarChart, myTreeChart, myTreeList;
@@ -37,7 +37,7 @@ var timer = function(callback, delay, data) {
         return 0;
     };
     this.resume();
-};
+}
 
 /* 정렬 알고리즘 - 페이지 변경에 따른 내부 내용 변경 */
 function contentsChange(page) {
@@ -99,7 +99,7 @@ function generateArray() {
     }
 
     if ($('#treeChart').length) {
-        if (myTreeChart) {
+        if (myTreeChart != undefined) {
             myTreeChart.reset();
         }
         if (currentBarJob) {
@@ -227,7 +227,6 @@ class BarChart {
         });
         this.timers = [];
         this.timeout = 0;
-        this.interval = 500;
 
         this.running = false;
     }
@@ -240,7 +239,7 @@ class BarChart {
     }
 
     update(data) {
-        this.timeout += this.interval;
+        this.timeout += interval;
         var chart = this.chart;
         this.timers.push(new timer(function() {
             chart.data.datasets[0].data = data;
@@ -327,13 +326,14 @@ class TreeChart {
                 childDataField: "children",
                 fillField: "fill",
                 paddingBottom: 40,
-                paddingTop: 60
+                paddingTop: 60,
             })
         );
 
 
         this.series.circles.template.setAll({
             radius: 15,
+            templateField: "circle"
         });
 
         this.series.outerCircles.template.setAll({
@@ -343,7 +343,7 @@ class TreeChart {
         this.series.links.template.setAll({
             strokeWidth: 1,
             strokeOpacity: 0.5,
-            strokeWidth: 2
+            templateField: "link"
         });
 
         this.series.nodes.template.setAll({
@@ -360,13 +360,11 @@ class TreeChart {
 
         this.timers = [];
         this.timeout = 0;
-        this.interval = 100;
-
         this.running = false;
     }
 
     update(tree) {
-        this.timeout += this.interval;
+        this.timeout += interval;
         var series = this.series;
         this.timers.push(new timer(function() {
             series.data.setAll(tree);
@@ -401,6 +399,25 @@ class TreeChart {
         }
 
         return value;
+    }
+
+    highLight(tree, value) {
+        var series = this.series;
+        var temp = tree[0];
+        while (true) {
+            if (temp.name == value) {
+                this.timers.push(new timer(function() {
+                    temp.fill = '#a52a2a';
+                    series.data.setAll(JSON.parse(JSON.stringify(tree)));
+                }, this.timeout));
+                this.timeout += interval;
+                return
+            } else if (temp.name > value) {
+                temp = temp.children[0];
+            } else {
+                temp = temp.children[1];
+            }
+        }
     }
 
 
@@ -598,14 +615,12 @@ function heapSort_tree() {
 
     for (var i = data.length - 1; i >= 0; i--) {
         heapSort_tree_pop(tree, i);
-
-        console.log("__________________HEAPIFY(" + i + ")________________________")
         heapSort_tree_heapify(tree, i);
     }
 }
 
-function heapSort_tree_add(tree, index, data) {
-    var data = { id: index, name: data, fill: "#333d4d" };
+function heapSort_tree_add(tree, index, value) {
+    var data = { id: index, name: value, fill: '#333d4d' };
     if (tree.length == 0) {
         tree.push(data);
     } else {
@@ -634,7 +649,6 @@ function heapSort_tree_add(tree, index, data) {
 }
 
 function heapSort_tree_pop(tree, index) {
-    console.log("__________________POP(" + tree[0].name + ")________________________")
     myTreeChart.addListChild(tree[0].name);
     if (index > 0) {
         tree[0].name = myTreeChart.pop(tree, index);
@@ -645,42 +659,26 @@ function heapSort_tree_pop(tree, index) {
 }
 
 
-/* 최대 힙으로 정렬하는 방법 */
 function heapSort_tree_heapify(tree) {
-    console.log("Heapify Start")
     var temp = tree[0]
-    /* 자식 노드가 있음 */
     while ('children' in temp) {
-        console.log("자식 노드가 있음")
-        /* 자식 노드가 1개 */
         if (temp.children.length == 1) {
-            console.log("길이 1")
-            /* 자식 노드가 더 크면 교환*/
             if (temp.children[0].name > temp.name) {
                 var value = temp.name;
                 temp.name = temp.children[0].name;
                 temp.children[0].name = value;
                 myTreeChart.update(JSON.parse(JSON.stringify(tree)));
-                /* 다음 자리로 넘어감 */
             }
             temp = temp.children[0]
-            /* 자식 노드가 2개 */
         } else {
-            console.log("길이 2")
             if (temp.name > temp.children[0].name && temp.name > temp.children[1].name) {
-                console.log("temp.name(" + temp.name + ") > temp.children[0].name(" + temp.children[0].name + ") & temp.children[1].name(" + temp.children[1].name + ")")
-                console.log("탈출")
                 break;
             } else {
 
                 var biggerChildren = temp.children[0].name > temp.children[1].name ? temp.children[0] : temp.children[1];
-                console.log("temp.name(" + temp.name + ") < biggerChildren(" + biggerChildren.name + ")")
-
-                console.log("교체")
                 var value = temp.name;
                 temp.name = biggerChildren.name;
                 biggerChildren.name = value;
-
                 myTreeChart.update(JSON.parse(JSON.stringify(tree)));
                 temp = biggerChildren;
             }
@@ -692,73 +690,36 @@ function heapSort_tree_heapify(tree) {
 function treeSort_tree() {
     now = new Date().getTime();
     var data = [...firstArray];
+    myTreeChart.running = true;
 
-    var dataset = [];
-    for (let i = 0; i < data.length; i++) {
-        treeSort_insert(dataset, i, data[i]);
-        myTreeChart.update([...dataset]);
+    var tree = [];
+    for (var i = 0; i < data.length; i++) {
+        treeSort_tree_add(tree, i, data[i]);
+        myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+        myTreeChart.removeListChild();
     }
+    treeSort_tree_pop(tree,tree[0]);
 }
 
-function treeSort_insert(dataset, index, value) {
-
-    if (dataset.length == 0) {
-        dataset.push(data);
+function treeSort_tree_add(tree, index, value) {
+    var data = { id: index, name: value, fill: '#333d4d' };
+    if (tree.length == 0) {
+        tree.push(data);
     } else {
-        var temp = dataset[0];
+        var temp = tree[0];
         while (true) {
-            if (temp.hasOwnProperty('children')) {
-                if (temp.children.length == 1) {
-                    if (temp.name > value) {
-                        if (temp.children[0].name > value) {
-                            temp = temp.children[0];
-                        }
-                        else {
-                            temp.children.push(data);
-                            return;
-                        }
-                    } else {
-                        if (temp.children[0].name < value) {
-                            temp = temp.children[0];
-                        }
-                        else {
-                            temp.children.push(data);
-                            return;
-                        }
-                    }
-                } else {
-                    if (temp.name > value) {
-                        temp = temp.children[0];
-                    } else {
-                        temp = temp.children[1];
-                    }
-                }
-            } else {
-                temp.children = [data];
-                return;
+            if (!temp.hasOwnProperty('children')) {
+                temp.children = [{ id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d'}, { id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d' }];
             }
-        }
-    }
-
-}
-
-function treeSort_insert2(dataset, index, value) {
-    var data = { id: index, name: value, children: [{}, {}] };
-
-    if (dataset.length == 0) {
-        dataset.push(data);
-    } else {
-        var temp = dataset[0];
-        while (true) {
             if (temp.name > value) {
-                if (Object.keys(temp.children[0]).length === 0) {
+                if (temp.children[0].id == null) {
                     temp.children[0] = data;
                     return;
                 } else {
                     temp = temp.children[0];
                 }
             } else {
-                if (Object.keys(temp.children[1]).length === 0) {
+                if (temp.children[1].id == null) {
                     temp.children[1] = data;
                     return;
                 } else {
@@ -767,5 +728,17 @@ function treeSort_insert2(dataset, index, value) {
             }
         }
     }
+}
 
+function treeSort_tree_pop(tree, node) {
+    if (node.id != null) {
+        if (node.hasOwnProperty('children')) {
+            treeSort_tree_pop(tree, node.children[0]);        }
+        myTreeChart.highLight(tree, node.name);
+        myTreeChart.addListChild(node.name);
+        
+        if (node.hasOwnProperty('children')) {
+            treeSort_tree_pop(tree, node.children[1]);
+        }
+    }
 }

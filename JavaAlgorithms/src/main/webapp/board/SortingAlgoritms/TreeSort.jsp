@@ -74,7 +74,7 @@
 	<!-- Tree Chart -->
 	<div class="d-flex flex-column justify-content-center">
 		<!-- HTML -->
-		<div id="treeChart" style="display: block; width: 100%; height: 300px;"></div>
+		<div id="treeChart" style="display: block; width: 100%; height: 500px;"></div>
 
 		<div class="card card-body">
 			<div id="treeList"></div>

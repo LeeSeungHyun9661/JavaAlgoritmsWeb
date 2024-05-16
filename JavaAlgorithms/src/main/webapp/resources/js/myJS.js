@@ -1,6 +1,6 @@
 var now;
 var firstArray, option, group;
-var currentPage, currentJob;/* 현재 페이지 값 저장하는 변수 */
+var currentPage, currentTreeJob, currentBarJob;/* 현재 페이지 값 저장하는 변수 */
 var myBarChart, myTreeChart, myTreeList;
 
 const chartColor = am5.color(0x6771dc);
@@ -68,7 +68,8 @@ function generateArray() {
     var min = Number($("#min").val());
     var max = Number($("#max").val());
 
-    currentJob = $('#BarSortingBtn').attr('onclick');
+    currentBarJob = $('#BarSortingBtn').attr('onclick');
+    currentTreeJob = $('#TreeSortingBtn').attr('onclick');
 
     let set = new Set();
     /* 값 범위가 너무 작으면 재생성 요청 */
@@ -91,18 +92,24 @@ function generateArray() {
         if (myBarChart) {
             myBarChart.reset();
         }
-        if (currentJob) {
-            $('#BarSortingBtn').attr("onclick", currentJob);
+        if (currentBarJob) {
+            $('#BarSortingBtn').attr("onclick", currentBarJob);
         }
         myBarChart = new BarChart($('#barChart'), [...firstArray]);
     }
 
     if ($('#treeChart').length) {
+        if (myTreeChart) {
+            myTreeChart.reset();
+        }
+        if (currentBarJob) {
+            $('#BarSortingBtn').attr("onclick", currentBarJob);
+        }
 
         myTreeChart = new TreeChart('treeChart', []);
         myTreeList = $("#treeList");
 
-        $("#treeList").empty();
+        myTreeList.empty();
         for (let num of firstArray) {
             var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
             dom.appendTo(myTreeList);
@@ -126,8 +133,7 @@ function bar_reset() {
     if (myBarChart) {
         myBarChart.running = false;
         myBarChart.reset();
-        console.log(currentJob);
-        $('#BarSortingBtn').attr("onclick", currentJob);
+        $('#BarSortingBtn').attr("onclick", currentBarJob);
     }
 }
 
@@ -136,6 +142,34 @@ function bar_resume() {
         myBarChart.running = true;
         if (myBarChart) {
             myBarChart.resume();
+        }
+    }
+
+}
+
+function tree_pause() {
+    if (myTreeChart) {
+        if (myTreeChart.running) {
+            myTreeChart.running = false;
+            myTreeChart.stop();
+            $('#TreeSortingBtn').attr("onclick", "tree_resume()");
+        }
+    }
+}
+
+function tree_reset() {
+    if (myTreeChart) {
+        myTreeChart.running = false;
+        myTreeChart.reset();
+        $('#TreeSortingBtn').attr("onclick", currentTreeJob);
+    }
+}
+
+function tree_resume() {
+    if (!myTreeChart.running) {
+        myTreeChart.running = true;
+        if (myTreeChart) {
+            myTreeChart.resume();
         }
     }
 
@@ -193,7 +227,7 @@ class BarChart {
         });
         this.timers = [];
         this.timeout = 0;
-        this.interval = 100;
+        this.interval = 500;
 
         this.running = false;
     }
@@ -327,50 +361,46 @@ class TreeChart {
         this.timers = [];
         this.timeout = 0;
         this.interval = 100;
-    }
 
-    binaryAdd(tree, index, data) {
-        var data = { id: index, name: data, fill: "#333d4d" };
-
-        if (tree.length == 0) {
-            tree.push(data);
-        } else {
-            var route = [];
-            while (index > 0) {
-                if (index % 2 == 0) {
-                    index = Math.floor((index - 2) / 2);
-                    route.push(true);
-                }
-                else {
-                    index = Math.floor((index - 1) / 2);
-                    route.push(false);
-                }
-            }
-            var temp = tree[0];
-            var cnt = route.length;
-            while (--cnt > 0) {
-                if (route[cnt]) {
-                    temp = temp.children[1];
-                } else {
-                    temp = temp.children[0];
-                }
-            }
-            if (!route[cnt]) {
-                temp.children = [];
-            }
-            temp.children.push(data);
-        }
-        this.update(JSON.parse(JSON.stringify(tree)));
-        this.removeListChild();
+        this.running = false;
     }
 
     update(tree) {
         this.timeout += this.interval;
         var series = this.series;
         this.timers.push(new timer(function() {
-            console.log(JSON.stringify(tree));
             series.data.setAll(tree);
         }, this.timeout));
+    }
+
+    getNode(tree, index) {
+        if (index == 0) {
+            return tree[0];
+        } else {
+            var parents = Math.floor((index - 1) / 2);
+            if (index % 2 == 0) {
+                return this.getNode(tree, parents).children[1];
+            }
+            /* 홀수 -> 왼쪽 */
+            else {
+                return this.getNode(tree, parents).children[0];
+            }
+        }
+    }
+
+    pop(tree, index) {
+        var value = this.getNode(tree, index).name;
+
+        if (index > 0) {
+            var parents = this.getNode(tree, Math.floor((index - 1) / 2));
+            if (index % 2 == 0) {
+                parents.children.pop();
+            } else {
+                delete parents.children;
+            }
+        }
+
+        return value;
     }
 
 
@@ -385,6 +415,34 @@ class TreeChart {
             var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
             dom.appendTo(myTreeList);
         }, this.timeout));
+    }
+
+    stop() {
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
+        }
+
+    }
+
+    resume() {
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].resume();
+        }
+    }
+
+    reset() {
+
+        myTreeList.empty();
+        for (let num of firstArray) {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTreeList);
+        }
+        this.timeout = 0;
+        this.series.data.setAll([]);
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
+        }
+        this.timers = [];
     }
 }
 
@@ -530,42 +588,103 @@ function heapSort_heapify_bar(data, i) {
 function heapSort_tree() {
     now = new Date().getTime();
     var data = [...firstArray];
+    myTreeChart.running = true;
 
+    /* 최대 힙 구현*/
     var tree = [];
     for (var i = 0; i < data.length; i++) {
-        myTreeChart.binaryAdd(tree, i, data[i]);
+        heapSort_tree_add(tree, i, data[i]);
+    }
+
+    for (var i = data.length - 1; i >= 0; i--) {
+        heapSort_tree_pop(tree, i);
+
+        console.log("__________________HEAPIFY(" + i + ")________________________")
+        heapSort_tree_heapify(tree, i);
     }
 }
 
-function heapSort_heapify_tree(data, i) {
-    let index = parseInt(i / 2) - 1;
-    while (index >= 0) {
-        const left = index * 2 + 1;
-        const right = index * 2 + 2;
-
-        if (data[left] >= data[right] && data[index] < data[left]) {
-            myBarChart.swap(data, index, left);
-        } else if (data[right] > data[left] && data[index] < data[right]) {
-            myBarChart.swap(data, index, right);
+function heapSort_tree_add(tree, index, data) {
+    var data = { id: index, name: data, fill: "#333d4d" };
+    if (tree.length == 0) {
+        tree.push(data);
+    } else {
+        var parents = myTreeChart.getNode(tree, Math.floor((index - 1) / 2));
+        if (index % 2 == 1) {
+            parents.children = [];
         }
-        index--;
+        parents.children.push(data);
+    }
+    myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+    myTreeChart.removeListChild();
+
+    while (index > 0) {
+        var node = myTreeChart.getNode(tree, index);
+        var parents = myTreeChart.getNode(tree, (Math.floor((index - 1) / 2)));
+        if (parents.name > node.name) {
+            break;
+        } else {
+            var temp = node.name;
+            node.name = parents.name;
+            parents.name = temp;
+            myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+            index = parents.id;
+        }
     }
 }
 
+function heapSort_tree_pop(tree, index) {
+    console.log("__________________POP(" + tree[0].name + ")________________________")
+    myTreeChart.addListChild(tree[0].name);
+    if (index > 0) {
+        tree[0].name = myTreeChart.pop(tree, index);
+    } else {
+        tree = [];
+    }
+    myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+}
 
 
-function heapSort_heapify_tree(data, i) {
-    let index = parseInt(i / 2) - 1;
-    while (index >= 0) {
-        const left = index * 2 + 1;
-        const right = index * 2 + 2;
+/* 최대 힙으로 정렬하는 방법 */
+function heapSort_tree_heapify(tree) {
+    console.log("Heapify Start")
+    var temp = tree[0]
+    /* 자식 노드가 있음 */
+    while ('children' in temp) {
+        console.log("자식 노드가 있음")
+        /* 자식 노드가 1개 */
+        if (temp.children.length == 1) {
+            console.log("길이 1")
+            /* 자식 노드가 더 크면 교환*/
+            if (temp.children[0].name > temp.name) {
+                var value = temp.name;
+                temp.name = temp.children[0].name;
+                temp.children[0].name = value;
+                myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+                /* 다음 자리로 넘어감 */
+            }
+            temp = temp.children[0]
+            /* 자식 노드가 2개 */
+        } else {
+            console.log("길이 2")
+            if (temp.name > temp.children[0].name && temp.name > temp.children[1].name) {
+                console.log("temp.name(" + temp.name + ") > temp.children[0].name(" + temp.children[0].name + ") & temp.children[1].name(" + temp.children[1].name + ")")
+                console.log("탈출")
+                break;
+            } else {
 
-        if (data[left] >= data[right] && data[index] < data[left]) {
-            myTreeChart.swap(data, index, left);
-        } else if (data[right] > data[left] && data[index] < data[right]) {
-            myTreeChart.swap(data, index, right);
+                var biggerChildren = temp.children[0].name > temp.children[1].name ? temp.children[0] : temp.children[1];
+                console.log("temp.name(" + temp.name + ") < biggerChildren(" + biggerChildren.name + ")")
+
+                console.log("교체")
+                var value = temp.name;
+                temp.name = biggerChildren.name;
+                biggerChildren.name = value;
+
+                myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+                temp = biggerChildren;
+            }
         }
-        index--;
     }
 }
 

@@ -81,12 +81,12 @@
 				</button>
 			</div>
 			<div class="col">
-				<button type="button" class="btn btn-primary" id="pauseBtn" onclick="bar_pause()">
+				<button type="button" class="btn btn-primary" id="BarPauseBtn" onclick="bar_pause()">
 					<i class="bi bi-pause-fill"></i>
 				</button>
 			</div>
 			<div class="col">
-				<button type="button" class="btn btn-primary" id="resetBtn" onclick="bar_reset()">
+				<button type="button" class="btn btn-primary" id="BarResetBtn" onclick="bar_reset()">
 					<i class="bi bi-arrow-clockwise"></i>
 				</button>
 
@@ -108,17 +108,17 @@
 
 		<div class="row mx-auto p-2">
 			<div class="col">
-				<button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="heapSort_tree()">
+				<button type="button" class="btn btn-primary" id="TreeSortingBtn" onclick="heapSort_tree()">
 					<i class="bi bi-play-fill"></i>
 				</button>
 			</div>
 			<div class="col">
-				<button type="button" class="btn btn-primary" id="pauseBtn" onclick="tree_pause()">
+				<button type="button" class="btn btn-primary" id="TreepauseBtn" onclick="tree_pause()">
 					<i class="bi bi-pause-fill"></i>
 				</button>
 			</div>
 			<div class="col">
-				<button type="button" class="btn btn-primary" id="resetBtn" onclick="tree_reset()">
+				<button type="button" class="btn btn-primary" id="TreeresetBtn" onclick="tree_reset()">
 					<i class="bi bi-arrow-clockwise"></i>
 				</button>
 

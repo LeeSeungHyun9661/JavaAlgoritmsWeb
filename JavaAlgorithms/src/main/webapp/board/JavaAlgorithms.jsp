@@ -15,9 +15,6 @@
 <!-- Charts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-<!-- Custom CSS -->
-<link href="../resources/css/style.css" rel="stylesheet" type="text/css">
-
 <!-- Color Mod -->
 <script src="../resources/js/color-mode.js"></script>
 
@@ -43,6 +40,10 @@
 
 <!-- Prism CSS -->
 <link href="../resources/css/prism.css" rel="stylesheet" type="text/css">
+
+<!-- Custom CSS -->
+<link href="../resources/css/style.css" rel="stylesheet" type="text/css">
+
 </head>
 
 <body>

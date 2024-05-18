@@ -1,7 +1,7 @@
-var now, interval = 100;
+var now, interval = 500;
 var firstArray, option, group;
-var currentPage, currentTreeJob, currentBarJob;/* 현재 페이지 값 저장하는 변수 */
-var myBarChart, myTreeChart, myTreeList;
+var currentPage, currentTreeJob, currentBarJob, currentTableJob;/* 현재 페이지 값 저장하는 변수 */
+var myBarChart, myTreeChart, myTreeList, myTableChart, myTableList;
 
 const chartColor = am5.color(0x6771dc);
 
@@ -70,6 +70,7 @@ function generateArray() {
 
     currentBarJob = $('#BarSortingBtn').attr('onclick');
     currentTreeJob = $('#TreeSortingBtn').attr('onclick');
+    currentTableJob = $('#TableSortingBtn').attr('onclick');
 
     let set = new Set();
     /* 값 범위가 너무 작으면 재생성 요청 */
@@ -108,7 +109,7 @@ function generateArray() {
             myTreeChart.reset();
         }
         if (currentBarJob) {
-            $('#BarSortingBtn').attr("onclick", currentBarJob);
+            $('#BarSortingBtn').attr("onclick", currentTreeJob);
         }
 
         myTreeChart = new TreeChart('treeChart', []);
@@ -120,6 +121,24 @@ function generateArray() {
             dom.appendTo(myTreeList);
         }
     }
+
+    if ($('#tableChart').length) {
+        if (myTableChart != undefined) {
+            myTableChart.reset();
+        }
+        if (currentTableJob) {
+            $('#BarSortingBtn').attr("onclick", currentTableJob);
+        }
+        myTableChart = new TableChart('tableChart');
+        myTableList = $("#tableList");
+
+        myTableList.empty();
+        for (let num of firstArray) {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTableList);
+        }
+    }
+
 
     $("#table-row tr:not(:first)").remove();
 }
@@ -175,6 +194,34 @@ function tree_resume() {
         myTreeChart.running = true;
         if (myTreeChart) {
             myTreeChart.resume();
+        }
+    }
+
+}
+
+function table_pause() {
+    if (myTableChart) {
+        if (myTableChart.running) {
+            myTableChart.running = false;
+            myTableChart.stop();
+            $('#TreeSortingBtn').attr("onclick", "tree_resume()");
+        }
+    }
+}
+
+function table_reset() {
+    if (myTableChart) {
+        myTableChart.running = false;
+        myTableChart.reset();
+        $('#TreeSortingBtn').attr("onclick", currentTableJob);
+    }
+}
+
+function table_resume() {
+    if (!myTableChart.running) {
+        myTableChart.running = true;
+        if (myTableChart) {
+            myTableChart.resume();
         }
     }
 
@@ -242,7 +289,7 @@ class BarChart {
         data[j] = temp;
         this.update([...data]);
     }
-    
+
     update(data) {
         this.timeout += interval;
         var chart = this.chart;
@@ -330,8 +377,6 @@ class TreeChart {
                 categoryField: "name",
                 childDataField: "children",
                 fillField: "fill",
-                paddingBottom: 40,
-                paddingTop: 60,
             })
         );
 
@@ -343,6 +388,10 @@ class TreeChart {
 
         this.series.outerCircles.template.setAll({
             radius: 0
+        });
+
+        this.series.labels.template.setAll({
+            templateField: "label"
         });
 
         this.series.links.template.setAll({
@@ -468,6 +517,77 @@ class TreeChart {
     }
 }
 
+/*__________________________________________Table Chart_____________________________________________________*/
+
+class TableChart {
+    constructor(ctx) {
+        this.table = document.getElementById(ctx);
+        this.timers = [];
+        this.timeout = 0;
+        this.running = false;
+    }
+
+    insert(number, row, column) {
+        this.timeout += interval;
+        var table = this.table;
+        this.timers.push(new timer(function() {
+            while (table.rows.length < row + 1) {
+                var newRow = table.insertRow();
+                for (let i = 0; i < 10; i++) {
+                    newRow.insertCell(i);
+                }
+            }
+            table.rows[row].cells[column].innerHTML = number;
+        }, this.timeout));
+    }
+
+    remove(row, column) {
+        this.timeout += interval;
+        var table = this.table;
+        this.timers.push(new timer(function() {
+            table.rows[row].cells[column].innerHTML = "";
+        }, this.timeout));
+    }
+
+    stop() {
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
+        }
+
+    }
+
+    resume() {
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].resume();
+        }
+    }
+
+    reset() {
+        myTableList.empty();
+        for (let num of firstArray) {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTableList);
+        }
+        this.timeout = 0;
+        for (var i = 0; i < this.timers.length; i++) {
+            this.timers[i].pause();
+        }
+        this.timers = [];
+    }
+
+    removeListChild() {
+        this.timers.push(new timer(function() {
+            myTableList.find('span:first').remove();
+        }, this.timeout));
+    }
+
+    addListChild(num) {
+        this.timers.push(new timer(function() {
+            var dom = $('<span class="badge rounded-pill text-bg-secondary">' + String(num) + '</span>')
+            dom.appendTo(myTableList);
+        }, this.timeout));
+    }
+}
 
 /* ______________________________Sorting Algoriths based JS__________________________________________________ */
 
@@ -697,7 +817,6 @@ function treeSort_tree() {
     now = new Date().getTime();
     var data = [...firstArray];
     myTreeChart.running = true;
-
     var tree = [];
     for (var i = 0; i < data.length; i++) {
         treeSort_tree_add(tree, i, data[i]);
@@ -898,23 +1017,55 @@ function radixSort_bar() {
     while (radix < maxRadix) {
         var index = 0;
         for (var num = 0; num < 10; num++) {
-            
             for (var i = 0; i < data.length; i++) {
-                
                 let str = String(data[i]);
-                
-                var k = str[str.length - 1 - radix];                
+                var k = str[str.length - 1 - radix];
                 if (k == null) k = 0;
-                
-                
                 if (k == String(num)) {
                     if (index != i) {
-                        /* 자리 교체*/
                         data.splice(index, 0, data.splice(i, 1)[0]);
                         myBarChart.update([...data]);
                     }
                     index++;
                 }
+            }
+        }
+        radix++;
+    }
+}
+
+function radixSort_table() {
+    now = new Date().getTime();
+    var data = [...firstArray];
+    myTableChart.running = true;
+
+    var buckets = [];
+    for (var i = 0; i < 10; i++) {
+        buckets.push([]);
+    }
+
+    var top = 0;
+    for (var i = 0; i < data.length; i++) {
+        if (top < data[i]) top = data[i];
+    }
+    var maxRadix = top.toString().length;
+    var radix = 0;
+
+    while (radix < maxRadix) {
+        while (data.length > 0) {
+            var value = data.shift();
+            var num = parseInt(value / Math.pow(10, radix) % 10);
+            buckets[num].push(value);
+            myTableChart.insert(value, buckets[num].length, num);
+            myTableChart.removeListChild();
+        }
+        for (var i = 0; i < 10; i++) {
+            var length = buckets[i].length;
+            while (buckets[i].length > 0) {
+                var value = buckets[i].shift();
+                data.push(value);
+                myTableChart.remove(length - buckets[i].length, i);
+                myTableChart.addListChild(value);
             }
         }
         radix++;

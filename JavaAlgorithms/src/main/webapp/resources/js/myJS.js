@@ -1,4 +1,4 @@
-var now, interval = 250;
+var now, interval = 100;
 var firstArray, option, group;
 var currentPage, currentTreeJob, currentBarJob;/* 현재 페이지 값 저장하는 변수 */
 var myBarChart, myTreeChart, myTreeList;
@@ -698,7 +698,7 @@ function treeSort_tree() {
         myTreeChart.update(JSON.parse(JSON.stringify(tree)));
         myTreeChart.removeListChild();
     }
-    treeSort_tree_pop(tree,tree[0]);
+    treeSort_tree_pop(tree, tree[0]);
 }
 
 function treeSort_tree_add(tree, index, value) {
@@ -709,7 +709,7 @@ function treeSort_tree_add(tree, index, value) {
         var temp = tree[0];
         while (true) {
             if (!temp.hasOwnProperty('children')) {
-                temp.children = [{ id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d'}, { id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d' }];
+                temp.children = [{ id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d' }, { id: null, circle: { fill: "#FFFFFF" }, fill: '#333d4d' }];
             }
             if (temp.name > value) {
                 if (temp.children[0].id == null) {
@@ -736,9 +736,158 @@ function treeSort_tree_pop(tree, node) {
             treeSort_tree_pop(tree, node.children[0]);        }
         myTreeChart.highLight(tree, node.name);
         myTreeChart.addListChild(node.name);
-        
+
         if (node.hasOwnProperty('children')) {
             treeSort_tree_pop(tree, node.children[1]);
         }
     }
+}
+
+function timSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+    var run = 8;
+
+    for (var i = 0; i < data.length; i += run) {
+        timsort_bar_insertion(data, i, Math.min((i + run - 1), (data.length - 1)));
+    }
+
+    for (var size = run; size < data.length; size *= 2) {
+        for (let left = 0; left < data.length; left += 2 * size) {
+            timsort_bar_merge(data, left, left + size - 1, Math.min((left + 2 * size - 1), (data.length - 1)))
+        }
+
+    }
+}
+
+
+function timsort_bar_insertion(data, left, right) {
+    for (let i = left + 1; i <= right; i++) {
+        let target = i;
+        for (let j = i - 1; j >= left; j--) {
+            if (data[target] < data[j]) {
+                myBarChart.swap(data, target--, j);
+            } else {
+                break;
+            }
+        }
+    }
+
+}
+
+function timsort_bar_merge(data, min, mid, max) {
+    var i = min;
+    while (i <= mid) {
+        if (data[i] > data[mid + 1]) {
+            myBarChart.swap(data, i, mid + 1);
+            for (var j = mid + 1; j < max; j++) {
+                if (data[j] > data[j + 1]) {
+                    myBarChart.swap(data, j, j + 1);
+                }
+            }
+        }
+        i++;
+    }
+}
+
+function introSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+    var depth = parseInt(Math.log(data.length) * 2);
+    introSort_bar_intro(data, depth, 0, data.length - 1);
+}
+
+function introSort_bar_intro(data, depth, min, max) {
+    if (depth == 0) {
+        if (max - min > 16) {
+            introSort_bar_heapsort(data, min, max);
+        } else {
+            introSort_bar_insertonsort(data, min, max);
+        }
+    } else {
+        if (min >= max) {
+            return;
+        }
+        var pivot = introSort_bar_partition(data, min, max);
+        introSort_bar_intro(data, depth - 1, min, pivot);
+        introSort_bar_intro(data, depth - 1, pivot + 1, max);
+    }
+}
+
+function introSort_bar_insertonsort(data, min, max) {
+    for (var i = min; i < max; i++) {
+        var target = i;
+        for (var j = i - 1; j >= 0; j--) {
+            if (data[target] < data[j]) {
+                myBarChart.swap(data, target--, j);
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+function introSort_bar_heapsort(data, min, max) {
+    var list = data.slice(min, max);
+    for (let i = list.length - 1; i >= 0; i--) {
+        introSort_bar_heapify(data, list,min, i);
+        if (list[0] > list[i]) {
+            var temp = list[0];
+            list[0] = list[i];
+            list[i] = temp;
+            myBarChart.swap(data, min, min + i);
+        }
+    }
+}
+
+
+function introSort_bar_heapify(data, list,min, i) {
+    let index = parseInt(i / 2) - 1;
+    while (index >= 0) {
+        const left = index * 2 + 1;
+        const right = index * 2 + 2;
+        
+        if (list[left] >= list[right] && list[index] < list[left]) {
+            var temp = list[index];
+            list[index] = list[left];
+            list[left] = temp;
+            myBarChart.swap(data, min+index, min+left);
+            
+        } else if (list[right] > list[left] && list[index] < list[right]) {
+            var temp = list[index];
+            list[index] = list[right];
+            list[right] = temp;
+            myBarChart.swap(data, min+index, min+right);
+        }
+        index--;
+    }
+}
+
+
+function heapSort_heapify_bar(data, i) {
+    let index = parseInt(i / 2) - 1;
+    while (index >= 0) {
+        const left = index * 2 + 1;
+        const right = index * 2 + 2;
+
+        if (data[left] >= data[right] && data[index] < data[left]) {
+            myBarChart.swap(data, index, left);
+        } else if (data[right] > data[left] && data[index] < data[right]) {
+            myBarChart.swap(data, index, right);
+        }
+        index--;
+    }
+}
+
+function introSort_bar_partition(data, min, max) {
+    var pivot = data[Math.floor((min + max) / 2)]; // 부분리스트의 중간 요소를 피벗으로 설정
+    while (true) {
+        while (data[min] < pivot) min++;
+        while (data[max] > pivot && min <= max) max--;
+        if (min >= max) return max;
+        myBarChart.swap(data, min, max);
+    }
+
 }

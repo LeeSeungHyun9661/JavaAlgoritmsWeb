@@ -64,9 +64,9 @@ function contentsChange(page) {
 /* 정렬 알고리즘 - 배열 생성 */
 function generateArray() {
     /* 입력 변수 받아오기 */
-    var size = Number($("#size").val());
-    var min = Number($("#min").val());
-    var max = Number($("#max").val());
+    var size = Number($('#size').val());
+    var min = Number($('#min').val());
+    var max = Number($('#max').val());
 
     currentBarJob = $('#BarSortingBtn').attr('onclick');
     currentTreeJob = $('#TreeSortingBtn').attr('onclick');
@@ -75,9 +75,14 @@ function generateArray() {
     /* 값 범위가 너무 작으면 재생성 요청 */
     if ((max - min + 1) * 0.7 < size) { alert("Make Number range wider!"); return; }
     /* 값을 넣지 않은 상태일 경우 디폴트값 지정*/
-    if (size == 0) size = 50; min = 1; max = 100;
+    if (size == 0) {
+        size = 50; min = 1; max = 100;
+    }
     /* 난수 배열 생성 */
-    while (set.size < size) set.add(Math.floor(Math.random() * (max - min + 1)) + min);
+    while (set.size < size) {
+        var randNum = Math.floor(Math.random() * (max - min + 1)) + min; -
+            set.add(randNum);
+    }
     /* 현재 값들에 대한 초기값 저장*/
     firstArray = Array.from(set);
 
@@ -237,7 +242,7 @@ class BarChart {
         data[j] = temp;
         this.update([...data]);
     }
-
+    
     update(data) {
         this.timeout += interval;
         var chart = this.chart;
@@ -556,6 +561,7 @@ function quickSort_bar() {
 
     quickSort_pivot(data, 0, data.length - 1);
 }
+
 function quickSort_pivot(data, min, max) {
     if (min < max) {
         var pivot = quickSort_partition(data, min, max);
@@ -832,7 +838,7 @@ function introSort_bar_insertonsort(data, min, max) {
 function introSort_bar_heapsort(data, min, max) {
     var list = data.slice(min, max);
     for (let i = list.length - 1; i >= 0; i--) {
-        introSort_bar_heapify(data, list,min, i);
+        introSort_bar_heapify(data, list, min, i);
         if (list[0] > list[i]) {
             var temp = list[0];
             list[0] = list[i];
@@ -843,43 +849,28 @@ function introSort_bar_heapsort(data, min, max) {
 }
 
 
-function introSort_bar_heapify(data, list,min, i) {
+function introSort_bar_heapify(data, list, min, i) {
     let index = parseInt(i / 2) - 1;
     while (index >= 0) {
         const left = index * 2 + 1;
         const right = index * 2 + 2;
-        
+
         if (list[left] >= list[right] && list[index] < list[left]) {
             var temp = list[index];
             list[index] = list[left];
             list[left] = temp;
-            myBarChart.swap(data, min+index, min+left);
-            
+            myBarChart.swap(data, min + index, min + left);
+
         } else if (list[right] > list[left] && list[index] < list[right]) {
             var temp = list[index];
             list[index] = list[right];
             list[right] = temp;
-            myBarChart.swap(data, min+index, min+right);
+            myBarChart.swap(data, min + index, min + right);
         }
         index--;
     }
 }
 
-
-function heapSort_heapify_bar(data, i) {
-    let index = parseInt(i / 2) - 1;
-    while (index >= 0) {
-        const left = index * 2 + 1;
-        const right = index * 2 + 2;
-
-        if (data[left] >= data[right] && data[index] < data[left]) {
-            myBarChart.swap(data, index, left);
-        } else if (data[right] > data[left] && data[index] < data[right]) {
-            myBarChart.swap(data, index, right);
-        }
-        index--;
-    }
-}
 
 function introSort_bar_partition(data, min, max) {
     var pivot = data[Math.floor((min + max) / 2)]; // 부분리스트의 중간 요소를 피벗으로 설정
@@ -888,6 +879,45 @@ function introSort_bar_partition(data, min, max) {
         while (data[max] > pivot && min <= max) max--;
         if (min >= max) return max;
         myBarChart.swap(data, min, max);
+    }
+
+}
+
+function radixSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
+    var top = 0;
+    for (var i = 0; i < data.length; i++) {
+        if (top < data[i]) top = data[i];
+    }
+    var maxRadix = top.toString().length;
+    var radix = 0;
+
+    while (radix < maxRadix) {
+        var index = 0;
+        for (var num = 0; num < 10; num++) {
+            
+            for (var i = 0; i < data.length; i++) {
+                
+                let str = String(data[i]);
+                
+                var k = str[str.length - 1 - radix];                
+                if (k == null) k = 0;
+                
+                
+                if (k == String(num)) {
+                    if (index != i) {
+                        /* 자리 교체*/
+                        data.splice(index, 0, data.splice(i, 1)[0]);
+                        myBarChart.update([...data]);
+                    }
+                    index++;
+                }
+            }
+        }
+        radix++;
     }
 
 }

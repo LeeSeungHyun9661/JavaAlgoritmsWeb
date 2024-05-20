@@ -1,4 +1,4 @@
-var now, interval = 500;
+var now, interval = 100;
 var firstArray, option, group;
 var currentPage, currentTreeJob, currentBarJob, currentTableJob;/* 현재 페이지 값 저장하는 변수 */
 var myBarChart, myTreeChart, myTreeList, myTableChart, myTableList;
@@ -1070,5 +1070,57 @@ function radixSort_table() {
         }
         radix++;
     }
-
 }
+
+
+function shellSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
+    var gap = data.length / 2;
+    while (gap > 0) {
+        console.log("GAP : " + gap);
+        for (var left = 0; left < gap; left++) {
+            for (var i = left + gap; i < data.length; i += gap) {
+                var target = i;
+                for (var j = i - gap; j >= left; j -= gap) {
+                    if (data[target] < data[j]) {
+                        myBarChart.swap(data, target--, j);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        gap = Math.floor(gap / 2);
+    }
+}
+
+function sleepSort_bar() {
+    now = new Date().getTime();
+    var data = [...myBarChart.chart.data.datasets[0].data];
+    myBarChart.running = true;
+
+    var gap = data.length / 2;
+    while (gap > 0) {
+        console.log("GAP : " + gap);
+        for (var left = 0; left < gap; left++) {
+            for (var i = left + gap; i < data.length; i += gap) {
+                var target = i;
+                for (var j = i - gap; j >= left; j -= gap) {
+                    if (data[target] < data[j]) {
+                        myBarChart.swap(data, target--, j);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        gap = Math.floor(gap / 2);
+    }
+}
+
+
+
+

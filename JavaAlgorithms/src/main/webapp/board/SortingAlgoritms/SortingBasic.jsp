@@ -1,234 +1,185 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">About Sorting Algorithm</h1>
+	<h1>Introduction to Sorting Algorithms</h1>
 </div>
+<p>Welcome to our Sorting Algorithms page. On this page, you will find an introduction to various sorting algorithms, their principles, and how they are implemented in Java. Sorting algorithms are a fundamental concept in computer science, as they enable efficient organization and retrieval of data by arranging it in a specific order, such as ascending or descending.</p>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h2>What is a Sorting Algorithm?</h2>
+</div>
+
+<p>A sorting algorithm is a method used to arrange data in a predetermined order. It is one of the most important problems in the field of computer science. Whether the data consists of numbers, words, or other types of information, it often needs to be sorted before use. The key to solving the sorting problem lies in how effectively the data can be sorted.</p>
+<p>The primary reason for sorting data is to facilitate efficient searching. Computers often need to handle millions of data points, and databases theoretically need to manage an infinite amount of data. If the data to be searched is not sorted, only sequential search algorithms can be used. However, if the data is sorted, a variety of powerful algorithms can be employed. While data that requires frequent insertion and deletion may rely on sequential search due to the overhead of maintaining sorted order, in most cases, searching far outweighs the need for insertion and deletion. Thus, sorting is crucial for efficient searching.</p>
+
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h2>Fast Search Through Sorting Algorithms</h2>
+</div>
+<p>The main advantage of sorted data is that when you pick an arbitrary value, all values to the right are guaranteed to be greater than or equal to it, and all values to the left are guaranteed to be less than or equal to it. This property allows for efficient searching algorithms like binary search. In binary search, the computer examines the middle value of the candidate range. If the target value is smaller, the left half is ignored; if larger, the right half is ignored.</p>
+<p>For example, in a dataset of 4.3 billion sorted items, the worst-case scenario for finding a value (or determining it is absent) involves only 32 comparisons. With 33 comparisons, about 8.6 billion items can be searched. More advanced algorithms, like interpolation search (which estimates the position based on the percentage between the minimum and maximum values), can find the desired value with even fewer comparisons. The primary reason for performing sorting on computers is to enable efficient binary search on the data.</p>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h2>Time Complexity</h2>
+</div>
+
+<p>Time complexity is a method used to analyze the performance of algorithms. Different sorting algorithms perform differently under various conditions. While the absolute execution time can vary based on the user's computer, the relative time complexity depends on the algorithm used.</p>
+<p>The types of time complexity are as follows:</p>
 <ul>
-    <li>
-        <strong>Introduction to Sorting Algorithms:</strong>
-        <br>
-        <p>Sorting algorithms are foundational tools in computer science, enabling the efficient organization of data in various applications. At their core, sorting algorithms aim to rearrange elements in a list or array in a specific order, such as ascending or descending, based on certain criteria. The importance of sorting algorithms extends beyond simple data organization; they are essential for tasks like searching, data analysis, and computational problem-solving. Understanding the different types of sorting algorithms and their characteristics is key to selecting the most appropriate algorithm for a given problem and optimizing computational efficiency.</p>
-    </li>
-    <li>
-        <strong>Comparison of Sorting Algorithms:</strong>
-        <br>
-        <p>Comparing sorting algorithms involves analyzing their performance characteristics, including time complexity, space complexity, stability, and adaptability to different datasets. While some algorithms like bubble sort and selection sort are simple to implement, they may be inefficient for large datasets due to their quadratic time complexity. In contrast, more advanced algorithms like merge sort and quicksort offer better average-case performance with O(n log n) time complexity, making them suitable for larger datasets. However, the choice of algorithm depends on various factors such as the size and nature of the dataset, available resources, and desired stability.</p>
-    </li>
-    <li>
-        <strong>Real-World Applications of Sorting Algorithms:</strong>
-        <br>
-        <p>Sorting algorithms find applications in a wide range of real-world scenarios, from organizing data in databases and optimizing search operations to facilitating efficient file management on computers. For example, databases use sorting algorithms to quickly retrieve and display sorted query results, improving user experience and system performance. Similarly, operating systems rely on sorting algorithms to efficiently manage files and directories, enabling users to navigate and access data with ease. Understanding sorting algorithms is crucial for developers and engineers working on systems that handle large volumes of data and require fast and efficient sorting capabilities.</p>
-    </li>
-    <li>
-        <strong>Optimizing Sorting Algorithms:</strong>
-        <br>
-        <p>Optimizing sorting algorithms involves improving their efficiency and performance through various techniques, such as parallel processing, hybrid approaches, and specialized optimizations for specific types of data. For example, parallelizing sorting algorithms can leverage multiple processors or cores to sort data concurrently, reducing overall execution time. Hybrid approaches combine the strengths of different algorithms to achieve better performance in specific scenarios, such as using insertion sort for small sublists in merge sort. Specialized optimizations, such as radix sort for integer data or counting sort for limited range values, can further improve efficiency by exploiting specific characteristics of the data being sorted.</p>
-    </li>
-
-    <li>
-        <strong>Sorting Algorithms in Data Structures:</strong>
-        <br>
-        <p>Sorting algorithms are closely integrated with various data structures, shaping their design and functionality. For instance, arrays and linked lists often use sorting algorithms to arrange elements in a specific order, facilitating efficient search and retrieval operations. Trees and graphs may employ sorting algorithms to organize nodes or edges based on certain criteria, enabling traversal and manipulation of hierarchical data structures. Understanding how sorting algorithms interact with different data structures is essential for designing efficient algorithms and data storage solutions in computer science and software engineering.</p>
-    </li>
-
-    <li>
-        <strong>Sorting Algorithms in Competitive Programming:</strong>
-        <br>
-        <p>In competitive programming contests, sorting algorithms play a crucial role in solving algorithmic problems efficiently within strict time and memory constraints. Competitors must select the most appropriate sorting algorithm for each problem based on its requirements and input size. Strategies may involve leveraging the inherent properties of certain algorithms, such as merge sort's stability or quicksort's average-case performance, to optimize solutions and maximize competitive rankings. Mastery of sorting algorithms is a cornerstone of success in competitive programming, enabling competitors to tackle diverse problems effectively and achieve optimal solutions within limited timeframes.</p>
-    </li>
-
-    <li>
-        <strong>Emerging Trends in Sorting Algorithms:</strong>
-        <br>
-        <p>Recent developments and emerging trends in sorting algorithms reflect advancements in computational techniques, hardware architectures, and problem-solving methodologies. For example, machine learning-based approaches aim to leverage data-driven models and algorithms to optimize sorting processes and adapt to dynamic data distributions. Quantum sorting algorithms explore the potential of quantum computing to revolutionize sorting efficiency by exploiting quantum phenomena such as superposition and entanglement. Additionally, optimizations tailored to specific hardware architectures, such as GPUs or specialized accelerators, seek to further enhance sorting performance and scalability in modern computing environments. Keeping abreast of these emerging trends is essential for researchers and practitioners seeking to push the boundaries of sorting algorithm efficiency and applicability in diverse domains.</p>
-    </li>
+	<li>
+		<strong>Every-Case Time Complexity (<i>T</i>(<i>n</i>))
+		</strong>: The number of operations an algorithm performs for input size <i>n</i>. Depends solely on the input size and is constant for any input values.
+	</li>
+	<li>
+		<strong>Worst Case Time Complexity (<i>W</i>(<i>n</i>))
+		</strong>: The maximum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the maximum operations in the worst scenario.
+	</li>
+	<li>
+		<strong>Best Case Time Complexity (<i>B</i>(<i>n</i>))
+		</strong>: The minimum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the minimum operations in the best scenario.
+	</li>
+	<li>
+		<strong>Average Case Time Complexity (<i>A</i>(<i>n</i>))
+		</strong>: The average number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the expected operations for all possible inputs.
+	</li>
+	<li>
+		<strong>Big-O Notation</strong>: Big-O notation is used to describe the performance of an algorithm as <i>n</i> becomes very large. It is the most commonly used notation and follows the order:
+		<ul>
+			<li>
+				<i>o</i>(1) &lt; <i>o</i>(log <i>n</i>) &lt; <i>o</i>(<i>n</i>) &lt; <i>o</i>(<i>n</i> log <i>n</i>) &lt; <i>o</i>(<i>n</i>²) &lt; <i>o</i>(<i>n</i>³) &lt; <i>o</i>(2<sup><i>n</i></sup>) &lt; <i>o</i>(<i>n</i>!)
+			</li>
+		</ul>
+	</li>
 </ul>
 
+<table>
+	<caption>Time Complexity of Sorting Algorithms</caption>
+	<thead>
+		<tr>
+			<th>Algorithm</th>
+			<th>Best Case</th>
+			<th>Average Case</th>
+			<th>Worst Case</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Bubble Sort</td>
+			<td>O(n)</td>
+			<td>O(n^2)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Selection Sort</td>
+			<td>O(n^2)</td>
+			<td>O(n^2)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Insertion Sort</td>
+			<td>O(n)</td>
+			<td>O(n^2)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Merge Sort</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+		</tr>
+		<tr>
+			<td>Quick Sort</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Heap Sort</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+		</tr>
+		<tr>
+			<td>Tree Sort</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Tim Sort</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+			<td>O(n log n)</td>
+		</tr>
+		<tr>
+			<td>Radix Sort</td>
+			<td>O(nk)</td>
+			<td>O(nk)</td>
+			<td>O(nk)</td>
+		</tr>
+		<tr>
+			<td>Shell Sort</td>
+			<td>O(n log n)</td>
+			<td>Varies</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Bucket Sort</td>
+			<td>O(n + k)</td>
+			<td>O(n + k)</td>
+			<td>O(n^2)</td>
+		</tr>
+		<tr>
+			<td>Counting Sort</td>
+			<td>O(n + k)</td>
+			<td>O(n + k)</td>
+			<td>O(n + k)</td>
+		</tr>
+	</tbody>
+</table>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Algorithm Examples</h1>
+	<h2>Sorting Algorithms</h2>
 </div>
-<p>
+
+<p>Let's take a closer look at some common sorting algorithms:</p>
+
 <ol>
-    <li>
-        <strong>Bubble Sort</strong>: A simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order. Despite its simplicity, it has poor time complexity (O(n^2)) and is typically used for educational purposes rather than in practical applications.
-    </li>
-    <li>
-        <strong>Selection Sort</strong>: Another simple comparison-based algorithm that divides the input list into two parts: a sorted sublist and an unsorted sublist. It repeatedly selects the smallest (or largest) element from the unsorted sublist and moves it to the end of the sorted sublist. Selection sort also has a time complexity of O(n^2) and is generally not suitable for large datasets.
-    </li>
-    <li>
-        <strong>Insertion Sort</strong>: Similar to how people sort a deck of cards, insertion sort builds the final sorted array one element at a time. It iterates through the input list, removing one element at a time and inserting it into its correct position in the sorted portion of the list. While insertion sort is more efficient than bubble sort and selection sort, it still has a time complexity of O(n^2) in the worst case.
-    </li>
-    <li>
-        <strong>Merge Sort</strong>: A divide-and-conquer algorithm that recursively divides the input list into smaller sublists until each sublist contains only one element. It then merges the sublists back together, sorting them in the process. Merge sort has a time complexity of O(n log n) in all cases, making it more efficient than the previous algorithms for large datasets.
-    </li>
-    <li>
-        <strong>Quicksort</strong>: Another divide-and-conquer algorithm that selects a pivot element from the list and partitions the other elements into two sublists based on whether they are less than or greater than the pivot. It then recursively sorts the sublists. Quicksort is generally faster than merge sort for small datasets and has an average time complexity of O(n log n), although it can degrade to O(n^2) in the worst case.
-    </li>
-    <li></li>
-    <li></li>
-    <li></li>
-
+	<li>
+		<strong>Bubble Sort</strong>: A simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
+	</li>
+	<li>
+		<strong>Selection Sort</strong>: Divides the input list into a sorted and an unsorted region, repeatedly selects the smallest (or largest) element from the unsorted region, and moves it to the end of the sorted region.
+	</li>
+	<li>
+		<strong>Insertion Sort</strong>: Builds the final sorted array one item at a time by iteratively placing each element in its correct position.
+	</li>
+	<li>
+		<strong>Merge Sort</strong>: A divide-and-conquer algorithm that divides the input list into two halves, recursively sorts them, and then merges the two sorted halves.
+	</li>
+	<li>
+		<strong>Quick Sort</strong>: A highly efficient sorting algorithm that works by selecting a 'pivot' element and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot.
+	</li>
+	<li>
+		<strong>Heap Sort</strong>: Converts the list into a binary heap data structure, then repeatedly extracts the maximum element from the heap and reconstructs the heap until no elements remain.
+	</li>
+	<li>
+		<strong>Tree Sort</strong>: Builds a binary search tree from the input elements and then traverses the tree in-order to produce a sorted sequence.
+	</li>
+	<li>
+		<strong>Tim Sort</strong>: A hybrid sorting algorithm derived from merge sort and insertion sort, designed to perform well on many kinds of real-world data.
+	</li>
 </ol>
-</p>
+
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2">Java Code for Algorithm</h1>
+	<h2>Sorting Algorithms and Computer Science</h2>
 </div>
 
+<p>Sorting algorithms provide an excellent entry point for understanding computer science and algorithm design. They illustrate fundamental concepts such as data manipulation, algorithmic efficiency, and problem-solving strategies. Aspiring programmers and computer science enthusiasts can deepen their understanding of these concepts by studying sorting algorithms and their applications.</p>
 
-<div class="card card-body">
-    <pre class="line-numbers">
-        <code class="language-java">package main;
-        
-        import java.util.ArrayList;
-        import java.util.Collections;
-        import java.util.Random;
-        import java.util.Scanner;
-        
-        import sortings.*;
-        
-        public class Main {
-            public static void main(String[] args) {
-                // Input for choice the Sorting option
-                Scanner input = new Scanner(System.in);
-                boolean exit = true;
-        
-                // This while loop repeats until the 'exit' value is set to 0.
-                while (exit) {
-                    // This 'generateArr' function creates an ArrayList with random integers without
-                    // duplicates.
-                    ArrayList<Integer> list = generateArr(100);
-                    // This 'answer' list just to make sure it's correct.
-                    ArrayList<Integer> answer = list;
-                    Collections.sort(answer);
-        
-                    // Each of Case in this 'switch loop' return sorted ArrayList
-                    System.out.print("Select Sorting! : ");
-                    switch (input.nextInt()) {
-                    case 0: {
-                        exit = false;
-                        break;
-                    }
-                    case 1: {
-                        System.out.println("Bubble Sorting! :");
-                        show(new BubbleSort(list));
-                        break;
-                    }
-                    case 2: {
-                        System.out.println("Selection Sorting! :");
-                        show(new SelectionSort(list));
-                        break;
-                    }
-        
-                    case 3: {
-                        System.out.println("Double Selection Sorting! :");
-                        show(new DoubleSelectionSort(list));
-                        break;
-                    }
-                    case 4: {
-                        System.out.println("Insertion Sorting! :");
-                        show(new InsertionSort(list));
-                        break;
-                    }
-        
-                    case 5: {
-                        System.out.println("Merge Sorting! :");
-                        show(new MergeSort(list));
-                        break;
-                    }
-        
-                    case 6: {
-                        System.out.println("Quick Sorting! :");
-                        show(new QuickSort(list));
-                        break;
-                    }
-        
-                    default:
-                        System.out.println("Worng Input!!");
-                        break;
-                    }
-        
-                    if (answer.toString().equals(list.toString())) {
-                        System.out.println("______________________correct____________");
-                    } else {
-                        System.out.println("____________________Incorrect____________");
-                        System.out.println(answer.toString());
-                        System.out.println(list.toString());
-                    }
-        
-                }
-            }
-        
-            // This function creates an array of random, non-duplicate integers.
-            private static ArrayList<Integer> generateArr(int size) {
-                Random rand = new Random();
-                ArrayList<Integer> list = new ArrayList<>();
-                while (list.size() < size) {
-                    int randInt = rand.nextInt(1000);
-                    // The way to remove duplicates is to check if a certain value exists in an
-                    // existing array.
-                    if (!list.contains(randInt))
-                        list.add(randInt);
-                }
-                return list;
-            }
-        
-            private static void show(Sort sort) {
-                System.out.print("Before : ");
-                System.out.println(sort);
-                sort.sort();
-                System.out.println("");
-                System.out.print("After : ");
-                System.out.println(sort);
-        
-            }
-        }            
-        </code>
-    </pre>
-</div>
+<p>For non-specialists, sorting algorithms may seem trivial at first glance. However, developing highly effective sorting methods demands dedication, expertise, and innovation. Bill Gates' decades-long quest to develop groundbreaking sorting algorithms serves as a testament to the complexity and significance of these algorithms in computer science and beyond.</p>
 
-<div class="card card-body">
-    <pre class="line-numbers">
-        <code class="language-java">package sortings;
 
-        import java.util.ArrayList;
-        
-        // Parents class to create sorting algorithms
-        public abstract class Sort {
-            private ArrayList<Integer> list;
-            private int size;
-        
-            public Sort(ArrayList<Integer> list) {
-                this.list = list;
-                this.size = list.size();
-            }
-        
-            public ArrayList<Integer> getList() {
-                return list;
-            }
-        
-            public void setList(ArrayList<Integer> list) {
-                this.list = list;
-            }
-        
-            public int getSize() {
-                return size;
-            }
-        
-            public abstract void sort();
-        
-            public String toString() {
-                return list.toString();
-            }
-        
-            public void swap(int i, int j) {
-                int tmp = list.get(j);
-                list.set(j, list.get(i));
-                list.set(i, tmp);
-            }
-        
-        }</code>
-    </pre>
-</div>
-    
 <!-- Prism JS -->
 <script src="../resources/js/prism.js"></script>
 

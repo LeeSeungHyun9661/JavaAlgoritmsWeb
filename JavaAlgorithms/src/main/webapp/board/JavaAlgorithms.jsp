@@ -289,22 +289,6 @@
 													Shell Sort
 												</a>
 											</li>
-
-											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/SleepSort.jsp')">
-													<svg class="bi">
-                                                        <use xlink:href="#puzzle"></use></svg>
-													Sleep Sort
-												</a>
-											</li>
-
-											<li class="nav-item">
-												<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="contentsChange('SortingAlgoritms/GravitySort.jsp')">
-													<svg class="bi">
-                                                        <use xlink:href="#puzzle"></use></svg>
-													Gravity Sort
-												</a>
-											</li>
 										</ul>
 									</div>
 								</div>

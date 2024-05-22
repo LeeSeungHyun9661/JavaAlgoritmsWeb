@@ -19,13 +19,17 @@
 }
 
 .accordion-body {
-    padding: 15px;
+    padding:10px
 }
 
-@media (min-width: 1280px) {설
-    .container-fluid {
+@media (min-width: 1280px) {
+    설 .container-fluid {
         width: 100%;
     }
+}
+
+body {
+    display: none;
 }
 
 td,

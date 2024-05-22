@@ -3,8 +3,6 @@ var firstArray, option, group;
 var currentPage, currentTreeJob, currentBarJob, currentTableJob;/* 현재 페이지 값 저장하는 변수 */
 var myBarChart, myTreeChart, myTreeList, myTableChart, myTableList;
 
-const chartColor = am5.color(0x6771dc);
-
 /* 새로고침 기능 대체 */
 function disableF5(e) {
     if ((e.which || e.keyCode) == 116) {
@@ -14,7 +12,6 @@ function disableF5(e) {
 };
 $(document).bind("keydown", disableF5);
 $(document).on("keydown", disableF5);
-
 
 /* 그래프 동기화를 위한 타이머 함수*/
 var timer = function(callback, delay, data) {

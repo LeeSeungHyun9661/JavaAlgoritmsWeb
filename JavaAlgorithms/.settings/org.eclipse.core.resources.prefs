@@ -1,4 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/main/webapp/board/JavaAlgorithms.jsp=UTF-8
-encoding//src/main/webapp/board/SortingAlgoritms/ArrayMaker.jsp=UTF-8
+encoding//src/main/webapp/templates/sorting/ArraySetting.html=UTF-8
 encoding/<project>=UTF-8

@@ -1,162 +1,355 @@
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Heap Sort</h1>
-</div>
-<p>
-	<strong>Insertion Sort</strong> is another simple and efficient sorting algorithm that builds the final sorted list one item at a time. It works by repeatedly taking the next item from the unsorted part of the list and inserting it into its correct position within the sorted part of the list.
-	<br>
-	Insertion Sort is efficient for small lists or nearly sorted lists. Its time complexity is O(n^2) in the worst case scenario, but it can perform well on small datasets or partially sorted lists because it makes a relatively small number of comparisons and swaps compared to other quadratic-time sorting algorithms.
-	<br>
-	Overall, Insertion Sort is easy to understand and implement, making it a good choice for sorting small datasets or as part of more complex sorting algorithms.
-</p>
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">How It Work?</h1>
-</div>
-<ul>
-	<li>Start with the second element (index 1) of the list. This element is considered as being part of the sorted list.</li>
-	<li>Compare this element with the one before it (the first element in the sorted list). If the current element is smaller, swap them.</li>
-	<li>Move to the next unsorted element and repeat step 2 until all elements have been included in the sorted list.</li>
-	<li>At each step, the sorted list grows by one element, and the unsorted list shrinks by one element until the entire list is sorted.</li>
-</ul>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Java Sorting Algorithms</title>
+    <!-- Bootstrap - CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Bootstrap Icons - CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <!-- Color Mod -->
+    <script src="/JavaAlgorithms/resources/js/color-mode.js"></script>
+
+    <!-- amChart -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+    <!-- Favicons : 웹 아이콘 설정 -->
+    <link rel="apple-touch-icon" href="/JavaAlgorithms/resources/icon/java-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="/JavaAlgorithms/resources/icon/java-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="/JavaAlgorithms/resources/icon/java-16x16.png" sizes="16x16" type="image/png">
+    <link rel="manifest" href="https://getbootstrap.kr/docs/5.3/assets/img/favicons/manifest.json">
+    <link rel="mask-icon" href="https://getbootstrap.kr/docs/5.3/assets/img/favicons/safari-pinned-tab.svg"
+        color="#712cf9">
+    <link rel="icon" href="/JavaAlgorithms/resources/icon/java.ico">
+    <meta name="theme-color" content="#712cf9">
+    <link href="/JavaAlgorithms/resources/css/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="/JavaAlgorithms/resources/css/dashboard.css" rel="stylesheet">
+
+    <!-- Prism CSS -->
+    <link href="/JavaAlgorithms/resources/css/prism.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="/JavaAlgorithms/resources/css/style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div data-include-path="/JavaAlgorithms/templates/layouts/header.html"></div>
+    <!-- Main DOM -->
+    <div class="container-fluid">
+        <div class="row">
+            <div data-include-path="/JavaAlgorithms/templates/layouts/nav.html"></div>
+            <!-- MainBoard -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
 
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Java Code</h1>
-	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button" aria-expanded="false" aria-controls="collapse">
-		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-    </svg>
-	</a>
-</div>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Bubble Sort</h1>
+                </div>
+                <p>
+                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
+                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
+                    is repeated until the list is sorted.
+                    <br>
+                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
+                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
+                    <br>
+                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
+                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
+                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
+                    list increases, the time it takes to sort the list grows quadratically.
+                    <br>
+                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
+                    educational contexts to teach the concept of sorting algorithms and as a building block for more
+                    advanced algorithms.
+                </p>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">How It Work?</h1>
+                </div>
+                <ul>
+                    <li>Start at the beginning of the list.</li>
+                    <li>Compare the first two elements of the list. If the first element is greater than the second
+                        element, swap them.</li>
+                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
+                        you reach the end of the list.</li>
+                    <li>After the first pass, the largest element will be at the end of the list.</li>
+                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
+                        since it's already in its correct position.</li>
+                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                </ul>
 
-<div class="collapse show" id="collapse-code">
-	<pre class="line-numbers">
-        <code class="language-java">package sortings;
 
-        import java.util.ArrayList;
-        
-        public class InsertionSort extends Sort{    
-            
-            public InsertionSort(ArrayList&lt;Integer&gt; list) {
-                super(list);
-            }
-        
-            @Override
-            public void sort() {
-                int size = super.getSize();
-                ArrayList&lt;Integer> list = super.getList();
-                
-                for(int i=1; i&lt;size ; i++) {
-                    int target=i; for(int j=i-1; j>= 0; j--) {
-                        if(list.get(target) &lt; list.get(j)) {
-                            swap(target--,j);
-                        }else {
-                            break;
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Java Code</h1>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
+                        aria-expanded="false" aria-controls="collapse">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
+                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                            <path fill-rule="evenodd"
+                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="collapse show" id="collapse-code">
+                    <pre class="line-numbers">
+                    <code class="language-java">                    
+                    public void sort() {
+                        int size = super.getSize();
+                        ArrayList&lt;Integer&gt;list = super.getList();
+                    
+                        for (int i = 0; i < size - 1; i++) {
+                            for (int j = 0; j < (size - i) - 1; j++) {
+                                if (list.get(j) > list.get(j + 1)) {
+                                    swap(j, j + 1);
+                                }
+                            }
                         }
+                    }</code>
+                    </pre>
+                </div>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" id="chart_area">Visualization</h1>
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
+                        aria-expanded="false" aria-controls="collapse">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
+                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                            <path fill-rule="evenodd"
+                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="collapse show" id="collapse-chart">
+                    <!-- Bar Chart -->
+                    <div class="d-flex flex-column justify-content-center">
+                        <canvas class="my-4" id="barChart"
+                            style="display: block; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
+                        <div class="row mx-auto p-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="bar_startBtn" onclick="bar_start()">
+                                    <i class="bi bi-play-fill"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="bar_pauseBtn" onclick="bar_pause()">
+                                    <i class="bi bi-pause-fill"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="bar_resetBtn" onclick="bar_reset()">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="collapse show" id="collapse-chart">
+                    <!-- Tree Chart -->
+                    <div class="d-flex flex-column justify-content-center">
+                        <!-- HTML -->
+                        <div id="treeChart" style="display: block; width: 100%; height: 500px;"></div>
+
+                        <div class="card card-body">
+                            <div id="treeList"></div>
+                        </div>
+
+                        <div class="row mx-auto p-2">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="tree_start()">
+                                    <i class="bi bi-play-fill"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="pauseBtn" onclick="tree_pause()">
+                                    <i class="bi bi-pause-fill"></i>
+                                </button>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" id="resetBtn" onclick="tree_reset()">
+                                    <i class="bi bi-arrow-clockwise"></i>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>
+                    Setting
+                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                            <path fill-rule="evenodd"
+                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+                        </svg>
+                    </a>
+                </h2>
+
+                <div class="collapse show" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html"></div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
+                    </div>
+                </div>
+
+
+            </main>
+        </div>
+    </div>
+    <!-- Prism JS -->
+    <script src="/JavaAlgorithms/resources/js/prism.js"></script>
+
+    <script type="text/javascript" src="/JavaAlgorithms/resources/js/includeHTML.js"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- Custom JS -->
+    <script type="text/javascript" src="/JavaAlgorithms/resources/js/global.js"></script>
+    <script type="text/javascript" src="/JavaAlgorithms/resources/js/sorting.js"></script>
+    <script>
+        function bar_start() {
+            now = new Date().getTime();
+            var data = [...myBarChart.chart.data.datasets[0].data];
+            myBarChart.running = true;
+
+            for (let i = data.length - 1; i >= 0; i--) {
+                bar_heapify(data, i)
+                if (data[0] > data[i]) {
+                    myBarChart.swap(data, 0, i);
+                }
+            }
+        }
+        function bar_heapify(data, i) {
+            let index = parseInt(i / 2) - 1;
+            while (index >= 0) {
+                const left = index * 2 + 1;
+                const right = index * 2 + 2;
+
+                if (data[left] >= data[right] && data[index] < data[left]) {
+                    myBarChart.swap(data, index, left);
+                } else if (data[right] > data[left] && data[index] < data[right]) {
+                    myBarChart.swap(data, index, right);
+                }
+                index--;
+            }
+        }
+
+
+        function tree_start() {
+            now = new Date().getTime();
+            var data = [...firstArray];
+            myTreeChart.running = true;
+
+            /* 최대 힙 구현*/
+            var tree = [];
+            for (var i = 0; i < data.length; i++) {
+                tree_add(tree, i, data[i]);
+            }
+
+            for (var i = data.length - 1; i >= 0; i--) {
+                tree_pop(tree, i);
+                tree_heapify(tree, i);
+            }
+        }
+
+        function tree_add(tree, index, value) {
+            var data = {id: index, name: value, fill: '#333d4d'};
+            if (tree.length == 0) {
+                tree.push(data);
+            } else {
+                var parents = myTreeChart.getNode(tree, Math.floor((index - 1) / 2));
+                if (index % 2 == 1) {
+                    parents.children = [];
+                }
+                parents.children.push(data);
+            }
+            myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+            myTreeChart.removeListChild();
+
+            while (index > 0) {
+                var node = myTreeChart.getNode(tree, index);
+                var parents = myTreeChart.getNode(tree, (Math.floor((index - 1) / 2)));
+                if (parents.name > node.name) {
+                    break;
+                } else {
+                    var temp = node.name;
+                    node.name = parents.name;
+                    parents.name = temp;
+                    myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+                    index = parents.id;
+                }
+            }
+        }
+
+        function tree_pop(tree, index) {
+            myTreeChart.addListChild(tree[0].name);
+            if (index > 0) {
+                tree[0].name = myTreeChart.pop(tree, index);
+            } else {
+                tree = [];
+            }
+            myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+        }
+
+
+        function tree_heapify(tree) {
+            var temp = tree[0]
+            while ('children' in temp) {
+                if (temp.children.length == 1) {
+                    if (temp.children[0].name > temp.name) {
+                        var value = temp.name;
+                        temp.name = temp.children[0].name;
+                        temp.children[0].name = value;
+                        myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+                    }
+                    temp = temp.children[0]
+                } else {
+                    if (temp.name > temp.children[0].name && temp.name > temp.children[1].name) {
+                        break;
+                    } else {
+
+                        var biggerChildren = temp.children[0].name > temp.children[1].name ? temp.children[0] : temp.children[1];
+                        var value = temp.name;
+                        temp.name = biggerChildren.name;
+                        biggerChildren.name = value;
+                        myTreeChart.update(JSON.parse(JSON.stringify(tree)));
+                        temp = biggerChildren;
                     }
                 }
             }
-        }</code>
-    </pre>
-</div>
+        }
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Visualization</h1>
-	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button" aria-expanded="false" aria-controls="collapse">
-		<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-    </svg>
-	</a>
-</div>
+    </script>
+    <!-- Chart js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js"
+        integrity="sha512-7DgGWBKHddtgZ9Cgu8aGfJXvgcVv4SWSESomRtghob4k4orCBUTSRQ4s5SaC2Rz+OptMqNk0aHHsaUBk6fzIXw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Bootstrap - JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
 
-<div class="collapse show" id="collapse-chart">
-	<!-- Bar Chart -->
-	<div class="d-flex flex-column justify-content-center">
-		<canvas class="my-4" id="barChart" style="display: block; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-		<div class="row mx-auto p-2">
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="BarSortingBtn" onclick="heapSort_bar()">
-					<i class="bi bi-play-fill"></i>
-				</button>
-			</div>
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="BarPauseBtn" onclick="bar_pause()">
-					<i class="bi bi-pause-fill"></i>
-				</button>
-			</div>
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="BarResetBtn" onclick="bar_reset()">
-					<i class="bi bi-arrow-clockwise"></i>
-				</button>
-
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="collapse show" id="collapse-chart">
-	<!-- Tree Chart -->
-	<div class="d-flex flex-column justify-content-center">
-		<!-- HTML -->
-		<div id="treeChart" style="display: block; width: 100%; height: 500px;"></div>
-
-		<div class="card card-body">
-			<div id="treeList"></div>
-		</div>
-
-
-		<div class="row mx-auto p-2">
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="TreeSortingBtn" onclick="heapSort_tree()">
-					<i class="bi bi-play-fill"></i>
-				</button>
-			</div>
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="TreepauseBtn" onclick="tree_pause()">
-					<i class="bi bi-pause-fill"></i>
-				</button>
-			</div>
-			<div class="col">
-				<button type="button" class="btn btn-primary" id="TreeresetBtn" onclick="tree_reset()">
-					<i class="bi bi-arrow-clockwise"></i>
-				</button>
-
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-
-<h2>
-	Setting
-	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button" aria-expanded="false" aria-controls="collapse">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-    </svg>
-	</a>
-</h2>
-
-<h2>
-	Setting
-	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button" aria-expanded="false" aria-controls="collapse">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-      <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-    </svg>
-	</a>
-</h2>
-
-<div class="collapse show" id="collapse-setting">
-	<div class="card card-body">
-		<jsp:include page="ArrayMaker.jsp" flush="true" />
-
-		<input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
-	</div>
-</div>
-<!-- Prism JS -->
-<script src="../resources/js/prism.js"></script>
-
+</html>

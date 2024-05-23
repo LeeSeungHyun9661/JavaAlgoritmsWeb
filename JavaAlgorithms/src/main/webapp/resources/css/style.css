@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
+@font-face {
+    font-family: "coves";
+    src: url(../font/Coves_Light.otf) format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "coves";
+    src: url(../font/Coves_Bold.otf) format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+
+
 .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -19,7 +35,7 @@
 }
 
 .accordion-body {
-    padding:10px
+    padding: 10px
 }
 
 @media (min-width: 1280px) {
@@ -30,6 +46,13 @@
 
 body {
     display: none;
+    font-family: coves;
+}
+
+h1,
+h2,
+h5 {
+    font-weight: bold;
 }
 
 td,
@@ -47,6 +70,10 @@ th {
 
 td {
     border-bottom: 0px !important;
+}
+
+img{
+    width: 100%;
 }
 
 .b-example-divider {
@@ -106,4 +133,8 @@ td {
 
 .bd-mode-toggle {
     z-index: 1500;
+}
+
+#barChart{
+    max-height: 500px;
 }

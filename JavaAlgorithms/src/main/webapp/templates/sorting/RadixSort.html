@@ -48,92 +48,132 @@
             <div data-include-path="/JavaAlgorithms/templates/layouts/nav.html"></div>
             <!-- MainBoard -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
-
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1>Radix Sort</h1>
+                </div>
+                <p><strong>Radix Sort</strong> is a non-comparison sorting algorithm that sorts integers by processing
+                    individual digits of the numbers. It works by distributing the elements into buckets based on their
+                    digits, then collecting the elements from the buckets in a specific order.</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bubble Sort</h1>
+                    <h2>History</h2>
                 </div>
-                <p>
-                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
-                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
-                    is repeated until the list is sorted.
-                    <br>
-                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
-                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
-                    <br>
-                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
-                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
-                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
-                    list increases, the time it takes to sort the list grows quadratically.
-                    <br>
-                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
-                    educational contexts to teach the concept of sorting algorithms and as a building block for more
-                    advanced algorithms.
-                </p>
+                <p>Radix Sort was first proposed by Herman Hollerith in 1887 for use with punched card machines. It
+                    became popular in the computer science community for its linear time complexity.</p>
+
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">How It Work?</h1>
+                    <h2>Working Principle and Example</h2>
                 </div>
+                <p>Consider an array to be sorted: <code>[170, 45, 75, 90, 802, 24, 2, 66]</code>.</p>
+
+                <h5>Step.1</h5>
                 <ul>
-                    <li>Start at the beginning of the list.</li>
-                    <li>Compare the first two elements of the list. If the first element is greater than the second
-                        element, swap them.</li>
-                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
-                        you reach the end of the list.</li>
-                    <li>After the first pass, the largest element will be at the end of the list.</li>
-                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
-                        since it's already in its correct position.</li>
-                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                    <li>Sort the elements based on their least significant digit (units place)</li>
+                    <li>After this step, the array becomes: <code>[170, 90, 802, 2, 24, 45, 75, 66]</code></li>
                 </ul>
 
+                <h5>Step.2</h5>
+                <ul>
+                    <li>Sort the elements again based on their next significant digit (tens place)</li>
+                    <li>After this step, the array becomes: <code>[802, 2, 24, 45, 66, 170, 75, 90]</code></li>
+                </ul>
+
+                <h5>Step.3</h5>
+                <ul>
+                    <li>Repeat the sorting process for all significant digits until the most significant digit is
+                        reached</li>
+                    <li>After the final step, the array is sorted: <code>[2, 24, 45, 66, 75, 90, 170, 802]</code></li>
+                </ul>
+
+                <h5>Result</h5>
+                <p><code>[2, 24, 45, 66, 75, 90, 170, 802]</code> (sorted)</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Java Code</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2>Time Complexity</h2>
+                </div>
+                <ul>
+                    <li><strong>Time complexity:</strong> \(O(d \cdot (n + k))\), where \(d\) is the number of digits,
+                        \(n\) is the number of elements, and \(k\) is the base of the number system (typically 10 for
+                        decimal numbers)</li>
+                </ul>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Summary</h2>
+                </div>
+                <p>Radix Sort is a stable sorting algorithm that is especially effective for sorting integers with a
+                    fixed number of digits. It achieves linear time complexity by leveraging the radix-based sorting
+                    technique.</p>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Java code</h2>
                 </div>
 
                 <div class="collapse show" id="collapse-code">
                     <pre class="line-numbers">
-                    <code class="language-java">                    
-                    public void sort() {
-                        int size = super.getSize();
-                        ArrayList&lt;Integer&gt;list = super.getList();
-                    
-                        for (int i = 0; i < size - 1; i++) {
-                            for (int j = 0; j < (size - i) - 1; j++) {
-                                if (list.get(j) > list.get(j + 1)) {
-                                    swap(j, j + 1);
-                                }
-                            }
-                        }
-                    }</code>
+        <code class="language-java">public void sort() {
+            int[] list = super.getList();
+            int topRadix = getTopRadix(list);
+    
+            Queue<Integer>[] buckets = new LinkedList[10];
+            for (int i = 0; i < 10; i++) {
+                buckets[i] = new LinkedList<>();
+            }
+    
+            int radix = 0;
+            while (topRadix > radix) {
+                int listIdx = 0;
+    
+                for (int i : list) {
+                    int num = (int) (i / Math.pow(10, radix) % 10);
+                    buckets[num].add(i);
+                }
+    
+                for (int j = 0; j < 10; j++) {
+                    while (!buckets[j].isEmpty()) {
+                        list[listIdx++] = buckets[j].poll();
+                    }
+                }
+                radix++;
+            }
+    
+        }</code>
+                    </pre>
+                    <pre class="line-numbers">
+        <code class="language-java">public static int getTopRadix(int[] list) {
+            int top = 0;
+            for (int i : list) {
+                if (i > top)
+                    top = i;
+            }
+            int radix = 0;
+            while (top > 0) {
+                top /= 10;
+                radix++;
+            }
+            return radix;
+        }</code>
                     </pre>
                 </div>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="chart_area">Visualization</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2 id="chart_area">Visualization</h2>
+                    <i class="bi bi-gear-fill" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse"></i>
+                </div>
+                <div class="collapse" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html">
+                        </div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
+                    </div>
                 </div>
 
                 <div class="collapse show" id="collapse-chart">
@@ -195,7 +235,8 @@
 
                         <div class="row mx-auto p-2">
                             <div class="col">
-                                <button type="button" class="btn btn-primary" id="TreeSortingBtn" onclick="table_start()">
+                                <button type="button" class="btn btn-primary" id="TreeSortingBtn"
+                                    onclick="table_start()">
                                     <i class="bi bi-play-fill"></i>
                                 </button>
                             </div>
@@ -213,30 +254,6 @@
                         </div>
                     </div>
                 </div>
-
-                <h2>
-                    Setting
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
-                </h2>
-
-                <div class="collapse show" id="collapse-setting">
-                    <div class="card card-body">
-                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html"></div>
-
-                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
-                    </div>
-                </div>
-
-
             </main>
         </div>
     </div>

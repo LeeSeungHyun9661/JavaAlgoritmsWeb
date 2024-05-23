@@ -48,92 +48,121 @@
             <div data-include-path="/JavaAlgorithms/templates/layouts/nav.html"></div>
             <!-- MainBoard -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
-
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1>Insertion Sort</h1>
+                </div>
+                <p><strong>Insertion Sort</strong> is a simple and efficient comparison-based sorting algorithm. It
+                    builds the final sorted array one item at a time, with the movement of elements being akin to
+                    sorting playing cards in your hands.</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bubble Sort</h1>
+                    <h2>History</h2>
                 </div>
-                <p>
-                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
-                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
-                    is repeated until the list is sorted.
-                    <br>
-                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
-                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
-                    <br>
-                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
-                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
-                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
-                    list increases, the time it takes to sort the list grows quadratically.
-                    <br>
-                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
-                    educational contexts to teach the concept of sorting algorithms and as a building block for more
-                    advanced algorithms.
+                <p>Insertion Sort has been used since the early days of computing and is still widely taught due to its
+                    simplicity and ease of understanding. It is efficient for small datasets or partially sorted arrays
+                    and serves as an introduction to more complex algorithms.</p>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Working Principle</h2>
+                </div>
+                <p>Insertion Sort iterates through the list, consuming one input element per iteration and growing a
+                    sorted output list. At each iteration, Insertion Sort removes one element from the input data, finds
+                    the location it belongs within the sorted list, and inserts it there. It repeats until no input
+                    elements remain. Insertion Sort is an in-place sorting algorithm with a space complexity of
+                    \(O(1)\). It is also a stable sorting algorithm, maintaining the relative order of equal elements.
                 </p>
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">How It Work?</h1>
-                </div>
+
+
+                <p>Consider an array to be sorted: <code>[5, 3, 8, 4, 2]</code>.</p>
+
+                <h5>Step.1</h5>
                 <ul>
-                    <li>Start at the beginning of the list.</li>
-                    <li>Compare the first two elements of the list. If the first element is greater than the second
-                        element, swap them.</li>
-                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
-                        you reach the end of the list.</li>
-                    <li>After the first pass, the largest element will be at the end of the list.</li>
-                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
-                        since it's already in its correct position.</li>
-                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                    <li><code>[5, 3, 8, 4, 2]</code> (Initial array)</li>
+                    <li>3 is compared with 5 and inserted before it → <code>[3, 5, 8, 4, 2]</code></li>
                 </ul>
 
+                <h5>Step.2</h5>
+                <ul>
+                    <li><code>[3, 5, 8, 4, 2]</code></li>
+                    <li>8 is compared with 5 and remains in place → <code>[3, 5, 8, 4, 2]</code></li>
+                </ul>
+
+                <h5>Step.3</h5>
+                <ul>
+                    <li><code>[3, 5, 8, 4, 2]</code></li>
+                    <li>4 is compared with 8 and inserted before it → <code>[3, 5, 4, 8, 2]</code></li>
+                    <li>4 is then compared with 5 and inserted before it → <code>[3, 4, 5, 8, 2]</code></li>
+                </ul>
+
+                <h5>Step.4</h5>
+                <ul>
+                    <li><code>[3, 4, 5, 8, 2]</code></li>
+                    <li>2 is compared with 8 and inserted before it → <code>[3, 4, 5, 2, 8]</code></li>
+                    <li>2 is then compared with 5 and inserted before it → <code>[3, 4, 2, 5, 8]</code></li>
+                    <li>2 is then compared with 4 and inserted before it → <code>[3, 2, 4, 5, 8]</code></li>
+                    <li>2 is finally compared with 3 and inserted before it → <code>[2, 3, 4, 5, 8]</code></li>
+                </ul>
+
+                <h5>Result</h5>
+                <p><code>[2, 3, 4, 5, 8]</code> (sorted)</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Java Code</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2>Time Complexity</h2>
+                </div>
+                <ul>
+                    <li><strong>Best-case time complexity:</strong> \(O(n)\) (when the array is already sorted)</li>
+                    <li><strong>Average and worst-case time complexity:</strong> \(O(n^2)\)</li>
+                </ul>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Summary</h2>
+                </div>
+                <p>Insertion Sort is a simple and easy-to-understand algorithm that works efficiently on small datasets
+                    or nearly sorted arrays. This page provided an explanation of Insertion Sort, including its
+                    definition, working principle, time complexity, history, and step-by-step operation. This
+                    information aims to enhance understanding of Insertion Sort and provide foundational knowledge for
+                    comparing it with other sorting algorithms.</p>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Java code</h2>
                 </div>
 
                 <div class="collapse show" id="collapse-code">
                     <pre class="line-numbers">
-                    <code class="language-java">                    
-                    public void sort() {
-                        int size = super.getSize();
-                        ArrayList&lt;Integer&gt;list = super.getList();
-                    
-                        for (int i = 0; i < size - 1; i++) {
-                            for (int j = 0; j < (size - i) - 1; j++) {
-                                if (list.get(j) > list.get(j + 1)) {
-                                    swap(j, j + 1);
-                                }
-                            }
-                        }
-                    }</code>
+        <code class="language-java">public void sort() {
+            int[] list = getList();
+    
+            for (int i = 1; i < list.length; i++) {
+                int target = i;
+                for (int j = i - 1; j >= 0; j--) {
+                    if (list[target] < list[j]) {
+                        swap(target--, j);
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }</code>
                     </pre>
                 </div>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="chart_area">Visualization</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2 id="chart_area">Visualization</h2>
+                    <i class="bi bi-gear-fill" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse"></i>
+                </div>
+                <div class="collapse" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html">
+                        </div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
+                    </div>
                 </div>
 
                 <div class="collapse show" id="collapse-chart">
@@ -162,19 +191,7 @@
                     </div>
                 </div>
 
-                <h2>
-                    Setting
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
-                </h2>
+
 
                 <div class="collapse show" id="collapse-setting">
                     <div class="card card-body">
@@ -199,21 +216,21 @@
     <script type="text/javascript" src="/JavaAlgorithms/resources/js/sorting.js"></script>
     <script>
         function bar_start() {
-    now = new Date().getTime();
-    var data = [...myBarChart.chart.data.datasets[0].data];
-    myBarChart.running = true;
+            now = new Date().getTime();
+            var data = [...myBarChart.chart.data.datasets[0].data];
+            myBarChart.running = true;
 
-    for (var i = 0; i < data.length; i++) {
-        var target = i;
-        for (var j = i - 1; j >= 0; j--) {
-            if (data[target] < data[j]) {
-                myBarChart.swap(data, target--, j);
-            } else {
-                break;
+            for (var i = 0; i < data.length; i++) {
+                var target = i;
+                for (var j = i - 1; j >= 0; j--) {
+                    if (data[target] < data[j]) {
+                        myBarChart.swap(data, target--, j);
+                    } else {
+                        break;
+                    }
+                }
             }
         }
-    }
-}
     </script>
     <!-- Chart js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.umd.js"

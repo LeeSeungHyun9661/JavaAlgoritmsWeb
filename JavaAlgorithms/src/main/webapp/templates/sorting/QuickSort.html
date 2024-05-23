@@ -48,92 +48,119 @@
             <div data-include-path="/JavaAlgorithms/templates/layouts/nav.html"></div>
             <!-- MainBoard -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
-
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1>Quick Sort</h1>
+                </div>
+                <p><strong>Quick Sort</strong> is a highly efficient sorting algorithm based on the divide and conquer
+                    strategy. It first selects a pivot element from the array and partitions the other elements into two
+                    sub-arrays according to whether they are less than or greater than the pivot. The sub-arrays are
+                    then recursively sorted.</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bubble Sort</h1>
+                    <h2>History</h2>
                 </div>
-                <p>
-                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
-                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
-                    is repeated until the list is sorted.
-                    <br>
-                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
-                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
-                    <br>
-                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
-                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
-                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
-                    list increases, the time it takes to sort the list grows quadratically.
-                    <br>
-                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
-                    educational contexts to teach the concept of sorting algorithms and as a building block for more
-                    advanced algorithms.
-                </p>
+                <p>Quick Sort was developed by Tony Hoare in 1959. It is widely used for sorting large datasets
+                    efficiently and is one of the most commonly used sorting algorithms in practice.</p>
+
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">How It Work?</h1>
+                    <h2>Working Principle</h2>
                 </div>
+                <p>Consider an array to be sorted: <code>[5, 3, 8, 4, 2]</code>.</p>
+
+                <h5>Step.1</h5>
                 <ul>
-                    <li>Start at the beginning of the list.</li>
-                    <li>Compare the first two elements of the list. If the first element is greater than the second
-                        element, swap them.</li>
-                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
-                        you reach the end of the list.</li>
-                    <li>After the first pass, the largest element will be at the end of the list.</li>
-                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
-                        since it's already in its correct position.</li>
-                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                    <li><code>[5, 3, 8, 4, 2]</code> (Initial array)</li>
+                    <li>Select a pivot element, for example, 4</li>
+                    <li>Partition the array into two sub-arrays: <code>[3, 2]</code> and <code>[5, 8]</code></li>
+                    <li>Recursively sort each sub-array</li>
                 </ul>
 
+                <h5>Step.2</h5>
+                <ul>
+                    <li><code>[3, 2]</code> (Sorted sub-array)</li>
+                    <li>No action needed as it contains only two elements</li>
+                </ul>
+
+                <h5>Step.3</h5>
+                <ul>
+                    <li><code>[5, 8]</code> (Sorted sub-array)</li>
+                    <li>No action needed as it contains only two elements</li>
+                </ul>
+
+                <h5>Result</h5>
+                <p><code>[2, 3, 4, 5, 8]</code> (sorted)</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Java Code</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2>Time Complexity</h2>
+                </div>
+                <ul>
+                    <li><strong>Time complexity:</strong> \(O(n \log n)\) on average, \(O(n^2)\) in the worst case</li>
+                </ul>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Summary</h2>
+                </div>
+                <p>Quick Sort is a highly efficient sorting algorithm with an average time complexity of \(O(n \log
+                    n)\). However, it can degrade to \(O(n^2)\) in the worst case. Despite this, Quick Sort is widely
+                    used for sorting large datasets due to its efficiency. This page has provided an explanation of
+                    Quick Sort, including its definition, working principle, time complexity, and history.</p>
+
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Java Code</h2>
                 </div>
 
                 <div class="collapse show" id="collapse-code">
                     <pre class="line-numbers">
-                    <code class="language-java">                    
-                    public void sort() {
-                        int size = super.getSize();
-                        ArrayList&lt;Integer&gt;list = super.getList();
-                    
-                        for (int i = 0; i < size - 1; i++) {
-                            for (int j = 0; j < (size - i) - 1; j++) {
-                                if (list.get(j) > list.get(j + 1)) {
-                                    swap(j, j + 1);
-                                }
-                            }
-                        }
-                    }</code>
+        <code class="language-java">public void sort() {
+            int[] list = super.getList();
+            divide(list, 0, list.length - 1);
+        }
+    
+        public void divide(int[] list, int min, int max) {
+            if (min < max) {
+                int pivot = getPivot(list, min, max);
+                divide(list, min, pivot);
+                divide(list, pivot + 1, max);
+            }
+            return;
+        }
+    
+        private int getPivot(int[] list, int min, int max) {
+            int pivot = list[(min + max) / 2];
+    
+            while (true) {
+                while (list[min] < pivot)
+                    min++;
+                while (list[max] > pivot && min <= max)
+                    max--;
+                if (min >= max)
+                    return max;
+                swap(min, max);
+            }
+        }</code>
                     </pre>
                 </div>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="chart_area">Visualization</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2 id="chart_area">Visualization</h2>
+                    <i class="bi bi-gear-fill" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse"></i>
+                </div>
+                <div class="collapse" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html">
+                        </div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
+                    </div>
                 </div>
 
                 <div class="collapse show" id="collapse-chart">
@@ -161,30 +188,6 @@
                         </div>
                     </div>
                 </div>
-
-                <h2>
-                    Setting
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
-                </h2>
-
-                <div class="collapse show" id="collapse-setting">
-                    <div class="card card-body">
-                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html"></div>
-
-                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
-                    </div>
-                </div>
-
-
             </main>
         </div>
     </div>

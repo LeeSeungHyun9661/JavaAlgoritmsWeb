@@ -49,116 +49,141 @@
             <!-- MainBoard -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
 
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1>Tree Sort</h1>
+                </div>
+                <p><strong>Tree Sort</strong> is a sorting algorithm that builds a binary search tree from the elements
+                    to be sorted, and then traverses the tree in-order to obtain the sorted sequence.</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bubble Sort</h1>
+                    <h2>History</h2>
                 </div>
-                <p>
-                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
-                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
-                    is repeated until the list is sorted.
-                    <br>
-                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
-                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
-                    <br>
-                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
-                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
-                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
-                    list increases, the time it takes to sort the list grows quadratically.
-                    <br>
-                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
-                    educational contexts to teach the concept of sorting algorithms and as a building block for more
-                    advanced algorithms.
-                </p>
+                <p>Tree Sort was first proposed by J. W. J. Williams in 1964, along with the invention of Heap Sort. It
+                    is based on the concept of binary search trees and provides an efficient way to sort data.</p>
+
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">How It Work?</h1>
+                    <h2>Working Principle</h2>
                 </div>
+                <p>Consider an array to be sorted: <code>[5, 3, 8, 4, 2]</code>.</p>
+
+                <h5>Step.1</h5>
                 <ul>
-                    <li>Start at the beginning of the list.</li>
-                    <li>Compare the first two elements of the list. If the first element is greater than the second
-                        element, swap them.</li>
-                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
-                        you reach the end of the list.</li>
-                    <li>After the first pass, the largest element will be at the end of the list.</li>
-                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
-                        since it's already in its correct position.</li>
-                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                    <li>Insert each element of the array into a binary search tree</li>
                 </ul>
 
+                <h5>Step.2</h5>
+                <ul>
+                    <li>Traverse the binary search tree in-order to obtain the sorted sequence</li>
+                </ul>
+
+                <h5>Result</h5>
+                <p><code>[2, 3, 4, 5, 8]</code> (sorted)</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Java Code</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2>Time Complexity</h2>
+                </div>
+                <ul>
+                    <li><strong>Time complexity:</strong> \(O(n \log n)\) in average case; \(O(n^2)\) in worst case (if
+                        the tree is unbalanced)</li>
+                </ul>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Summary</h2>
+                </div>
+                <p>Tree Sort is a sorting algorithm based on binary search trees. It has a time complexity of \(O(n \log
+                    n)\) in the average case and is suitable for sorting small to moderate-sized datasets. This page has
+                    provided an explanation of Tree Sort, including its definition, working principle, time complexity,
+                    and history.</p>
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Java Code</h2>
                 </div>
 
                 <div class="collapse show" id="collapse-code">
                     <pre class="line-numbers">
-                    <code class="language-java">                    
-                    public void sort() {
-                        int size = super.getSize();
-                        ArrayList&lt;Integer&gt;list = super.getList();
-                    
-                        for (int i = 0; i < size - 1; i++) {
-                            for (int j = 0; j < (size - i) - 1; j++) {
-                                if (list.get(j) > list.get(j + 1)) {
-                                    swap(j, j + 1);
-                                }
-                            }
-                        }
-                    }</code>
+        <code class="language-java">Node root;
+        int index = 0;
+        
+        class Node {
+            int value;
+            Node left, right;
+    
+            public Node(int value) {
+                this.value = value;
+                left = right = null;
+            }
+        }</code>
                     </pre>
+
+                    <pre class="line-numbers">
+        <code class="language-java">public void sort() {
+            int[] list = super.getList();
+    
+            for (int i = 0; i < list.length; i++) {
+                insertNode(list[i]);
+            }
+            popNode(list, root);
+        }</code>
+                    </pre>
+
+                    <pre class="line-numbers">
+        <code class="language-java">private void insertNode(Integer value) {
+            Node node = new Node(value);
+    
+            if (root == null) {
+                this.root = node;
+            } else {
+                Node temp = root;
+                while (true) {
+                    if (temp.value > value) {
+                        if (temp.left == null) {
+                            temp.left = node;
+                            return;
+                        } else {
+                            temp = temp.left;
+                        }
+                    } else {
+                        if (temp.right == null) {
+                            temp.right = node;
+                            return;
+                        } else {
+                            temp = temp.right;
+                        }
+                    }
+                }
+    
+            }
+        }</code>
+                        </pre>
+
+                    <pre class="line-numbers">
+        <code class="language-java">private void popNode(int[] list, Node node) {
+            if (node != null) {
+                popNode(list, node.left);
+                list[index++] = node.value;
+                popNode(list, node.right);
+            }
+        }</code>
+                        </pre>
                 </div>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="chart_area">Visualization</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2 id="chart_area">Visualization</h2>
+                    <i class="bi bi-gear-fill" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse"></i>
                 </div>
-
-                <div class="collapse show" id="collapse-chart">
-                    <!-- Bar Chart -->
-                    <div class="d-flex flex-column justify-content-center">
-                        <canvas class="my-4" id="barChart"
-                            style="display: block; box-sizing: border-box; height: 445px; width: 1056px;"></canvas>
-                        <div class="row mx-auto p-2">
-                            <div class="col">
-                                <button type="button" class="btn btn-primary" id="bar_startBtn" onclick="bar_start()">
-                                    <i class="bi bi-play-fill"></i>
-                                </button>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-primary" id="bar_pauseBtn" onclick="bar_pause()">
-                                    <i class="bi bi-pause-fill"></i>
-                                </button>
-                            </div>
-                            <div class="col">
-                                <button type="button" class="btn btn-primary" id="bar_resetBtn" onclick="bar_reset()">
-                                    <i class="bi bi-arrow-clockwise"></i>
-                                </button>
-
-                            </div>
+                <div class="collapse" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html">
                         </div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
                     </div>
                 </div>
 
@@ -192,30 +217,6 @@
                         </div>
                     </div>
                 </div>
-
-                <h2>
-                    Setting
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
-                </h2>
-
-                <div class="collapse show" id="collapse-setting">
-                    <div class="card card-body">
-                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html"></div>
-
-                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
-                    </div>
-                </div>
-
-
             </main>
         </div>
     </div>
@@ -275,13 +276,13 @@
         function tree_pop(tree, node) {
             if (node.id != null) {
                 if (node.hasOwnProperty('children')) {
-                    treeSort_tree_pop(tree, node.children[0]);
+                    tree_pop(tree, node.children[0]);
                 }
                 myTreeChart.highLight(tree, node.name);
                 myTreeChart.addListChild(node.name);
 
                 if (node.hasOwnProperty('children')) {
-                    treeSort_tree_pop(tree, node.children[1]);
+                    tree_pop(tree, node.children[1]);
                 }
             }
         }

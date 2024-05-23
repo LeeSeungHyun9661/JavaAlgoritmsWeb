@@ -48,92 +48,150 @@
             <div data-include-path="/JavaAlgorithms/templates/layouts/nav.html"></div>
             <!-- MainBoard -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-mds4" id="dashboard">
-
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1>Intro Sort</h1>
+                </div>
+                <p><strong>Intro Sort</strong> is a hybrid sorting algorithm that combines Quick Sort, Heap Sort, and
+                    Insertion Sort. It is used in the C++ Standard Library (STL) as one of the sorting algorithms.</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Bubble Sort</h1>
+                    <h2>History</h2>
                 </div>
-                <p>
-                    <strong>Bubble Sort</strong> is a simple sorting algorithm that repeatedly steps through the list,
-                    compares adjacent elements, and swaps them if they are in the wrong order. The pass through the list
-                    is repeated until the list is sorted.
-                    <br>
-                    The name "Bubble Sort" comes from the way smaller elements "bubble" to the top (beginning) of the
-                    list, while larger elements "sink" to the bottom (end) of the list with each iteration.
-                    <br>
-                    Bubble Sort is straightforward to understand and implement, making it a good introductory sorting
-                    algorithm. However, it is not very efficient, especially for large lists, as it has a time
-                    complexity of O(n^2) in the worst case scenario. This means that as the number of elements in the
-                    list increases, the time it takes to sort the list grows quadratically.
-                    <br>
-                    Despite its simplicity and inefficiency for large datasets, Bubble Sort is still sometimes used in
-                    educational contexts to teach the concept of sorting algorithms and as a building block for more
-                    advanced algorithms.
-                </p>
+                <p>Intro Sort was first introduced by David Musser in 1997. It was designed to provide both fast
+                    average-case performance of Quick Sort and the worst-case performance guarantees of Heap Sort.</p>
+
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">How It Work?</h1>
+                    <h2>Working Principle</h2>
                 </div>
+                <p>Consider an array to be sorted: <code>[5, 3, 8, 4, 2]</code>.</p>
+
+                <h5>Step.1</h5>
                 <ul>
-                    <li>Start at the beginning of the list.</li>
-                    <li>Compare the first two elements of the list. If the first element is greater than the second
-                        element, swap them.</li>
-                    <li>Move to the next pair of elements, and compare them in the same way. Continue this process until
-                        you reach the end of the list.</li>
-                    <li>After the first pass, the largest element will be at the end of the list.</li>
-                    <li>Repeat steps 1-4 for the remaining elements in the list, excluding the last one on each pass
-                        since it's already in its correct position.</li>
-                    <li>Continue this process until no swaps are needed, indicating that the list is sorted.</li>
+                    <li>Apply Quick Sort until a certain recursion depth threshold is reached</li>
                 </ul>
 
+                <h5>Step.2</h5>
+                <ul>
+                    <li>If the recursion depth threshold is exceeded, switch to Heap Sort</li>
+                </ul>
+
+                <h5>Step.3</h5>
+                <ul>
+                    <li>If the array becomes small enough, switch to Insertion Sort</li>
+                </ul>
+
+                <h5>Result</h5>
+                <p><code>[2, 3, 4, 5, 8]</code> (sorted)</p>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Java Code</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-code" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2>Time Complexity</h2>
+                </div>
+                <ul>
+                    <li><strong>Time complexity:</strong> \(O(n \log n)\)</li>
+                </ul>
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Summary</h2>
+                </div>
+                <p>Intro Sort combines the strengths of Quick Sort, Heap Sort, and Insertion Sort to achieve a balance
+                    between average-case and worst-case performance. It is widely used in practice due to its efficiency
+                    and stability.</p>
+
+
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h2>Java code</h2>
                 </div>
 
                 <div class="collapse show" id="collapse-code">
                     <pre class="line-numbers">
-                    <code class="language-java">                    
-                    public void sort() {
-                        int size = super.getSize();
-                        ArrayList&lt;Integer&gt;list = super.getList();
-                    
-                        for (int i = 0; i < size - 1; i++) {
-                            for (int j = 0; j < (size - i) - 1; j++) {
-                                if (list.get(j) > list.get(j + 1)) {
-                                    swap(j, j + 1);
-                                }
-                            }
-                        }
-                    }</code>
+        <code class="language-java">public void sort() {
+            int[] list = super.getList();
+            int depth = (int) (Math.log(list.length) * 2);
+    
+            intro(list, depth, 0, list.length - 1);
+        }</code>
+                    </pre>
+
+                    <pre class="line-numbers">
+        <code class="language-java">private void intro(int[] list, int depth, int start, int end) {
+            if (list.length <= 1) {
+                return;
+            } else if (depth == 0) {
+                if (end - start > 16) {
+                    heapsort(list, start, end);
+                } else {
+                    insertionsort(list, start, end);
+                }
+            } else {
+                if (start >= end) {
+                    return;
+                }
+                int pivot = partition(list, start, end);
+                intro(list, depth - 1, start, pivot);
+                intro(list, depth - 1, pivot + 1, end);
+            }
+    
+        }</code>
+                    </pre>
+                     <pre class="line-numbers">
+        <code class="language-java">private void insertionsort(int[] list, int start, int end) {
+            for (var i = start; i < end; i++) {
+                var target = i;
+                for (var j = i - 1; j >= 0; j--) {
+                    if (list[target] < list[j]) {
+                        swap(target--, j);
+                    } else {
+                        break;
+                    }
+                }
+        }</code>
+                        </pre>
+                     <pre class="line-numbers">
+        <code class="language-java">private void heapsort(int[] list, int start, int end) {
+            PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
+            for (int i = start; i < end; i++) {
+                heap.add(list[i]);
+            }
+            for (int i = start; i < end; i++) {
+                list[i] = heap.poll();
+            }
+        }</code>
+                    </pre>
+                     <pre class="line-numbers">
+        <code class="language-java">private int partition(int[] list, int start, int end) {
+            int pivot = list[(start + end) / 2];
+            while (true) {
+                while (list[start] < pivot)
+                    start++;
+                while (list[end] > pivot && start <= end)
+                    end--;
+                if (start >= end)
+                    return end;
+                swap(start, end);
+            }
+        }</code>
                     </pre>
                 </div>
 
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2" id="chart_area">Visualization</h1>
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-chart" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
+                    <h2 id="chart_area">Visualization</h2>
+                    <i class="bi bi-gear-fill" data-bs-toggle="collapse" href="#collapse-setting" role="button"
+                        aria-expanded="false" aria-controls="collapse"></i>
+                </div>
+                <div class="collapse" id="collapse-setting">
+                    <div class="card card-body">
+                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html">
+                        </div>
+
+                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
+                    </div>
                 </div>
 
                 <div class="collapse show" id="collapse-chart">
@@ -161,30 +219,6 @@
                         </div>
                     </div>
                 </div>
-
-                <h2>
-                    Setting
-                    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse-setting" role="button"
-                        aria-expanded="false" aria-controls="collapse">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-chevron-double-down" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                            <path fill-rule="evenodd"
-                                d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
-                        </svg>
-                    </a>
-                </h2>
-
-                <div class="collapse show" id="collapse-setting">
-                    <div class="card card-body">
-                        <div data-include-path="/JavaAlgorithms/templates/sorting/ArraySetting.html"></div>
-
-                        <input type="range" class="form-range" min="100" max="2000" value="500" id="speed">
-                    </div>
-                </div>
-
-
             </main>
         </div>
     </div>

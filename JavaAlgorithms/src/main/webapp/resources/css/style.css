@@ -2,14 +2,14 @@
 
 @font-face {
     font-family: "coves";
-    src: url(../font/Coves_Light.otf) format("opentype");
+    src: url(../font/SCDream3.otf) format("opentype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "coves";
-    src: url(../font/Coves_Bold.otf) format("truetype");
+    src: url(../font/SCDream5.otf) format("truetype");
     font-weight: bold;
     font-style: normal;
 }
@@ -39,7 +39,7 @@
 }
 
 @media (min-width: 1280px) {
-    설 .container-fluid {
+    .container-fluid {
         width: 100%;
     }
 }
@@ -55,24 +55,67 @@ h5 {
     font-weight: bold;
 }
 
-td,
-th,
-th {
+.textBlock{
+    div{
+        
+    }
+    
+}
+
+
+
+table {
+    width: 100%;
     border-collapse: collapse;
-    text-align: center !important;
+    border-radius: 10px;
+    /* 테이블 테두리를 둥글게 설정 */
+    overflow: hidden;
+    /* 테이블 테두리가 둥글게 보이도록 설정 */
+}
+
+th,
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
 th {
-    border-bottom: 1px solid #444444 !important;
-    background-color: #333d4d !important;
-    color: #FFFFFF !important;
+    background-color: #f2f2f2;
 }
 
-td {
-    border-bottom: 0px !important;
+th:first-child {
+    border-radius: 10px 0 0 0;
+    /* 첫 번째 열의 좌측 상단 테두리만 둥글게 설정 */
 }
 
-img{
+th:last-child {
+    border-radius: 0 10px 0 0;
+    /* 첫 번째 열의 우측 상단 테두리만 둥글게 설정 */
+}
+
+.tableChart {
+
+    td,
+    th,
+    th {
+        border-collapse: collapse;
+        text-align: center !important;
+    }
+
+    th {
+        border-bottom: 1px solid #444444 !important;
+        background-color: #333d4d !important;
+        color: #FFFFFF !important;
+    }
+
+    td {
+        border-bottom: 0px !important;
+    }
+}
+
+
+img {
     width: 100%;
 }
 
@@ -135,6 +178,6 @@ img{
     z-index: 1500;
 }
 
-#barChart{
+#barChart {
     max-height: 500px;
 }

@@ -6,6 +6,10 @@
 <title>Java Sorting Algorithms</title>
 </head>
 <body>
+	<%
+	String group = (String) request.getAttribute("group");
+	%>
+
 	<div class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary">
 		<div class="offcanvas-md offcanvas-end bg-body-tertiary" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
 			<div class="offcanvas-header">
@@ -21,108 +25,41 @@
 					<!-- Sorting Algoritms -->
 					<div class="accordion-item">
 						<h2 class="accordion-header">
-							<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Sorting Algoritms</button>
+							<button class="accordion-button <%if (!group.equals("/basic") && !group.equals("/main.do")) {%> collapsed <%}%>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_basic" aria-expanded="false" aria-controls="collapseOne">Basic</button>
 						</h2>
-						<div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+						<div id="collapse_basic" class="accordion-collapse collapse <%if (group.equals("/basic") || group.equals("/main.do")) {%> show <%}%>" data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<ul class="nav flex-column">
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="introduction.do">
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_ide.do">
 											<svg class="bi">
                                             <use xlink:href="#house-fill"></use>
                                         </svg>
-											Introduction
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="/JavaAlgorithms/templates/sorting/BubbleSort.html">
+											IDE
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_jvm.do">
 											<svg class="bi">
                                             <use xlink:href="#house-fill"></use>
                                         </svg>
-											Bubble Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/SelectionSort.html'">
+											JVM
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_grammer.do">
 											<svg class="bi">
-                                            <use xlink:href="#file-earmark"></use>
+                                            <use xlink:href="#house-fill"></use>
                                         </svg>
-											Selection Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/InsertionSort.html'">
+											Basic Grammer
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_loop.do">
 											<svg class="bi">
-                                            <use xlink:href="#cart"></use>
+                                            <use xlink:href="#house-fill"></use>
                                         </svg>
-											Insertion Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/MergeSort.html'">
+											Loop and Conditional
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_io.do">
 											<svg class="bi">
-                                            <use xlink:href="#people"></use>
+                                            <use xlink:href="#house-fill"></use>
                                         </svg>
-											Merge Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/QuickSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Quick Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/HeapSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Heap Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/TreeSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Tree Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/TimSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Tim Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/IntroSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Intro Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/RadixSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Radix Sort
-										</a>
-									</li>
-
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/sorting/ShellSort.html'">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Shell Sort
-										</a>
-									</li>
+											Input / Output
+										</a></li>
 								</ul>
 							</div>
 						</div>
@@ -131,59 +68,149 @@
 
 					<div class="accordion-item">
 						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseThree">Data Structure</button>
+							<button class="accordion-button <%if (!group.equals("/oop")) {%> collapsed <%}%>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_oop" aria-expanded="false" aria-controls="collapseThree">Object-Oriented Programming</button>
 						</h2>
-						<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+						<div id="collapse_oop" class="accordion-collapse collapse <%if (group.equals("/oop")) {%> show <%}%>" data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<ul class="nav flex-column mb-auto">
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/datastructure/array.html'">
+
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_features.do">
 											<svg class="bi">
                                             <use xlink:href="#puzzle"></use>
                                         </svg>
-											Shell Sort
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+											Features
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_class.do">
 											<svg class="bi">
-                                            <use xlink:href="#file-earmark-text"></use>
+                                            <use xlink:href="#puzzle"></use>
                                         </svg>
-											Last quarter
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+											Class
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_inheritance.do">
 											<svg class="bi">
-                                            <use xlink:href="#file-earmark-text"></use>
+                                            <use xlink:href="#puzzle"></use>
                                         </svg>
-											Social engagement
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+											Inheritance
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_abstract.do">
 											<svg class="bi">
-                                            <use xlink:href="#file-earmark-text"></use>
+                                            <use xlink:href="#puzzle"></use>
                                         </svg>
-											Year-end sale
-										</a>
-									</li>
+											Abstract
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_polymo.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Polymorphism
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_capsule.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Capsule
+										</a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button <%if (!group.equals("/ds")) {%> collapsed <%}%>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_ds" aria-expanded="false" aria-controls="collapseThree">Data Structure</button>
+						</h2>
+						<div id="collapse_ds" class="accordion-collapse collapse <%if (group.equals("/ds")) {%> show <%}%>" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<ul class="nav flex-column mb-auto">
+
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_collection.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Collection
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_list.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											List
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_map.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Map
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_generic.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Generic
+										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_queuestack.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Queue & Stack
+										</a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button <%if (!group.equals("/sorting")) {%> collapsed <%}%>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_sorting" aria-expanded="false" aria-controls="collapseThree">Sorting</button>
+						</h2>
+						<div id="collapse_sorting" class="accordion-collapse collapse <%if (group.equals("/sorting")) {%> show <%}%>" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<ul class="nav flex-column mb-auto">
+
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_generic.do">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Capsule
+										</a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed  <%if (!group.equals("/gui")) {%> collapsed <%}%>" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_gui" aria-expanded=<%if (group.equals("/gui")) {%> "true" <%} else {%>"false"<%}%> aria-controls="collapseThree">GUI</button>
+						</h2>
+						<div id="collapse_gui" class="accordion-collapse collapse <%if (group.equals("/gui")) {%> show <%}%>" data-bs-parent="#accordionExample">
+							<div class="accordion-body">
+								<ul class="nav flex-column mb-auto">
+
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/datastructure/array.html'">
+											<svg class="bi">
+                                            <use xlink:href="#puzzle"></use>
+                                        </svg>
+											Shell Sort
+										</a></li>
+
+								</ul>
+							</div>
+						</div>
+					</div>
+
+
+
 				</div>
 				<hr class="my-3">
 
 				<ul class="nav flex-column mb-auto">
-					<li class="nav-item">
-						<a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
+					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
 							<svg class="bi">
                             <use xlink:href="#door-closed"></use>
                         </svg>
 							Sign out
-						</a>
-					</li>
+						</a></li>
 				</ul>
 			</div>
 		</div>

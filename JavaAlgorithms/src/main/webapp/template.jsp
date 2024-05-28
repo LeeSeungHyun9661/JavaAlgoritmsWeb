@@ -47,13 +47,15 @@
 		</div>
 	</div>
 	<%
-	if (((String)request.getAttribute("script")).length() > 0) {
+	if (((String) request.getAttribute("script")).length() > 0) {
 	%>
 	<jsp:include page="${script}"></jsp:include>
 	<%
 	}
 	%>
 
+	<!-- Prism JS -->
+	<script src="/JavaAlgorithms/resources/js/prism.js"></script>
 	<!-- Jquery -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script type="text/javascript" src="/JavaAlgorithms/resources/js/includeHTML.js"></script>

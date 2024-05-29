@@ -542,15 +542,14 @@
 		<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 			<h2>메서드</h2>
 		</div>
-
-		<p>메서드는 특정 작업을 수행하기 위한 코드 블록입니다. 메서드는 보통 다음과 같은 형식으로 정의됩니다:</p>
+		<p>메서드는 특정 작업을 수행하기 위한 코드 블록입니다. 반복적으로 실행해야 하는 부분, 코드를 역할로 분리할 부분을 위해서 메서드를 정의하고 사용합니다. 메서드는 보통 다음과 같은 형식으로 정의됩니다.</p>
 		<pre class="line-numbers">
             <code class="language-java">반환형 메서드명(매개변수 목록) {
 			    // 메서드 몸체
 			}</code>
 		</pre>
 
-		<p>메서드는 다음과 같은 구성 요소로 이루어져 있습니다:</p>
+		<p>메서드는 다음과 같은 구성 요소로 이루어져 있습니다.</p>
 		<ul>
 			<li><strong>반환형</strong>: 메서드가 반환하는 값의 데이터 타입을 명시합니다. 반환값이 없을 경우 <code>void</code>를 사용합니다.</li>
 			<li><strong>메서드명</strong>: 메서드의 이름을 정의합니다. 보통 소문자로 시작하고 동사 형태를 사용합니다.</li>
@@ -578,12 +577,6 @@
 			    }
 			}</code>
 		</pre>
-
-		<h3>메서드의 구성 요소</h3>
-
 	</div>
-
-
-
 </body>
 </html>

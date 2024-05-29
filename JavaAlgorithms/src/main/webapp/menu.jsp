@@ -30,36 +30,12 @@
 						<div id="collapse_basic" class="accordion-collapse collapse <%if (group.equals("/basic") || group.equals("/main.do")) {%> show <%}%>" data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<ul class="nav flex-column">
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_ide.do">
-											<svg class="bi">
-                                            <use xlink:href="#house-fill"></use>
-                                        </svg>
-											IDE
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_jvm.do">
-											<svg class="bi">
-                                            <use xlink:href="#house-fill"></use>
-                                        </svg>
-											JVM
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_grammer.do">
-											<svg class="bi">
-                                            <use xlink:href="#house-fill"></use>
-                                        </svg>
-											Basic Grammer
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_loop.do">
-											<svg class="bi">
-                                            <use xlink:href="#house-fill"></use>
-                                        </svg>
-											Loop and Conditional
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_io.do">
-											<svg class="bi">
-                                            <use xlink:href="#house-fill"></use>
-                                        </svg>
-											Input / Output
-										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_ide.do"> IDE </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_jvm.do"> JVM </a></li>
+                                    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_grammer.do"> Basic Grammer </a></li>
+                                    <li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_array.do"> Array and Copy </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_loop.do"> Loop and Conditional </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" id="pageBtn" href="basic_io.do"> Input / Output </a></li>
 								</ul>
 							</div>
 						</div>
@@ -74,42 +50,12 @@
 							<div class="accordion-body">
 								<ul class="nav flex-column mb-auto">
 
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_features.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Features
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_class.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Class
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_inheritance.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Inheritance
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_abstract.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Abstract
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_polymo.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Polymorphism
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_capsule.do">
-											<svg class="bi">
-                                            <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Capsule
-										</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_features.do"> Features </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_class.do"> Class </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_inheritance.do"> Inheritance </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_abstract.do"> Abstract </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_polymo.do"> Polymorphism </a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_capsule.do"> Capsule </a></li>
 								</ul>
 							</div>
 						</div>
@@ -122,36 +68,26 @@
 							<div class="accordion-body">
 								<ul class="nav flex-column mb-auto">
 
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_collection.do">
-											<svg class="bi">
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_collection.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Collection
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_list.do">
-											<svg class="bi">
+                                        </svg> Collection
+									</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_list.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											List
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_map.do">
-											<svg class="bi">
+                                        </svg> List
+									</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_map.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Map
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_generic.do">
-											<svg class="bi">
+                                        </svg> Map
+									</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_generic.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Generic
-										</a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_queuestack.do">
-											<svg class="bi">
+                                        </svg> Generic
+									</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="ds_queuestack.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Queue & Stack
-										</a></li>
+                                        </svg> Queue & Stack
+									</a></li>
 
 								</ul>
 							</div>
@@ -166,12 +102,10 @@
 							<div class="accordion-body">
 								<ul class="nav flex-column mb-auto">
 
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_generic.do">
-											<svg class="bi">
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="oop_generic.do"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Capsule
-										</a></li>
+                                        </svg> Capsule
+									</a></li>
 
 								</ul>
 							</div>
@@ -187,12 +121,10 @@
 							<div class="accordion-body">
 								<ul class="nav flex-column mb-auto">
 
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/datastructure/array.html'">
-											<svg class="bi">
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="#" onclick="document.location.href='/JavaAlgorithms/templates/datastructure/array.html'"> <svg class="bi">
                                             <use xlink:href="#puzzle"></use>
-                                        </svg>
-											Shell Sort
-										</a></li>
+                                        </svg> Shell Sort
+									</a></li>
 
 								</ul>
 							</div>
@@ -205,12 +137,10 @@
 				<hr class="my-3">
 
 				<ul class="nav flex-column mb-auto">
-					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#">
-							<svg class="bi">
+					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="https://getbootstrap.kr/docs/5.3/examples/dashboard/#"> <svg class="bi">
                             <use xlink:href="#door-closed"></use>
-                        </svg>
-							Sign out
-						</a></li>
+                        </svg> Sign out
+					</a></li>
 				</ul>
 			</div>
 		</div>

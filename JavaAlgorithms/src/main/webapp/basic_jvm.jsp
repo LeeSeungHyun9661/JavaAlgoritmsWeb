@@ -8,7 +8,7 @@
 <body>
 
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>자바 컴파일링 과정</h2>
+		<h1>자바 컴파일과 JVM</h1>
 	</div>
 	<h2>컴파일</h2>
 	<p>우리가 작성하는 포르그래밍 코드는 단순한 물리적 형태를 취합니다. 사람이 이해할 수 있는 고수준의 언어는 그 자체로 컴퓨터가 이해할 수 없습니다. 따라서 이를 컴퓨터가 이해할 수 있는 저수준의 언어로 변환할 필요가 있습니다. 이 과정을 컴파일이라고 합니다.</p>

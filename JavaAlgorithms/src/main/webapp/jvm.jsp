@@ -26,16 +26,10 @@
 			<p>인터프리터와 JIT 컴파일러는 함께 작동하여 프로그램을 효율적으로 실행합니다. 처음에는 인터프리터가 코드를 실행하고, 자주 사용되는 부분은 JIT 컴파일러가 네이티브 코드로 변환합니다.</p></li>
 	</ol>
 	<img src="resources/img/java-compile.png">
-	<p>해당 과정은 편하게 자바 코드를 작성하고 실행할 수 있기 때문에 꼭 알 필요는 없습니다. 하지만 좋은 프로그래머가 되기 위해서는 내부 구조가 어떻게 작동되는지 알아야 합니다. 우리가 선언한 변수와 메서드는 어디에 있는지, 어떻게 그 역할을 수행하는지 궁금한 것은 지극히 당연한 일입니다.</p>
+	<p>해당 과정은 편하게 자바 코드를 작성하고 실행할 수 있기 때문에 몰라도 상관없습니다. 하지만 좋은 프로그래머가 되기 위해서는 내부 구조가 어떻게 작동되는지 알아야 합니다. 우리가 선언한 변수와 메서드는 어디에 있는지, 어떻게 그 역할을 수행하는지 궁금한 것은 지극히 당연한 일입니다.</p>
 
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h2>자바 가상 머신 (Java Virtual Machine, JVM)</h2>
-	</div>
-
-	<p></p>
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2></h2>
 	</div>
 	<p>컴파일 과정을 설명하며 등장했던 자바 가상 머신(JVM)은 자바 애플리케이션을 실행하기 위한 필수적인 런타임 환경입니다. JVM은 자바 프로그램을 독립적인 환경에서 실행할 수 있게 해주며, 특정 플랫폼에 종속되지 않고 다양한 시스템에서 실행될 수 있도록 합니다.</p>
 

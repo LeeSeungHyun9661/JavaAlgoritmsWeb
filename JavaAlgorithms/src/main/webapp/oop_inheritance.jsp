@@ -11,12 +11,9 @@
 		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h1>상속</h1>
 	</div>
-	<div class="card card-body">
-		<br>
-		<p>프로그래머 'Tom'은 25세이며 'A'라는 이름의 회사를 다닙니다. Tom은 개와 고양이를 키우고 있습니다. 개는 'Max'이며 5살입니다. 고양이 'Lily'는
-			3살입니다. Tom은 Max와 걷고 달리기를 하지만 고양이 Lily는 게을러서 걷기만 하고, 대신 점프를 할 줄 압니다. 셋 모두 음식을 먹지만 그건 Tom이 일을 열심히
-			하기 때문입니다. Max는 멍멍! Lily는 야옹! Tom은 랄랄라~ 노래를 부릅니다.</p>
-	</div>
+	<p>프로그래머 'Tom'은 25세이며 'A'라는 이름의 회사를 다닙니다. Tom은 개와 고양이를 키우고 있습니다. 개는 'Max'이며 5살입니다. 고양이 'Lily'는
+		3살입니다. Tom은 Max와 걷고 달리기를 하지만 고양이 Lily는 게을러서 걷기만 하고, 대신 점프를 할 줄 압니다. 셋 모두 음식을 먹지만 그건 Tom이 일을 열심히 하기
+		때문입니다. Max는 멍멍! Lily는 야옹! Tom은 랄랄라~ 노래를 부릅니다.</p>
 	<p>단란한 Tom네 집에 대해 Java 클래스로 표현해봅시다. 내용을 정리하면 다음과 같습니다.</p>
 
 	<pre class="line-numbers">
@@ -235,13 +232,24 @@
 			<p>자식 클래스의 생성자에게 전달받는 두 값중 <code>b</code>의 경우 <code>super()</code>키워드를 따라 부모 클래스의 생성자로 이동합니다.
 		</p></li>
 	</ol>
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>다형성</h1>
+	</div>
+	<p>다형성(Polymorphism)은 객체 지향 프로그래밍의 핵심 개념 중 하나로, 동일한 인터페이스를 통해 서로 다른 데이터 타입들을 처리할 수 있는 기능을
+		의미합니다. 다형성은 코드의 유연성과 재사용성을 높이며, 유지보수를 용이하게 합니다. 자바에서 다형성은 주로 상속과 인터페이스를 통해 구현됩니다.</p>
+	<p>다형성은 오버로딩과 오버라이딩 두 가지 방법이 있습니다.</p>
+
+	<ul>
+		<li><strong>메서드 오버로딩</strong>: 같은 이름의 메서드를 여러 개 정의하되, 매개변수의 타입이나 개수를 다르게 하여 구현하는 방식입니다. 이는
+			컴파일 시간 다형성의 한 예입니다.</li>
+		<li><strong>메서드 오버라이딩</strong>: 상위 클래스의 메서드를 하위 클래스에서 재정의하는 방식입니다. 이는 런타임 다형성의 한 예입니다.</li>
+	</ul>
 
 	<div
 		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h1>오버라이딩</h1>
 	</div>
-
-
 
 	<p>해당 내용을 참고하여 Tom의 집을 다시 만들어 봅시다. 상속을 위해서는 공통된 내용을 묶어줄 수 있는 부모 클래스를 만들어야 합니다. Animal 클래스를 만들고
 		이를 상속받는 클래스를 만들어봅시다.</p>

@@ -24,8 +24,7 @@
 				<!--  -->
 				<ul class="nav flex-column mb-auto">
 					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="index.jsp">HOME</a></li>
-					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="ide.do">IDE</a></li>
-					<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2" href="jvm.do">JVM</a></li>
+
 				</ul>
 
 				<!-- Accordion -->
@@ -33,8 +32,7 @@
 					<!-- Sorting Algoritms -->
 					<div class="accordion-item">
 						<h2 class="accordion-header">
-							<button
-								class="accordion-button <%if (!group.equals("/basic")) {%> collapsed <%}%>"
+							<button class="accordion-button <%if (!group.equals("/basic")) {%> collapsed <%}%>"
 								type="button" data-bs-toggle="collapse" data-bs-target="#collapse_basic"
 								aria-expanded="false" aria-controls="collapseOne">기초</button>
 						</h2>
@@ -43,6 +41,10 @@
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<ul class="nav flex-column">
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
+										aria-current="page" id="pageBtn" href="basic_ide.do">IDE</a></li>
+									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
+										aria-current="page" id="pageBtn" href="basic_jvm.do">JVM</a></li>
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
 										aria-current="page" id="pageBtn" href="basic_grammer.do"> 기본 구조와 문법 </a></li>
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
@@ -63,37 +65,16 @@
 										aria-current="page" id="pageBtn" href="basic_exception.do"> 오류와 예외처리 </a></li>
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
 										aria-current="page" id="pageBtn" href="basic_io.do"> 입력 / 출력 </a></li>
-								</ul>
-							</div>
-						</div>
-					</div>
-
-					<div class="accordion-item">
-						<h2 class="accordion-header">
-							<button class="accordion-button <%if (!group.equals("/oop")) {%> collapsed <%}%>"
-								type="button" data-bs-toggle="collapse" data-bs-target="#collapse_oop" aria-expanded="false"
-								aria-controls="collapseOne">객체지향 프로그래밍</button>
-						</h2>
-						<div id="collapse_oop"
-							class="accordion-collapse collapse <%if (group.equals("/oop")) {%> show <%}%>"
-							data-bs-parent="#accordionExample">
-							<div class="accordion-body">
-								<ul class="nav flex-column mb-auto">
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
 										aria-current="page" href="oop_class.do"> 객체지향과 클래스 </a></li>
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
-										aria-current="page" href="oop_inheritance.do"> 상속 </a></li>
+										aria-current="page" href="oop_inheritance.do"> 상속과 다형성 </a></li>
 									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
-										aria-current="page" href="oop_abstract.do"> 추상화 </a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
-										aria-current="page" href="oop_polymo.do"> 다형성 </a></li>
-									<li class="nav-item"><a class="nav-link d-flex align-items-center gap-2"
-										aria-current="page" href="oop_capsule.do"> 캡슐화 </a></li>
+										aria-current="page" href="oop_abstract.do"> 추상화와 캡슐화 </a></li>
 								</ul>
 							</div>
 						</div>
 					</div>
-
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button <%if (!group.equals("/ds")) {%> collapsed <%}%>"

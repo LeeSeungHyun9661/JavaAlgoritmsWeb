@@ -7,186 +7,39 @@
 </head>
 <body>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1>INTRODUCTION</h1>
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>추상화</h1>
 	</div>
-	<p>On this page, you will find an introduction to various sorting algorithms, their principles, and how they are implemented in Java. Sorting algorithms are a fundamental concept in computer science, as they enable efficient organization and retrieval of data by arranging it in a specific order, such as ascending or descending.</p>
+	<p>자바에서 추상화(Abstraction)는 객체 지향 프로그래밍의 중요한 개념 중 하나로, 복잡한 시스템을 단순화하여 이해하기 쉽도록 만드는 과정입니다. 추상화는
+		구체적인 구현 세부 사항을 숨기고, 필요한 기능이나 특성만을 노출함으로써 사용자에게 편리한 인터페이스를 제공합니다. 이를 통해 코드를 보다 읽기 쉽게 만들고 유지보수를 용이하게
+		합니다.</p>
+	<p>자바에서 추상화를 구현하는 두 가지 주요 도구는 추상 클래스(Abstract Class)와 인터페이스(Interface)입니다.</p>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>What is a Sorting Algorithm?</h2>
-	</div>
-
-	<p>A sorting algorithm is a method used to arrange data in a predetermined order. It is one of the most important problems in the field of computer science. Whether the data consists of numbers, words, or other types of information, it often needs to be sorted before use. The key to solving the sorting problem lies in how effectively the data can be sorted.</p>
-	<p>The primary reason for sorting data is to facilitate efficient searching. Computers often need to handle millions of data points, and databases theoretically need to manage an infinite amount of data. If the data to be searched is not sorted, only sequential search algorithms can be used. However, if the data is sorted, a variety of powerful algorithms can be employed. While data that requires frequent insertion and deletion may rely on sequential search due to the overhead of maintaining sorted order, in most cases, searching far outweighs the need for insertion and deletion. Thus, sorting is crucial for efficient searching.</p>
-
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Fast Search Through Sorting Algorithms</h2>
-	</div>
-	<p>The main advantage of sorted data is that when you pick an arbitrary value, all values to the right are guaranteed to be greater than or equal to it, and all values to the left are guaranteed to be less than or equal to it. This property allows for efficient searching algorithms like binary search. In binary search, the computer examines the middle value of the candidate range. If the target value is smaller, the left half is ignored; if larger, the right half is ignored.</p>
-	<p>For example, in a dataset of 4.3 billion sorted items, the worst-case scenario for finding a value (or determining it is absent) involves only 32 comparisons. With 33 comparisons, about 8.6 billion items can be searched. More advanced algorithms, like interpolation search (which estimates the position based on the percentage between the minimum and maximum values), can find the desired value with even fewer comparisons. The primary reason for performing sorting on computers is to enable efficient binary search on the data.</p>
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Time Complexity</h2>
-	</div>
-
-	<p>Time complexity is a method used to analyze the performance of algorithms. Different sorting algorithms perform differently under various conditions. While the absolute execution time can vary based on the user's computer, the relative time complexity depends on the algorithm used.</p>
-	<p>The types of time complexity are as follows:</p>
+	<h3>추상 클래스</h3>
+	<p>추상 클래스는 하나 이상의 추상 메서드(구현이 없는 메서드)를 포함할 수 있는 클래스입니다. 추상 클래스는 객체를 직접 생성할 수 없으며, 이를 상속받은 하위
+		클래스가 추상 메서드를 구현해야 합니다. 추상 클래스는 다음과 같은 특징을 가집니다.</p>
 	<ul>
-		<li>
-			<strong>Every-Case Time Complexity (<i>T</i>(<i>n</i>))
-			</strong>: The number of operations an algorithm performs for input size <i>n</i>. Depends solely on the input size and is constant for any input values.
-		</li>
-		<li>
-			<strong>Worst Case Time Complexity (<i>W</i>(<i>n</i>))
-			</strong>: The maximum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the maximum operations in the worst scenario.
-		</li>
-		<li>
-			<strong>Best Case Time Complexity (<i>B</i>(<i>n</i>))
-			</strong>: The minimum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the minimum operations in the best scenario.
-		</li>
-		<li>
-			<strong>Average Case Time Complexity (<i>A</i>(<i>n</i>))
-			</strong>: The average number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the expected operations for all possible inputs.
-		</li>
-		<li>
-			<strong>Big-O Notation</strong>: Big-O notation is used to describe the performance of an algorithm as <i>n</i> becomes very large. It is the most commonly used notation and follows the order:
-			<ul>
-				<li>
-					<i>o</i>(1) &lt; <i>o</i>(log <i>n</i>) &lt; <i>o</i>(<i>n</i>) &lt; <i>o</i>(<i>n</i> log <i>n</i>) &lt; <i>o</i>(<i>n</i><sup>3</sup>) &lt; <i>o</i>(<i>n</i>2<sup>3</sup>) &lt; <i>o</i>(2<sup><i>n</i></sup>) &lt; <i>o</i>(<i>n</i>!)
-				</li>
-			</ul>
-		</li>
+		<li><strong>공통 기능의 제공</strong>: 여러 하위 클래스에 공통으로 사용될 수 있는 메서드나 필드를 정의할 수 있습니다.</li>
+		<li><strong>부분적인 구현</strong>: 일부 메서드는 구현하고, 일부 메서드는 추상 메서드로 남겨두어 하위 클래스에서 구현하게 할 수 있습니다.</li>
 	</ul>
 
-	<table>
-		<caption>Time Complexity of Sorting Algorithms</caption>
-		<thead>
-			<tr>
-				<th>Algorithm</th>
-				<th>Best Case</th>
-				<th>Average Case</th>
-				<th>Worst Case</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Bubble Sort</td>
-				<td>O(n)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Selection Sort</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Insertion Sort</td>
-				<td>O(n)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Merge Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Quick Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Heap Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Tree Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Tim Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Radix Sort</td>
-				<td>O(nk)</td>
-				<td>O(nk)</td>
-				<td>O(nk)</td>
-			</tr>
-			<tr>
-				<td>Shell Sort</td>
-				<td>O(n log n)</td>
-				<td>Varies</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Bucket Sort</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Counting Sort</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-			</tr>
-		</tbody>
-	</table>
+	<h3>인터페이스</h3>
+	<p>인터페이스는 모든 메서드가 추상 메서드로만 이루어져 있는 구조입니다. 자바 8부터는 디폴트 메서드와 정적 메서드를 인터페이스에 포함할 수 있게 되었지만, 기본적으로
+		인터페이스는 메서드의 서명(signature)만 정의하고 구현은 제공하지 않습니다. 인터페이스의 주요 특징은 다음과 같습니다.</p>
+	<ul>
+		<li><strong>다중 상속</strong>: 자바는 클래스의 다중 상속을 지원하지 않지만, 인터페이스는 여러 개를 구현할 수 있습니다.</li>
+		<li><strong>계약(Contract) 역할</strong>: 특정 클래스가 어떤 메서드를 반드시 구현해야 하는지를 명시합니다.</li>
+	</ul>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Sorting Algorithms</h2>
-	</div>
 
-	<p>Let's take a closer look at some common sorting algorithms:</p>
-
+	<h3>추상화의 이점</h3>
 	<ol>
-		<li>
-			<strong>Bubble Sort</strong>: A simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
-		</li>
-		<li>
-			<strong>Selection Sort</strong>: Divides the input list into a sorted and an unsorted region, repeatedly selects the smallest (or largest) element from the unsorted region, and moves it to the end of the sorted region.
-		</li>
-		<li>
-			<strong>Insertion Sort</strong>: Builds the final sorted array one item at a time by iteratively placing each element in its correct position.
-		</li>
-		<li>
-			<strong>Merge Sort</strong>: A divide-and-conquer algorithm that divides the input list into two halves, recursively sorts them, and then merges the two sorted halves.
-		</li>
-		<li>
-			<strong>Quick Sort</strong>: A highly efficient sorting algorithm that works by selecting a 'pivot' element and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot.
-		</li>
-		<li>
-			<strong>Heap Sort</strong>: Converts the list into a binary heap data structure, then repeatedly extracts the maximum element from the heap and reconstructs the heap until no elements remain.
-		</li>
-		<li>
-			<strong>Tree Sort</strong>: Builds a binary search tree from the input elements and then traverses the tree in-order to produce a sorted sequence.
-		</li>
-		<li>
-			<strong>Tim Sort</strong>: A hybrid sorting algorithm derived from merge sort and insertion sort, designed to perform well on many kinds of real-world data.
-		</li>
+		<li><strong>코드의 재사용성 증가</strong>: 추상 클래스와 인터페이스를 통해 공통의 기능을 정의하고 재사용할 수 있습니다.</li>
+		<li><strong>유지보수 용이</strong>: 코드의 구조가 명확해져 변경이 필요할 때 특정 부분만 수정하면 되므로 유지보수가 쉽습니다.</li>
+		<li><strong>유연성 향상</strong>: 인터페이스를 사용하여 다형성을 구현하면, 다양한 구현체를 교체하여 사용할 수 있어 코드의 유연성이 증가합니다.</li>
+		<li><strong>캡슐화</strong>: 추상화는 세부 구현을 감추고 외부에 필요한 기능만 노출함으로써 캡슐화를 강화합니다.</li>
 	</ol>
-
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Sorting Algorithms and Computer Science</h2>
-	</div>
-
-	<p>Sorting algorithms provide an excellent entry point for understanding computer science and algorithm design. They illustrate fundamental concepts such as data manipulation, algorithmic efficiency, and problem-solving strategies. Aspiring programmers and computer science enthusiasts can deepen their understanding of these concepts by studying sorting algorithms and their applications.</p>
-
-	<img src="/JavaAlgorithms/resources/img/billgatespancake.png">
-
-	<p>For non-specialists, sorting algorithms may seem trivial at first glance. However, developing highly effective sorting methods demands dedication, expertise, and innovation. Bill Gates' decades-long quest to develop groundbreaking sorting algorithms serves as a testament to the complexity and significance of these algorithms in computer science and beyond.</p>
+	<p>결론적으로, 추상화는 자바에서 중요한 설계 원칙으로, 복잡성을 줄이고 코드의 가독성과 유지보수성을 높이는 데 크게 기여합니다. 추상 클래스와 인터페이스를 적절히 활용하면 더 구조적이고 유연한 프로그램을 작성할 수 있습니다.</p>
 </body>
 </html>

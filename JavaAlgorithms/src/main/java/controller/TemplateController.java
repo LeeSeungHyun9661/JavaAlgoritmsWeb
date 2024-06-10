@@ -38,6 +38,7 @@ public class TemplateController extends HttpServlet {
 		String requestURI = request.getRequestURI();
 		String contextPath = request.getContextPath();
 		String command = requestURI.substring(contextPath.length());
+		System.out.println(command);
 		// 응답 페이지
 		String page = "/template.jsp";
 		boolean isRedirect = false;

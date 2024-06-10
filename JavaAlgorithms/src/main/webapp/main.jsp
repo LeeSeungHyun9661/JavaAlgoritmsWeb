@@ -9,7 +9,7 @@
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h2>커피에서 영감을 받은 탄생</h2>
 	</div>
-	<img src="resources/img/james-gosling_1.png" style="float:left; width:30%;" >
+	<img src="resources/img/james-gosling_1.png" style="float:left; width:10vw;" >
 	<p>1991년 썬 마이크로시스템즈의 제임스 고슬링이 개발한 새로운 프로그래밍 언어는 OAK라는 이름으로 결정되었습니다. 사무실 밖에 있던 오크 나무에서 이름을 따온 이 언어는 가전제품에 탑재할 소프트웨어를 만들 목적으로 개발되었습니다. (오크 나무에게 깨물리지 않아서 다행이군요!) 하지만 당시 저작권법은 일반 명사를 사용한 상표권 등록을 허용하지 않았고 결국 새 이름을 찾아야 했습니다.</p>
 	<p>1995년 제임스 고슬링은 개발진들을 사무실에 가두었습니다. 그리고 끔직한 일을 저질렀죠. 개발된 프로그래밍 언어의 새로운 이름을 결정하는 것이었습니다! 차라리 수 만 줄의 코드를 작성하고 주석을 처리하는 일이었다면 얼마나 좋을까요? 이름을 결정하라니요! 끊임없는 브레인스토밍은 그들을 지치게 만들기 충분했습니다.</p>
 

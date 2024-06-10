@@ -7,186 +7,346 @@
 </head>
 <body>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h1>INTRODUCTION</h1>
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>상속</h1>
 	</div>
-	<p>On this page, you will find an introduction to various sorting algorithms, their principles, and how they are implemented in Java. Sorting algorithms are a fundamental concept in computer science, as they enable efficient organization and retrieval of data by arranging it in a specific order, such as ascending or descending.</p>
+	<div class="card card-body">
+		<br>
+		<p>프로그래머 'Tom'은 25세이며 'A'라는 이름의 회사를 다닙니다. Tom은 개와 고양이를 키우고 있습니다. 개는 'Max'이며 5살입니다. 고양이 'Lily'는
+			3살입니다. Tom은 Max와 걷고 달리기를 하지만 고양이 Lily는 게을러서 걷기만 하고, 대신 점프를 할 줄 압니다. 셋 모두 음식을 먹지만 그건 Tom이 일을 열심히
+			하기 때문입니다. Max는 멍멍! Lily는 야옹! Tom은 랄랄라~ 노래를 부릅니다.</p>
+	</div>
+	<p>단란한 Tom네 집에 대해 Java 클래스로 표현해봅시다. 내용을 정리하면 다음과 같습니다.</p>
 
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>What is a Sorting Algorithm?</h2>
+	<pre class="line-numbers">
+    <code class="language-java">class Programmer { // 프로그래머 클래스
+	    String name; // 이름
+	    int age; // 나이
+	    String company; // 회사
+	    int money; // 재산
+	
+	    Programmer(String name, int age, String company) { // 생성자
+	        this.name = name;
+	        this.age = age;
+	        this.company = company;
+	        int money = 0;
+	    }
+	
+	    void walk() {// 걷기
+	        System.out.println(this.name + "is walking");
+	    };
+	
+	    void run() {// 달리기
+	        System.out.println(this.name + "is running");
+	    };
+	
+	    void eat() {// 먹기
+	        System.out.println(this.name + "is eating");
+	    };
+	
+	    void work(int pay) {// 일하기
+	        System.out.println(this.name + "is working");
+	        this.money += pay;
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 랄랄라~");
+	    };
+	}
+	
+	class Dog { // 개 클래스
+	    String name; // 이름
+	    int age; // 나이
+	
+	    Dog(String name, int age) { // 생성자
+	        this.name = name;
+	        this.age = age;
+	    }
+	
+	    void walk() {// 걷기
+	        System.out.println(this.name + "is walking");
+	    };
+	
+	    void run() {// 뛰기
+	        System.out.println(this.name + "is running");
+	    };
+	
+	    void eat() {// 먹기
+	        System.out.println(this.name + "is eating");
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 멍멍~");
+	    };
+	
+	}
+	
+	class Cat { // 고양이 클래스
+	    String name; // 이름
+	    int age; // 나이
+	
+	    Cat(String name, int age) { // 생성자
+	        this.name = name;
+	        this.age = age;
+	    }
+	
+	    void walk() {// 걷기
+	        System.out.println(this.name + "is walking");
+	    };
+	
+	    void jump() {// 뛰기
+	        System.out.println(this.name + "is running");
+	    };
+	
+	    void eat() {// 먹기
+	        System.out.println(this.name + "is eating");
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 냐옹~");
+	    };
+	
+	}
+	
+	</code>
+    </pre>
+
+	<p>개와 고양이 그리고 프로그래머를 위한 세 개의 클래스가 만들어졌습니다. 동일한 변수와 메서드도 있지만 그 특성을 반영하는 차별화된 각자의 변수도 가지고 있습니다.
+		이대로 사용해도 좋습니다. 하지만 동일한 내용의 반복은 프로그래밍에 비효율적인 방법입니다. 만약 Tom이 돈을 많이 벌어서 펭귄과 호랑이, 금붕어와 앵무새까지 사게 되는 날에는
+		클래스가 계속 늘어날 것입니다. 반복되는 내용도 계속 늘어나고 코드의 유연성은 떨어질 것입니다. 공통된 내용을 묶어줄 수 있는 상속을 사용해보도록 합시다.</p>
+
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>부모 클래스의 생성과 상속 활용</h1>
 	</div>
 
-	<p>A sorting algorithm is a method used to arrange data in a predetermined order. It is one of the most important problems in the field of computer science. Whether the data consists of numbers, words, or other types of information, it often needs to be sorted before use. The key to solving the sorting problem lies in how effectively the data can be sorted.</p>
-	<p>The primary reason for sorting data is to facilitate efficient searching. Computers often need to handle millions of data points, and databases theoretically need to manage an infinite amount of data. If the data to be searched is not sorted, only sequential search algorithms can be used. However, if the data is sorted, a variety of powerful algorithms can be employed. While data that requires frequent insertion and deletion may rely on sequential search due to the overhead of maintaining sorted order, in most cases, searching far outweighs the need for insertion and deletion. Thus, sorting is crucial for efficient searching.</p>
+	<p>공통된 내용(이름, 나이, 걷기, 먹기)를 포함하고 있는 Animal 클래스를 만들었습니다. 이를 상속하기 위해서는 클래스에 <code>extends</code>
+		키워드를 사용합니다. 상속한 클래스는 <strong>부모 클래스</strong>, 상속 받은 클래스는 <strong>자식 클래스</strong>라고 합니다. 자식 클래스는 부모
+		클래스에서 선언한 변수와 함수를 활용할 수 있습니다.
+	</p>
+	<pre class="line-numbers">
+    <code class="language-java">class Parent { // 부모 클래스
+        int parentVal; // 부모 클래스 변수
+        void parentFun(){ // 부모 클래스 메서드
+        }
+    }
+    
+    class Child extends parent { // 자식 클래스
+        int childVal; // 자식 클래스 변수
+        void childFun(){ // 자식 클래스 메서드
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Child child = new Child(); // 자식 클래스 인스턴스 생성
+            child.patentVal; // 자식 클래스가 부모에서 정의한 변수를 포함한다.
+        }
+    }</code>
+    </pre>
 
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Fast Search Through Sorting Algorithms</h2>
-	</div>
-	<p>The main advantage of sorted data is that when you pick an arbitrary value, all values to the right are guaranteed to be greater than or equal to it, and all values to the left are guaranteed to be less than or equal to it. This property allows for efficient searching algorithms like binary search. In binary search, the computer examines the middle value of the candidate range. If the target value is smaller, the left half is ignored; if larger, the right half is ignored.</p>
-	<p>For example, in a dataset of 4.3 billion sorted items, the worst-case scenario for finding a value (or determining it is absent) involves only 32 comparisons. With 33 comparisons, about 8.6 billion items can be searched. More advanced algorithms, like interpolation search (which estimates the position based on the percentage between the minimum and maximum values), can find the desired value with even fewer comparisons. The primary reason for performing sorting on computers is to enable efficient binary search on the data.</p>
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Time Complexity</h2>
-	</div>
-
-	<p>Time complexity is a method used to analyze the performance of algorithms. Different sorting algorithms perform differently under various conditions. While the absolute execution time can vary based on the user's computer, the relative time complexity depends on the algorithm used.</p>
-	<p>The types of time complexity are as follows:</p>
+	<p>자바 상속을 사용할 경우 다음과 같은 내용을 참고 합시다.</p>
 	<ul>
-		<li>
-			<strong>Every-Case Time Complexity (<i>T</i>(<i>n</i>))
-			</strong>: The number of operations an algorithm performs for input size <i>n</i>. Depends solely on the input size and is constant for any input values.
-		</li>
-		<li>
-			<strong>Worst Case Time Complexity (<i>W</i>(<i>n</i>))
-			</strong>: The maximum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the maximum operations in the worst scenario.
-		</li>
-		<li>
-			<strong>Best Case Time Complexity (<i>B</i>(<i>n</i>))
-			</strong>: The minimum number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the minimum operations in the best scenario.
-		</li>
-		<li>
-			<strong>Average Case Time Complexity (<i>A</i>(<i>n</i>))
-			</strong>: The average number of operations an algorithm performs for input size <i>n</i>. Depends on both the input size and input values, representing the expected operations for all possible inputs.
-		</li>
-		<li>
-			<strong>Big-O Notation</strong>: Big-O notation is used to describe the performance of an algorithm as <i>n</i> becomes very large. It is the most commonly used notation and follows the order:
-			<ul>
-				<li>
-					<i>o</i>(1) &lt; <i>o</i>(log <i>n</i>) &lt; <i>o</i>(<i>n</i>) &lt; <i>o</i>(<i>n</i> log <i>n</i>) &lt; <i>o</i>(<i>n</i><sup>3</sup>) &lt; <i>o</i>(<i>n</i>2<sup>3</sup>) &lt; <i>o</i>(2<sup><i>n</i></sup>) &lt; <i>o</i>(<i>n</i>!)
-				</li>
-			</ul>
-		</li>
+		<li><strong>is-a 관계 유지</strong>: 상속을 사용할 때는 반드시 자식 클래스가 부모 클래스의 일종이라는 is-a 관계가 성립해야 합니다. 예를
+			들어, Bird 클래스와 Penguin 클래스의 관계에서는 Penguin이 Bird의 일종이므로 상속이 적절합니다. 상속으로 표현하고자 하는 관계는 부모가 자식을 포함하는 더
+			큰 분류에 해당합니다.</li>
+		<li><strong>메서드 오버라이딩 (Overriding)</strong>: 부모 클래스가 정의한 내용을 자식 클래스가 따르도록 되어있지만 이를 자식 클래스가
+			재정의할 수도 있습니다. 이를 오버라이딩이라고 하며 자식 클래스에서 부모 클래스의 메서드를 재정의할 때는 <code>@Override</code> 애너테이션을 사용하여
+			컴파일러가 이를 확인하게 합니다.</li>
+		<li><strong>접근 제어자 (Access Modifiers)</strong>: 상속받은 메서드나 필드의 접근 제어자를 적절히 설정해야 합니다. 부모 클래스의 <code>private</code>
+			멤버는 자식 클래스에서 접근할 수 없으며, <code>protected</code>나 <code>public</code>을 사용하면 접근할 수 있습니다.</li>
+		<li><strong>생성자 호출</strong>: 자식 클래스의 생성자에서 반드시 부모 클래스의 생성자를 호출해야 합니다.</li>
+		<li><strong>메서드 숨김(Method Hiding)</strong>: 부모 클래스의 static 메서드는 자식 클래스에서 오버라이딩할 수 없고, 같은 이름의
+			static 메서드를 정의하면 메서드 숨김이 발생합니다.</li>
+		<li><strong>업캐스팅(Upcasting)과 다운캐스팅(Downcasting)</strong>: 부모 클래스 타입의 참조 변수로 자식 클래스 객체를 참조할 수
+			있습니다(업캐스팅). 반대로, 자식 클래스 타입의 참조 변수로 부모 클래스 객체를 참조하려면 명시적 캐스팅이 필요합니다(다운캐스팅).</li>
+		<li><strong>다중 상속 불가</strong>: 자바는 다중 상속을 지원하지 않습니다. 이는 클래스 간의 복잡한 상속 관계와 충돌을 피하기 위함입니다. 다중
+			상속의 필요성이 있을 때는 인터페이스를 구현하는 방법을 사용합니다.</li>
 	</ul>
 
-	<table>
-		<caption>Time Complexity of Sorting Algorithms</caption>
-		<thead>
-			<tr>
-				<th>Algorithm</th>
-				<th>Best Case</th>
-				<th>Average Case</th>
-				<th>Worst Case</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td>Bubble Sort</td>
-				<td>O(n)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Selection Sort</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Insertion Sort</td>
-				<td>O(n)</td>
-				<td>O(n^2)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Merge Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Quick Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Heap Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Tree Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Tim Sort</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-				<td>O(n log n)</td>
-			</tr>
-			<tr>
-				<td>Radix Sort</td>
-				<td>O(nk)</td>
-				<td>O(nk)</td>
-				<td>O(nk)</td>
-			</tr>
-			<tr>
-				<td>Shell Sort</td>
-				<td>O(n log n)</td>
-				<td>Varies</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Bucket Sort</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-				<td>O(n^2)</td>
-			</tr>
-			<tr>
-				<td>Counting Sort</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-				<td>O(n + k)</td>
-			</tr>
-		</tbody>
-	</table>
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Sorting Algorithms</h2>
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>super</h1>
 	</div>
-
-	<p>Let's take a closer look at some common sorting algorithms:</p>
+	<p>상속의 개념에서 자식 클래스는 부모 클래스 요소에 대해 호출할 수 있습니다. 이는 super 키워드를 통해 가능합니다. 부모 클래스의 멤버(필드, 메서드, 생성자)를
+		자식 클래스에서 참조할 때 사용됩니다. 예시를 살펴봅시다.</p>
 
 	<ol>
-		<li>
-			<strong>Bubble Sort</strong>: A simple comparison-based algorithm that repeatedly steps through the list, compares adjacent elements, and swaps them if they are in the wrong order.
-		</li>
-		<li>
-			<strong>Selection Sort</strong>: Divides the input list into a sorted and an unsorted region, repeatedly selects the smallest (or largest) element from the unsorted region, and moves it to the end of the sorted region.
-		</li>
-		<li>
-			<strong>Insertion Sort</strong>: Builds the final sorted array one item at a time by iteratively placing each element in its correct position.
-		</li>
-		<li>
-			<strong>Merge Sort</strong>: A divide-and-conquer algorithm that divides the input list into two halves, recursively sorts them, and then merges the two sorted halves.
-		</li>
-		<li>
-			<strong>Quick Sort</strong>: A highly efficient sorting algorithm that works by selecting a 'pivot' element and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot.
-		</li>
-		<li>
-			<strong>Heap Sort</strong>: Converts the list into a binary heap data structure, then repeatedly extracts the maximum element from the heap and reconstructs the heap until no elements remain.
-		</li>
-		<li>
-			<strong>Tree Sort</strong>: Builds a binary search tree from the input elements and then traverses the tree in-order to produce a sorted sequence.
-		</li>
-		<li>
-			<strong>Tim Sort</strong>: A hybrid sorting algorithm derived from merge sort and insertion sort, designed to perform well on many kinds of real-world data.
-		</li>
+		<li><strong>부모 클래스 생성자 호출</strong>
+			<div class="row">
+
+				<div class="col-6">
+					<pre class="line-numbers">
+    <code class="language-java">class Parent {
+        int b;
+    
+        Parent(int b) {
+            this.b = b;
+        };
+    }</code>
+            </pre>
+
+				</div>
+				<div class="col-6">
+					<pre class="line-numbers">
+    <code class="language-java">class Child extends Parent {
+        String a;
+    
+        Child(String a) {
+            a = "A";
+        }
+    }</code>
+            </pre>
+				</div>
+			</div>
+			<p>해당 코드는 오류가 발생합니다. 부모 클래스의 생성자는 <code>int</code>값을 받아 클래스 변수에 저장합니다. 이를 상속하는 자식 클래스는 반면에 <code>String</code>값을
+				받아서 클래스 변수에 저장합니다. 자식 클래스의 생성자만으로는 부모 클래스의 생성자를 만족할 수 없습니다. 따라서 <code>super()</code> 키워드를 통해서 부모
+				클래스의 생성자에 값을 전달해주어야 합니다.<br>(기본적으로 자식 클래스의 생성자는 자동으로 <code>super()</code>가 포함되어 있습니다. 이는
+				파라미터가 없는 부모 클래스의 생성자를 의미합니다. 만약 부모 클래스의 생성자가 파라미터를 받지 않는다면 자식 클래스에 <code>super()</code> 키워드를 포함할
+				필요가 없습니다.)
+		</p>
+			<div class="row">
+
+				<div class="col-6">
+					<pre class="line-numbers">
+    <code class="language-java">class Parent {
+        int b;
+    
+        Parent(int b) {
+            this.b = b;
+        };
+    }</code>
+            </pre>
+
+				</div>
+				<div class="col-6">
+					<pre class="line-numbers">
+    <code class="language-java">class Child extends Parent {
+        String a;    
+        Child(String a, int b) {
+            super(b);
+            a = "A";
+        }
+    }</code>
+            </pre>
+				</div>
+			</div>
+			<p>자식 클래스의 생성자에게 전달받는 두 값중 <code>b</code>의 경우 <code>super()</code>키워드를 따라 부모 클래스의 생성자로 이동합니다.
+		</p></li>
 	</ol>
 
-
-	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-		<h2>Sorting Algorithms and Computer Science</h2>
+	<div
+		class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+		<h1>오버라이딩</h1>
 	</div>
 
-	<p>Sorting algorithms provide an excellent entry point for understanding computer science and algorithm design. They illustrate fundamental concepts such as data manipulation, algorithmic efficiency, and problem-solving strategies. Aspiring programmers and computer science enthusiasts can deepen their understanding of these concepts by studying sorting algorithms and their applications.</p>
 
-	<img src="/JavaAlgorithms/resources/img/billgatespancake.png">
 
-	<p>For non-specialists, sorting algorithms may seem trivial at first glance. However, developing highly effective sorting methods demands dedication, expertise, and innovation. Bill Gates' decades-long quest to develop groundbreaking sorting algorithms serves as a testament to the complexity and significance of these algorithms in computer science and beyond.</p>
+	<p>해당 내용을 참고하여 Tom의 집을 다시 만들어 봅시다. 상속을 위해서는 공통된 내용을 묶어줄 수 있는 부모 클래스를 만들어야 합니다. Animal 클래스를 만들고
+		이를 상속받는 클래스를 만들어봅시다.</p>
+	<pre class="line-numbers">
+    <code class="language-java">class Animal {
+        String name; // 이름
+        int age; // 나이
+    
+        public Animal(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        void walk() {// 걷기
+            System.out.println(this.name + "is walking");
+        };
+        void eat() {// 먹기
+            System.out.println(this.name + "is eating");
+        };
+    }
+    
+    class Dog extends Animal { // 자식 클래스 - 개
+
+	    Dog(String name, int age) { // 생성자
+	        super(name, age);
+	    }
+	
+	    void run() {// 뛰기
+	        System.out.println(this.name + "is running");
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 랄랄라~");
+	    };
+	
+	}
+	
+	class Cat extends Animal { // 자식 클래스 - 고양이
+	
+	    Cat(String name, int age) { // 생성자
+	        super(name, age);
+	    }
+	
+	    void jump() {// 뛰기
+	        System.out.println(this.name + "is running");
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 랄랄라~");
+	    };
+	
+	}
+	
+	class Programmer extends Animal {// 자식 클래스 - 프로그래머
+	    String company; // 회사
+	    int money; // 재산
+	
+	    Programmer(String name, int age, String company) { // 생성자
+	        super(name, age);
+	        this.company = company;
+	        int money = 0;
+	    }
+	
+	    void run() {// 달리기
+	        System.out.println(this.name + "is running");
+	    };     
+	
+	    void work(int pay) {// 일하기
+	        System.out.println(this.name + "is working");
+	        this.money += pay;
+	    };
+	
+	    void sing() {// 노래하기
+	        System.out.println(this.name + "is singing: 랄랄라~");
+	    };
+	}</code>
+    </pre>
+	<img src="resources/img/inheri.png">
+
+	<pre class="line-numbers">
+    <code class="language-java">public class Main {
+	    public static void main(String[] args) {
+	
+	        Programmer tom = new Programmer("tom", 25, "A");
+	        Dog max = new Dog("max", 5);
+	        Cat lily = new Cat("lily", 3);
+	
+	        // 다 함께 산책
+	        tom.walk();
+	        max.walk();
+	        lily.walk();
+	
+	        // 운동 시간
+	        tom.run();
+	        max.run();
+	        lily.jump();
+	
+	        // 톰은 돈을 벌어야 해요!
+	        tom.work(1000);
+	    }
+	}</code>
+    </pre>
+
+	<p>정리하자면, <strong>상속</strong>이라는 개념은 클래스를 구성할 때 부모 클래스를 만들고 공통된 내용을 포함한 자식 클래스에 상속해주는 것을 의미한다.
+	</p>
+
+
 </body>
 </html>

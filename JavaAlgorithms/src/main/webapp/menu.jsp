@@ -34,12 +34,12 @@
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button
-								class="accordion-button <%if (!group.equals("/basic") && !group.equals("/main.do")) {%> collapsed <%}%>"
+								class="accordion-button <%if (!group.equals("/basic")) {%> collapsed <%}%>"
 								type="button" data-bs-toggle="collapse" data-bs-target="#collapse_basic"
 								aria-expanded="false" aria-controls="collapseOne">기초</button>
 						</h2>
 						<div id="collapse_basic"
-							class="accordion-collapse collapse <%if (group.equals("/basic") || group.equals("/main.do")) {%> show <%}%>"
+							class="accordion-collapse collapse <%if (group.equals("/basic")) {%> show <%}%>"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
 								<ul class="nav flex-column">
